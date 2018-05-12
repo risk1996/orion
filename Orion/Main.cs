@@ -26,6 +26,18 @@ namespace Orion {
             }
         }
 
+        private void CalcBI_Click(object sender, EventArgs e) {
+            new Calc().Show();
+        }
+
+        private void SettingsBI_Click(object sender, EventArgs e) {
+
+        }
+
+        private void AboutBI_Click(object sender, EventArgs e) {
+
+        }
+
         private void MinimizeBI_Click(object sender, EventArgs e) {
             WindowState = FormWindowState.Minimized;
         }
@@ -36,6 +48,14 @@ namespace Orion {
 
         private void ExitBI_Click(object sender, EventArgs e) {
             Close();
+        }
+
+        private void LocationLI_DoubleClick(object sender, EventArgs e) {
+            WindowState = (WindowState == FormWindowState.Maximized) ? FormWindowState.Normal : FormWindowState.Maximized;
+        }
+
+        private void Main_Resize(object sender, EventArgs e) {
+            ItemSearchLCI.Width = SalesLC.Width - AddLCI.Width - 1;
         }
     }
 }
