@@ -57,5 +57,10 @@ namespace Orion {
         private void Main_Resize(object sender, EventArgs e) {
             ItemSearchLCI.Width = SalesLC.Width - AddLCI.Width - 1;
         }
+
+        private void Main_Load(object sender, EventArgs e) {
+            this.transaction_detailTableAdapter.Fill(this.oriondbDataSet.transaction_detail);
+            
+        }
     }
 }

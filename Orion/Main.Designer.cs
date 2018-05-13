@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -56,14 +57,23 @@
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.ItemSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.AddLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.ItemsLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.layoutControlItem1 = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.ItemsLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SubtotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.layoutControlItem2 = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.TotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.oriondbDataSet = new Orion.oriondbDataSet();
+            this.transactiondetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.transaction_detailTableAdapter = new Orion.oriondbDataSetTableAdapters.transaction_detailTableAdapter();
+            this.transactionidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             this.SalesLC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transactiondetailBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuMTP
@@ -347,6 +357,7 @@
             // 
             // ItemsDGV
             // 
+            this.ItemsDGV.AutoGenerateColumns = false;
             this.ItemsDGV.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -357,6 +368,12 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.ItemsDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.ItemsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ItemsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.transactionidDataGridViewTextBoxColumn,
+            this.productidDataGridViewTextBoxColumn,
+            this.quantityDataGridViewTextBoxColumn,
+            this.discountDataGridViewTextBoxColumn});
+            this.ItemsDGV.DataSource = this.transactiondetailBindingSource;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -455,16 +472,6 @@
             this.AddLCI.Name = "AddLCI";
             this.AddLCI.Width = 31;
             // 
-            // ItemsLCI
-            // 
-            this.ItemsLCI.Control = this.ItemsDGV;
-            this.ItemsLCI.Height = 100;
-            this.ItemsLCI.MinSize = new System.Drawing.Size(64, 18);
-            this.ItemsLCI.Name = "ItemsLCI";
-            this.ItemsLCI.Text = "Items:";
-            this.ItemsLCI.Width = 100;
-            this.ItemsLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
-            // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.listViewEx1;
@@ -474,6 +481,16 @@
             this.layoutControlItem1.Text = "Label:";
             this.layoutControlItem1.Width = 100;
             this.layoutControlItem1.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // ItemsLCI
+            // 
+            this.ItemsLCI.Control = this.ItemsDGV;
+            this.ItemsLCI.Height = 100;
+            this.ItemsLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.ItemsLCI.Name = "ItemsLCI";
+            this.ItemsLCI.Text = "Items:";
+            this.ItemsLCI.Width = 100;
+            this.ItemsLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // SubtotalLCI
             // 
@@ -505,6 +522,44 @@
             this.TotalLCI.Width = 100;
             this.TotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
+            // oriondbDataSet
+            // 
+            this.oriondbDataSet.DataSetName = "oriondbDataSet";
+            this.oriondbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // transactiondetailBindingSource
+            // 
+            this.transactiondetailBindingSource.DataMember = "transaction_detail";
+            this.transactiondetailBindingSource.DataSource = this.oriondbDataSet;
+            // 
+            // transaction_detailTableAdapter
+            // 
+            this.transaction_detailTableAdapter.ClearBeforeFill = true;
+            // 
+            // transactionidDataGridViewTextBoxColumn
+            // 
+            this.transactionidDataGridViewTextBoxColumn.DataPropertyName = "transaction_id";
+            this.transactionidDataGridViewTextBoxColumn.HeaderText = "transaction_id";
+            this.transactionidDataGridViewTextBoxColumn.Name = "transactionidDataGridViewTextBoxColumn";
+            // 
+            // productidDataGridViewTextBoxColumn
+            // 
+            this.productidDataGridViewTextBoxColumn.DataPropertyName = "product_id";
+            this.productidDataGridViewTextBoxColumn.HeaderText = "product_id";
+            this.productidDataGridViewTextBoxColumn.Name = "productidDataGridViewTextBoxColumn";
+            // 
+            // quantityDataGridViewTextBoxColumn
+            // 
+            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "quantity";
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "quantity";
+            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            // 
+            // discountDataGridViewTextBoxColumn
+            // 
+            this.discountDataGridViewTextBoxColumn.DataPropertyName = "discount";
+            this.discountDataGridViewTextBoxColumn.HeaderText = "discount";
+            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
+            // 
             // Main
             // 
             this.ClientSize = new System.Drawing.Size(784, 561);
@@ -517,10 +572,13 @@
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main | Orion";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.Resize += new System.EventHandler(this.Main_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).EndInit();
             this.SalesLC.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transactiondetailBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -561,5 +619,12 @@
         private DevComponents.DotNetBar.LabelX labelX3;
         private DevComponents.DotNetBar.Layout.LayoutControlItem layoutControlItem1;
         private DevComponents.DotNetBar.Layout.LayoutControlItem layoutControlItem2;
+        private oriondbDataSet oriondbDataSet;
+        private System.Windows.Forms.BindingSource transactiondetailBindingSource;
+        private oriondbDataSetTableAdapters.transaction_detailTableAdapter transaction_detailTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transactionidDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productidDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
     }
 }

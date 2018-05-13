@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,9 +15,16 @@ namespace Orion {
         }
 
         private void LoginB_Click(object sender, EventArgs e) {
-            Main main = new Main();
-            main.Show();
-            Close();
+            ProgressCP.Visible = true;
+            new Thread(() => {
+                Thread.CurrentThread.IsBackground = true;
+                Main main = new Main();
+                Invoke((MethodInvoker)delegate { main.Show(); Close(); });
+            }).Start();
+        }
+
+        private void Login_Load(object sender, EventArgs e) {
+            ProgressCP.IsRunning = true;
         }
     }
 }

@@ -29,8 +29,8 @@
             this.PasswordTB = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.SelectedH = new DevComponents.DotNetBar.Validator.Highlighter();
             this.RememberCB = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.ProgressCP = new DevComponents.DotNetBar.Controls.CircularProgress();
             this.reflectionImage1 = new DevComponents.DotNetBar.Controls.ReflectionImage();
+            this.ProgressCP = new DevComponents.DotNetBar.Controls.CircularProgress();
             this.SuspendLayout();
             // 
             // LoginB
@@ -104,21 +104,6 @@
             this.RememberCB.TabIndex = 2;
             this.RememberCB.Text = "Remember Username";
             // 
-            // ProgressCP
-            // 
-            this.ProgressCP.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.ProgressCP.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ProgressCP.Location = new System.Drawing.Point(175, 97);
-            this.ProgressCP.Name = "ProgressCP";
-            this.ProgressCP.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Dot;
-            this.ProgressCP.Size = new System.Drawing.Size(23, 23);
-            this.ProgressCP.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP;
-            this.ProgressCP.TabIndex = 4;
-            this.ProgressCP.TabStop = false;
-            // 
             // reflectionImage1
             // 
             // 
@@ -132,20 +117,35 @@
             this.reflectionImage1.Size = new System.Drawing.Size(58, 108);
             this.reflectionImage1.TabIndex = 5;
             // 
+            // ProgressCP
+            // 
+            // 
+            // 
+            // 
+            this.ProgressCP.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ProgressCP.Location = new System.Drawing.Point(175, 97);
+            this.ProgressCP.Name = "ProgressCP";
+            this.ProgressCP.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut;
+            this.ProgressCP.ProgressColor = System.Drawing.Color.DodgerBlue;
+            this.ProgressCP.Size = new System.Drawing.Size(23, 23);
+            this.ProgressCP.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeXP;
+            this.ProgressCP.TabIndex = 6;
+            this.ProgressCP.TabStop = false;
+            this.ProgressCP.Visible = false;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(291, 132);
+            this.Controls.Add(this.ProgressCP);
             this.Controls.Add(this.reflectionImage1);
             this.Controls.Add(this.RememberCB);
-            this.Controls.Add(this.ProgressCP);
             this.Controls.Add(this.PasswordTB);
             this.Controls.Add(this.UsernameTB);
             this.Controls.Add(this.LoginB);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -153,6 +153,7 @@
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login | Orion";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
 
         }
@@ -163,8 +164,8 @@
         private DevComponents.DotNetBar.Controls.TextBoxX UsernameTB;
         private DevComponents.DotNetBar.Controls.TextBoxX PasswordTB;
         private DevComponents.DotNetBar.Validator.Highlighter SelectedH;
-        private DevComponents.DotNetBar.Controls.CircularProgress ProgressCP;
         private DevComponents.DotNetBar.Controls.CheckBoxX RememberCB;
         private DevComponents.DotNetBar.Controls.ReflectionImage reflectionImage1;
+        private DevComponents.DotNetBar.Controls.CircularProgress ProgressCP;
     }
 }
