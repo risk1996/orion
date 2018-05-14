@@ -13,6 +13,16 @@ namespace Orion {
             InitializeComponent();
         }
 
+        private void Main_Load(object sender, EventArgs e) {
+            //transactionactiveBindingSource.Filter = ;
+            transaction_activeTableAdapter.Fill(oriondbDataSet.transaction_active);
+
+        }
+
+        private void Main_Resize(object sender, EventArgs e) {
+            ItemSearchLCI.Width = SalesLC.Width - AddLCI.Width - 1;
+        }
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
         [System.Runtime.InteropServices.DllImportAttribute("user32.dll")]
@@ -52,15 +62,6 @@ namespace Orion {
 
         private void LocationLI_DoubleClick(object sender, EventArgs e) {
             WindowState = (WindowState == FormWindowState.Maximized) ? FormWindowState.Normal : FormWindowState.Maximized;
-        }
-
-        private void Main_Resize(object sender, EventArgs e) {
-            ItemSearchLCI.Width = SalesLC.Width - AddLCI.Width - 1;
-        }
-
-        private void Main_Load(object sender, EventArgs e) {
-            this.transaction_detailTableAdapter.Fill(this.oriondbDataSet.transaction_detail);
-            
         }
     }
 }

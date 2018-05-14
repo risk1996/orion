@@ -28,15 +28,21 @@ namespace Orion {
         
         private productDataTable tableproduct;
         
-        private transactionDataTable tabletransaction;
-        
         private transaction_detailDataTable tabletransaction_detail;
         
-        private global::System.Data.DataRelation relationtransaction_ibfk_1;
+        private transaction_activeDataTable tabletransaction_active;
+        
+        private transaction_headerDataTable tabletransaction_header;
+        
+        private global::System.Data.DataRelation relationtransaction_detail_ibfk_2;
         
         private global::System.Data.DataRelation relationtransaction_detail_ibfk_1;
         
-        private global::System.Data.DataRelation relationtransaction_detail_ibfk_2;
+        private global::System.Data.DataRelation relationtransaction_active_ibfk_1;
+        
+        private global::System.Data.DataRelation relationtransaction_active_ibfk_2;
+        
+        private global::System.Data.DataRelation relationtransaction_header_ibfk_1;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -72,11 +78,14 @@ namespace Orion {
                 if ((ds.Tables["product"] != null)) {
                     base.Tables.Add(new productDataTable(ds.Tables["product"]));
                 }
-                if ((ds.Tables["transaction"] != null)) {
-                    base.Tables.Add(new transactionDataTable(ds.Tables["transaction"]));
-                }
                 if ((ds.Tables["transaction_detail"] != null)) {
                     base.Tables.Add(new transaction_detailDataTable(ds.Tables["transaction_detail"]));
+                }
+                if ((ds.Tables["transaction_active"] != null)) {
+                    base.Tables.Add(new transaction_activeDataTable(ds.Tables["transaction_active"]));
+                }
+                if ((ds.Tables["transaction_header"] != null)) {
+                    base.Tables.Add(new transaction_headerDataTable(ds.Tables["transaction_header"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -120,9 +129,9 @@ namespace Orion {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public transactionDataTable transaction {
+        public transaction_detailDataTable transaction_detail {
             get {
-                return this.tabletransaction;
+                return this.tabletransaction_detail;
             }
         }
         
@@ -130,9 +139,19 @@ namespace Orion {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public transaction_detailDataTable transaction_detail {
+        public transaction_activeDataTable transaction_active {
             get {
-                return this.tabletransaction_detail;
+                return this.tabletransaction_active;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public transaction_headerDataTable transaction_header {
+            get {
+                return this.tabletransaction_header;
             }
         }
         
@@ -209,11 +228,14 @@ namespace Orion {
                 if ((ds.Tables["product"] != null)) {
                     base.Tables.Add(new productDataTable(ds.Tables["product"]));
                 }
-                if ((ds.Tables["transaction"] != null)) {
-                    base.Tables.Add(new transactionDataTable(ds.Tables["transaction"]));
-                }
                 if ((ds.Tables["transaction_detail"] != null)) {
                     base.Tables.Add(new transaction_detailDataTable(ds.Tables["transaction_detail"]));
+                }
+                if ((ds.Tables["transaction_active"] != null)) {
+                    base.Tables.Add(new transaction_activeDataTable(ds.Tables["transaction_active"]));
+                }
+                if ((ds.Tables["transaction_header"] != null)) {
+                    base.Tables.Add(new transaction_headerDataTable(ds.Tables["transaction_header"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -260,21 +282,29 @@ namespace Orion {
                     this.tableproduct.InitVars();
                 }
             }
-            this.tabletransaction = ((transactionDataTable)(base.Tables["transaction"]));
-            if ((initTable == true)) {
-                if ((this.tabletransaction != null)) {
-                    this.tabletransaction.InitVars();
-                }
-            }
             this.tabletransaction_detail = ((transaction_detailDataTable)(base.Tables["transaction_detail"]));
             if ((initTable == true)) {
                 if ((this.tabletransaction_detail != null)) {
                     this.tabletransaction_detail.InitVars();
                 }
             }
-            this.relationtransaction_ibfk_1 = this.Relations["transaction_ibfk_1"];
-            this.relationtransaction_detail_ibfk_1 = this.Relations["transaction_detail_ibfk_1"];
+            this.tabletransaction_active = ((transaction_activeDataTable)(base.Tables["transaction_active"]));
+            if ((initTable == true)) {
+                if ((this.tabletransaction_active != null)) {
+                    this.tabletransaction_active.InitVars();
+                }
+            }
+            this.tabletransaction_header = ((transaction_headerDataTable)(base.Tables["transaction_header"]));
+            if ((initTable == true)) {
+                if ((this.tabletransaction_header != null)) {
+                    this.tabletransaction_header.InitVars();
+                }
+            }
             this.relationtransaction_detail_ibfk_2 = this.Relations["transaction_detail_ibfk_2"];
+            this.relationtransaction_detail_ibfk_1 = this.Relations["transaction_detail_ibfk_1"];
+            this.relationtransaction_active_ibfk_1 = this.Relations["transaction_active_ibfk_1"];
+            this.relationtransaction_active_ibfk_2 = this.Relations["transaction_active_ibfk_2"];
+            this.relationtransaction_header_ibfk_1 = this.Relations["transaction_header_ibfk_1"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -289,22 +319,32 @@ namespace Orion {
             base.Tables.Add(this.tableemployee);
             this.tableproduct = new productDataTable();
             base.Tables.Add(this.tableproduct);
-            this.tabletransaction = new transactionDataTable();
-            base.Tables.Add(this.tabletransaction);
             this.tabletransaction_detail = new transaction_detailDataTable();
             base.Tables.Add(this.tabletransaction_detail);
-            this.relationtransaction_ibfk_1 = new global::System.Data.DataRelation("transaction_ibfk_1", new global::System.Data.DataColumn[] {
-                        this.tableemployee.employee_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tabletransaction.employee_idColumn}, false);
-            this.Relations.Add(this.relationtransaction_ibfk_1);
-            this.relationtransaction_detail_ibfk_1 = new global::System.Data.DataRelation("transaction_detail_ibfk_1", new global::System.Data.DataColumn[] {
-                        this.tabletransaction.transaction_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tabletransaction_detail.transaction_idColumn}, false);
-            this.Relations.Add(this.relationtransaction_detail_ibfk_1);
+            this.tabletransaction_active = new transaction_activeDataTable();
+            base.Tables.Add(this.tabletransaction_active);
+            this.tabletransaction_header = new transaction_headerDataTable();
+            base.Tables.Add(this.tabletransaction_header);
             this.relationtransaction_detail_ibfk_2 = new global::System.Data.DataRelation("transaction_detail_ibfk_2", new global::System.Data.DataColumn[] {
                         this.tableproduct.product_idColumn}, new global::System.Data.DataColumn[] {
                         this.tabletransaction_detail.product_idColumn}, false);
             this.Relations.Add(this.relationtransaction_detail_ibfk_2);
+            this.relationtransaction_detail_ibfk_1 = new global::System.Data.DataRelation("transaction_detail_ibfk_1", new global::System.Data.DataColumn[] {
+                        this.tabletransaction_header.transaction_idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabletransaction_detail.transaction_idColumn}, false);
+            this.Relations.Add(this.relationtransaction_detail_ibfk_1);
+            this.relationtransaction_active_ibfk_1 = new global::System.Data.DataRelation("transaction_active_ibfk_1", new global::System.Data.DataColumn[] {
+                        this.tableemployee.employee_idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabletransaction_active.employee_idColumn}, false);
+            this.Relations.Add(this.relationtransaction_active_ibfk_1);
+            this.relationtransaction_active_ibfk_2 = new global::System.Data.DataRelation("transaction_active_ibfk_2", new global::System.Data.DataColumn[] {
+                        this.tableproduct.product_idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabletransaction_active.product_idColumn}, false);
+            this.Relations.Add(this.relationtransaction_active_ibfk_2);
+            this.relationtransaction_header_ibfk_1 = new global::System.Data.DataRelation("transaction_header_ibfk_1", new global::System.Data.DataColumn[] {
+                        this.tableemployee.employee_idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabletransaction_header.employee_idColumn}, false);
+            this.Relations.Add(this.relationtransaction_header_ibfk_1);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -321,13 +361,19 @@ namespace Orion {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializetransaction() {
+        private bool ShouldSerializetransaction_detail() {
             return false;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializetransaction_detail() {
+        private bool ShouldSerializetransaction_active() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializetransaction_header() {
             return false;
         }
         
@@ -393,10 +439,13 @@ namespace Orion {
         public delegate void productRowChangeEventHandler(object sender, productRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void transactionRowChangeEventHandler(object sender, transactionRowChangeEvent e);
+        public delegate void transaction_detailRowChangeEventHandler(object sender, transaction_detailRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void transaction_detailRowChangeEventHandler(object sender, transaction_detailRowChangeEvent e);
+        public delegate void transaction_activeRowChangeEventHandler(object sender, transaction_activeRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void transaction_headerRowChangeEventHandler(object sender, transaction_headerRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -1192,297 +1241,6 @@ namespace Orion {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class transactionDataTable : global::System.Data.TypedTableBase<transactionRow> {
-            
-            private global::System.Data.DataColumn columntransaction_id;
-            
-            private global::System.Data.DataColumn columntransaction_time;
-            
-            private global::System.Data.DataColumn columnemployee_id;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionDataTable() {
-                this.TableName = "transaction";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal transactionDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected transactionDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn transaction_idColumn {
-                get {
-                    return this.columntransaction_id;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn transaction_timeColumn {
-                get {
-                    return this.columntransaction_time;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn employee_idColumn {
-                get {
-                    return this.columnemployee_id;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionRow this[int index] {
-                get {
-                    return ((transactionRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event transactionRowChangeEventHandler transactionRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event transactionRowChangeEventHandler transactionRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event transactionRowChangeEventHandler transactionRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event transactionRowChangeEventHandler transactionRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void AddtransactionRow(transactionRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionRow AddtransactionRow(string transaction_id, System.DateTime transaction_time, employeeRow parentemployeeRowBytransaction_ibfk_1) {
-                transactionRow rowtransactionRow = ((transactionRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        transaction_id,
-                        transaction_time,
-                        null};
-                if ((parentemployeeRowBytransaction_ibfk_1 != null)) {
-                    columnValuesArray[2] = parentemployeeRowBytransaction_ibfk_1[0];
-                }
-                rowtransactionRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowtransactionRow);
-                return rowtransactionRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionRow FindBytransaction_id(string transaction_id) {
-                return ((transactionRow)(this.Rows.Find(new object[] {
-                            transaction_id})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                transactionDataTable cln = ((transactionDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new transactionDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal void InitVars() {
-                this.columntransaction_id = base.Columns["transaction_id"];
-                this.columntransaction_time = base.Columns["transaction_time"];
-                this.columnemployee_id = base.Columns["employee_id"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            private void InitClass() {
-                this.columntransaction_id = new global::System.Data.DataColumn("transaction_id", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntransaction_id);
-                this.columntransaction_time = new global::System.Data.DataColumn("transaction_time", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntransaction_time);
-                this.columnemployee_id = new global::System.Data.DataColumn("employee_id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnemployee_id);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columntransaction_id}, true));
-                this.columntransaction_id.AllowDBNull = false;
-                this.columntransaction_id.Unique = true;
-                this.columntransaction_time.AllowDBNull = false;
-                this.columnemployee_id.AllowDBNull = false;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionRow NewtransactionRow() {
-                return ((transactionRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new transactionRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(transactionRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.transactionRowChanged != null)) {
-                    this.transactionRowChanged(this, new transactionRowChangeEvent(((transactionRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.transactionRowChanging != null)) {
-                    this.transactionRowChanging(this, new transactionRowChangeEvent(((transactionRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.transactionRowDeleted != null)) {
-                    this.transactionRowDeleted(this, new transactionRowChangeEvent(((transactionRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.transactionRowDeleting != null)) {
-                    this.transactionRowDeleting(this, new transactionRowChangeEvent(((transactionRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void RemovetransactionRow(transactionRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                oriondbDataSet ds = new oriondbDataSet();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "transactionDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class transaction_detailDataTable : global::System.Data.TypedTableBase<transaction_detailRow> {
             
             private global::System.Data.DataColumn columntransaction_id;
@@ -1595,15 +1353,15 @@ namespace Orion {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transaction_detailRow Addtransaction_detailRow(transactionRow parenttransactionRowBytransaction_detail_ibfk_1, productRow parentproductRowBytransaction_detail_ibfk_2, int quantity, float discount) {
+            public transaction_detailRow Addtransaction_detailRow(transaction_headerRow parenttransaction_headerRowBytransaction_detail_ibfk_1, productRow parentproductRowBytransaction_detail_ibfk_2, int quantity, float discount) {
                 transaction_detailRow rowtransaction_detailRow = ((transaction_detailRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         null,
                         quantity,
                         discount};
-                if ((parenttransactionRowBytransaction_detail_ibfk_1 != null)) {
-                    columnValuesArray[0] = parenttransactionRowBytransaction_detail_ibfk_1[0];
+                if ((parenttransaction_headerRowBytransaction_detail_ibfk_1 != null)) {
+                    columnValuesArray[0] = parenttransaction_headerRowBytransaction_detail_ibfk_1[0];
                 }
                 if ((parentproductRowBytransaction_detail_ibfk_2 != null)) {
                     columnValuesArray[1] = parentproductRowBytransaction_detail_ibfk_2[0];
@@ -1737,6 +1495,611 @@ namespace Orion {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "transaction_detailDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class transaction_activeDataTable : global::System.Data.TypedTableBase<transaction_activeRow> {
+            
+            private global::System.Data.DataColumn columnemployee_id;
+            
+            private global::System.Data.DataColumn columnproduct_id;
+            
+            private global::System.Data.DataColumn columntransaction_qty;
+            
+            private global::System.Data.DataColumn columntransaction_discount;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_activeDataTable() {
+                this.TableName = "transaction_active";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal transaction_activeDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected transaction_activeDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn employee_idColumn {
+                get {
+                    return this.columnemployee_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn product_idColumn {
+                get {
+                    return this.columnproduct_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn transaction_qtyColumn {
+                get {
+                    return this.columntransaction_qty;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn transaction_discountColumn {
+                get {
+                    return this.columntransaction_discount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_activeRow this[int index] {
+                get {
+                    return ((transaction_activeRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event transaction_activeRowChangeEventHandler transaction_activeRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event transaction_activeRowChangeEventHandler transaction_activeRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event transaction_activeRowChangeEventHandler transaction_activeRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event transaction_activeRowChangeEventHandler transaction_activeRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Addtransaction_activeRow(transaction_activeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_activeRow Addtransaction_activeRow(employeeRow parentemployeeRowBytransaction_active_ibfk_1, productRow parentproductRowBytransaction_active_ibfk_2, int transaction_qty, float transaction_discount) {
+                transaction_activeRow rowtransaction_activeRow = ((transaction_activeRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        null,
+                        transaction_qty,
+                        transaction_discount};
+                if ((parentemployeeRowBytransaction_active_ibfk_1 != null)) {
+                    columnValuesArray[0] = parentemployeeRowBytransaction_active_ibfk_1[0];
+                }
+                if ((parentproductRowBytransaction_active_ibfk_2 != null)) {
+                    columnValuesArray[1] = parentproductRowBytransaction_active_ibfk_2[0];
+                }
+                rowtransaction_activeRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowtransaction_activeRow);
+                return rowtransaction_activeRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                transaction_activeDataTable cln = ((transaction_activeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new transaction_activeDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnemployee_id = base.Columns["employee_id"];
+                this.columnproduct_id = base.Columns["product_id"];
+                this.columntransaction_qty = base.Columns["transaction_qty"];
+                this.columntransaction_discount = base.Columns["transaction_discount"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnemployee_id = new global::System.Data.DataColumn("employee_id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnemployee_id);
+                this.columnproduct_id = new global::System.Data.DataColumn("product_id", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnproduct_id);
+                this.columntransaction_qty = new global::System.Data.DataColumn("transaction_qty", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntransaction_qty);
+                this.columntransaction_discount = new global::System.Data.DataColumn("transaction_discount", typeof(float), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntransaction_discount);
+                this.columnemployee_id.AllowDBNull = false;
+                this.columnproduct_id.AllowDBNull = false;
+                this.columntransaction_qty.AllowDBNull = false;
+                this.columntransaction_discount.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_activeRow Newtransaction_activeRow() {
+                return ((transaction_activeRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new transaction_activeRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(transaction_activeRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.transaction_activeRowChanged != null)) {
+                    this.transaction_activeRowChanged(this, new transaction_activeRowChangeEvent(((transaction_activeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.transaction_activeRowChanging != null)) {
+                    this.transaction_activeRowChanging(this, new transaction_activeRowChangeEvent(((transaction_activeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.transaction_activeRowDeleted != null)) {
+                    this.transaction_activeRowDeleted(this, new transaction_activeRowChangeEvent(((transaction_activeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.transaction_activeRowDeleting != null)) {
+                    this.transaction_activeRowDeleting(this, new transaction_activeRowChangeEvent(((transaction_activeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Removetransaction_activeRow(transaction_activeRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                oriondbDataSet ds = new oriondbDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "transaction_activeDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class transaction_headerDataTable : global::System.Data.TypedTableBase<transaction_headerRow> {
+            
+            private global::System.Data.DataColumn columntransaction_id;
+            
+            private global::System.Data.DataColumn columntransaction_timestamp;
+            
+            private global::System.Data.DataColumn columnemployee_id;
+            
+            private global::System.Data.DataColumn columntransaction_method;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerDataTable() {
+                this.TableName = "transaction_header";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal transaction_headerDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected transaction_headerDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn transaction_idColumn {
+                get {
+                    return this.columntransaction_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn transaction_timestampColumn {
+                get {
+                    return this.columntransaction_timestamp;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn employee_idColumn {
+                get {
+                    return this.columnemployee_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn transaction_methodColumn {
+                get {
+                    return this.columntransaction_method;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerRow this[int index] {
+                get {
+                    return ((transaction_headerRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event transaction_headerRowChangeEventHandler transaction_headerRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event transaction_headerRowChangeEventHandler transaction_headerRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event transaction_headerRowChangeEventHandler transaction_headerRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event transaction_headerRowChangeEventHandler transaction_headerRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Addtransaction_headerRow(transaction_headerRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerRow Addtransaction_headerRow(string transaction_id, System.DateTime transaction_timestamp, employeeRow parentemployeeRowBytransaction_header_ibfk_1, string transaction_method) {
+                transaction_headerRow rowtransaction_headerRow = ((transaction_headerRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        transaction_id,
+                        transaction_timestamp,
+                        null,
+                        transaction_method};
+                if ((parentemployeeRowBytransaction_header_ibfk_1 != null)) {
+                    columnValuesArray[2] = parentemployeeRowBytransaction_header_ibfk_1[0];
+                }
+                rowtransaction_headerRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowtransaction_headerRow);
+                return rowtransaction_headerRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerRow FindBytransaction_id(string transaction_id) {
+                return ((transaction_headerRow)(this.Rows.Find(new object[] {
+                            transaction_id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                transaction_headerDataTable cln = ((transaction_headerDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new transaction_headerDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columntransaction_id = base.Columns["transaction_id"];
+                this.columntransaction_timestamp = base.Columns["transaction_timestamp"];
+                this.columnemployee_id = base.Columns["employee_id"];
+                this.columntransaction_method = base.Columns["transaction_method"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columntransaction_id = new global::System.Data.DataColumn("transaction_id", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntransaction_id);
+                this.columntransaction_timestamp = new global::System.Data.DataColumn("transaction_timestamp", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntransaction_timestamp);
+                this.columnemployee_id = new global::System.Data.DataColumn("employee_id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnemployee_id);
+                this.columntransaction_method = new global::System.Data.DataColumn("transaction_method", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntransaction_method);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columntransaction_id}, true));
+                this.columntransaction_id.AllowDBNull = false;
+                this.columntransaction_id.Unique = true;
+                this.columntransaction_timestamp.AllowDBNull = false;
+                this.columnemployee_id.AllowDBNull = false;
+                this.columntransaction_method.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerRow Newtransaction_headerRow() {
+                return ((transaction_headerRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new transaction_headerRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(transaction_headerRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.transaction_headerRowChanged != null)) {
+                    this.transaction_headerRowChanged(this, new transaction_headerRowChangeEvent(((transaction_headerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.transaction_headerRowChanging != null)) {
+                    this.transaction_headerRowChanging(this, new transaction_headerRowChangeEvent(((transaction_headerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.transaction_headerRowDeleted != null)) {
+                    this.transaction_headerRowDeleted(this, new transaction_headerRowChangeEvent(((transaction_headerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.transaction_headerRowDeleting != null)) {
+                    this.transaction_headerRowDeleting(this, new transaction_headerRowChangeEvent(((transaction_headerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Removetransaction_headerRow(transaction_headerRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                oriondbDataSet ds = new oriondbDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "transaction_headerDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -1925,12 +2288,23 @@ namespace Orion {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionRow[] GettransactionRows() {
-                if ((this.Table.ChildRelations["transaction_ibfk_1"] == null)) {
-                    return new transactionRow[0];
+            public transaction_activeRow[] Gettransaction_activeRows() {
+                if ((this.Table.ChildRelations["transaction_active_ibfk_1"] == null)) {
+                    return new transaction_activeRow[0];
                 }
                 else {
-                    return ((transactionRow[])(base.GetChildRows(this.Table.ChildRelations["transaction_ibfk_1"])));
+                    return ((transaction_activeRow[])(base.GetChildRows(this.Table.ChildRelations["transaction_active_ibfk_1"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerRow[] Gettransaction_headerRows() {
+                if ((this.Table.ChildRelations["transaction_header_ibfk_1"] == null)) {
+                    return new transaction_headerRow[0];
+                }
+                else {
+                    return ((transaction_headerRow[])(base.GetChildRows(this.Table.ChildRelations["transaction_header_ibfk_1"])));
                 }
             }
         }
@@ -2047,74 +2421,15 @@ namespace Orion {
                     return ((transaction_detailRow[])(base.GetChildRows(this.Table.ChildRelations["transaction_detail_ibfk_2"])));
                 }
             }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class transactionRow : global::System.Data.DataRow {
-            
-            private transactionDataTable tabletransaction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal transactionRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tabletransaction = ((transactionDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string transaction_id {
-                get {
-                    return ((string)(this[this.tabletransaction.transaction_idColumn]));
-                }
-                set {
-                    this[this.tabletransaction.transaction_idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public System.DateTime transaction_time {
-                get {
-                    return ((global::System.DateTime)(this[this.tabletransaction.transaction_timeColumn]));
-                }
-                set {
-                    this[this.tabletransaction.transaction_timeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int employee_id {
-                get {
-                    return ((int)(this[this.tabletransaction.employee_idColumn]));
-                }
-                set {
-                    this[this.tabletransaction.employee_idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public employeeRow employeeRow {
-                get {
-                    return ((employeeRow)(this.GetParentRow(this.Table.ParentRelations["transaction_ibfk_1"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["transaction_ibfk_1"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transaction_detailRow[] Gettransaction_detailRows() {
-                if ((this.Table.ChildRelations["transaction_detail_ibfk_1"] == null)) {
-                    return new transaction_detailRow[0];
+            public transaction_activeRow[] Gettransaction_activeRows() {
+                if ((this.Table.ChildRelations["transaction_active_ibfk_2"] == null)) {
+                    return new transaction_activeRow[0];
                 }
                 else {
-                    return ((transaction_detailRow[])(base.GetChildRows(this.Table.ChildRelations["transaction_detail_ibfk_1"])));
+                    return ((transaction_activeRow[])(base.GetChildRows(this.Table.ChildRelations["transaction_active_ibfk_2"])));
                 }
             }
         }
@@ -2179,12 +2494,93 @@ namespace Orion {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionRow transactionRow {
+            public productRow productRow {
                 get {
-                    return ((transactionRow)(this.GetParentRow(this.Table.ParentRelations["transaction_detail_ibfk_1"])));
+                    return ((productRow)(this.GetParentRow(this.Table.ParentRelations["transaction_detail_ibfk_2"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["transaction_detail_ibfk_2"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerRow transaction_headerRow {
+                get {
+                    return ((transaction_headerRow)(this.GetParentRow(this.Table.ParentRelations["transaction_detail_ibfk_1"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["transaction_detail_ibfk_1"]);
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class transaction_activeRow : global::System.Data.DataRow {
+            
+            private transaction_activeDataTable tabletransaction_active;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal transaction_activeRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tabletransaction_active = ((transaction_activeDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int employee_id {
+                get {
+                    return ((int)(this[this.tabletransaction_active.employee_idColumn]));
+                }
+                set {
+                    this[this.tabletransaction_active.employee_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string product_id {
+                get {
+                    return ((string)(this[this.tabletransaction_active.product_idColumn]));
+                }
+                set {
+                    this[this.tabletransaction_active.product_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int transaction_qty {
+                get {
+                    return ((int)(this[this.tabletransaction_active.transaction_qtyColumn]));
+                }
+                set {
+                    this[this.tabletransaction_active.transaction_qtyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public float transaction_discount {
+                get {
+                    return ((float)(this[this.tabletransaction_active.transaction_discountColumn]));
+                }
+                set {
+                    this[this.tabletransaction_active.transaction_discountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public employeeRow employeeRow {
+                get {
+                    return ((employeeRow)(this.GetParentRow(this.Table.ParentRelations["transaction_active_ibfk_1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["transaction_active_ibfk_1"]);
                 }
             }
             
@@ -2192,10 +2588,91 @@ namespace Orion {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public productRow productRow {
                 get {
-                    return ((productRow)(this.GetParentRow(this.Table.ParentRelations["transaction_detail_ibfk_2"])));
+                    return ((productRow)(this.GetParentRow(this.Table.ParentRelations["transaction_active_ibfk_2"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["transaction_detail_ibfk_2"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["transaction_active_ibfk_2"]);
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class transaction_headerRow : global::System.Data.DataRow {
+            
+            private transaction_headerDataTable tabletransaction_header;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal transaction_headerRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tabletransaction_header = ((transaction_headerDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string transaction_id {
+                get {
+                    return ((string)(this[this.tabletransaction_header.transaction_idColumn]));
+                }
+                set {
+                    this[this.tabletransaction_header.transaction_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public System.DateTime transaction_timestamp {
+                get {
+                    return ((global::System.DateTime)(this[this.tabletransaction_header.transaction_timestampColumn]));
+                }
+                set {
+                    this[this.tabletransaction_header.transaction_timestampColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int employee_id {
+                get {
+                    return ((int)(this[this.tabletransaction_header.employee_idColumn]));
+                }
+                set {
+                    this[this.tabletransaction_header.employee_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string transaction_method {
+                get {
+                    return ((string)(this[this.tabletransaction_header.transaction_methodColumn]));
+                }
+                set {
+                    this[this.tabletransaction_header.transaction_methodColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public employeeRow employeeRow {
+                get {
+                    return ((employeeRow)(this.GetParentRow(this.Table.ParentRelations["transaction_header_ibfk_1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["transaction_header_ibfk_1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_detailRow[] Gettransaction_detailRows() {
+                if ((this.Table.ChildRelations["transaction_detail_ibfk_1"] == null)) {
+                    return new transaction_detailRow[0];
+                }
+                else {
+                    return ((transaction_detailRow[])(base.GetChildRows(this.Table.ChildRelations["transaction_detail_ibfk_1"])));
                 }
             }
         }
@@ -2272,22 +2749,22 @@ namespace Orion {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class transactionRowChangeEvent : global::System.EventArgs {
+        public class transaction_detailRowChangeEvent : global::System.EventArgs {
             
-            private transactionRow eventRow;
+            private transaction_detailRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionRowChangeEvent(transactionRow row, global::System.Data.DataRowAction action) {
+            public transaction_detailRowChangeEvent(transaction_detailRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transactionRow Row {
+            public transaction_detailRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -2306,22 +2783,56 @@ namespace Orion {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class transaction_detailRowChangeEvent : global::System.EventArgs {
+        public class transaction_activeRowChangeEvent : global::System.EventArgs {
             
-            private transaction_detailRow eventRow;
+            private transaction_activeRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transaction_detailRowChangeEvent(transaction_detailRow row, global::System.Data.DataRowAction action) {
+            public transaction_activeRowChangeEvent(transaction_activeRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public transaction_detailRow Row {
+            public transaction_activeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class transaction_headerRowChangeEvent : global::System.EventArgs {
+            
+            private transaction_headerRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerRowChangeEvent(transaction_headerRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public transaction_headerRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3891,408 +4402,6 @@ namespace Orion.oriondbDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class transactionTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::Devart.Data.MySql.MySqlDataAdapter _adapter;
-        
-        private global::Devart.Data.MySql.MySqlConnection _connection;
-        
-        private global::System.Data.Common.DbTransaction _transaction;
-        
-        private global::Devart.Data.MySql.MySqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public transactionTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected internal global::Devart.Data.MySql.MySqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        internal global::Devart.Data.MySql.MySqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::Devart.Data.MySql.MySqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        internal global::System.Data.Common.DbTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected global::Devart.Data.MySql.MySqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::Devart.Data.MySql.MySqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "transaction";
-            tableMapping.ColumnMappings.Add("transaction_id", "transaction_id");
-            tableMapping.ColumnMappings.Add("transaction_time", "transaction_time");
-            tableMapping.ColumnMappings.Add("employee_id", "employee_id");
-            this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.DeleteCommand = new global::Devart.Data.MySql.MySqlCommand();
-            this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `oriondb`.`transaction` WHERE ((`transaction_id` = :Original_transact" +
-                "ion_id) AND (`transaction_time` = :Original_transaction_time) AND (`employee_id`" +
-                " = :Original_employee_id))";
-            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            global::Devart.Data.MySql.MySqlParameter param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "Original_transaction_id";
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
-            param.IsNullable = true;
-            param.SourceColumn = "transaction_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "Original_transaction_time";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.Date;
-            param.IsNullable = true;
-            param.SourceColumn = "transaction_time";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "Original_employee_id";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
-            param.IsNullable = true;
-            param.SourceColumn = "employee_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            this._adapter.InsertCommand = new global::Devart.Data.MySql.MySqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `oriondb`.`transaction` (`transaction_id`, `transaction_time`, `emplo" +
-                "yee_id`) VALUES (:transaction_id, :transaction_time, :employee_id)";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "transaction_id";
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
-            param.IsNullable = true;
-            param.SourceColumn = "transaction_id";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "transaction_time";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.Date;
-            param.IsNullable = true;
-            param.SourceColumn = "transaction_time";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "employee_id";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
-            param.IsNullable = true;
-            param.SourceColumn = "employee_id";
-            this._adapter.InsertCommand.Parameters.Add(param);
-            this._adapter.UpdateCommand = new global::Devart.Data.MySql.MySqlCommand();
-            this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE `oriondb`.`transaction` SET `transaction_id` = :transaction_id, `transaction_time` = :transaction_time, `employee_id` = :employee_id WHERE ((`transaction_id` = :Original_transaction_id) AND (`transaction_time` = :Original_transaction_time) AND (`employee_id` = :Original_employee_id))";
-            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "transaction_id";
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
-            param.IsNullable = true;
-            param.SourceColumn = "transaction_id";
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "transaction_time";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.Date;
-            param.IsNullable = true;
-            param.SourceColumn = "transaction_time";
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "employee_id";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
-            param.IsNullable = true;
-            param.SourceColumn = "employee_id";
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "Original_transaction_id";
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
-            param.IsNullable = true;
-            param.SourceColumn = "transaction_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "Original_transaction_time";
-            param.DbType = global::System.Data.DbType.Date;
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.Date;
-            param.IsNullable = true;
-            param.SourceColumn = "transaction_time";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::Devart.Data.MySql.MySqlParameter();
-            param.ParameterName = "Original_employee_id";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
-            param.IsNullable = true;
-            param.SourceColumn = "employee_id";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::Devart.Data.MySql.MySqlConnection();
-            this._connection.ConnectionString = global::Orion.Properties.Settings.Default.oriondbConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::Devart.Data.MySql.MySqlCommand[1];
-            this._commandCollection[0] = new global::Devart.Data.MySql.MySqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT transaction_id, transaction_time, employee_id FROM oriondb.transaction";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(oriondbDataSet.transactionDataTable dataTable) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual oriondbDataSet.transactionDataTable GetData() {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            oriondbDataSet.transactionDataTable dataTable = new oriondbDataSet.transactionDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(oriondbDataSet.transactionDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(oriondbDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "transaction");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(string Original_transaction_id, System.DateTime Original_transaction_time, int Original_employee_id) {
-            if ((Original_transaction_id == null)) {
-                throw new global::System.ArgumentNullException("Original_transaction_id");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[0].Value = ((string)(Original_transaction_id));
-            }
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_transaction_time));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_employee_id));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string transaction_id, System.DateTime transaction_time, int employee_id) {
-            if ((transaction_id == null)) {
-                throw new global::System.ArgumentNullException("transaction_id");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(transaction_id));
-            }
-            this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(transaction_time));
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(employee_id));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string transaction_id, System.DateTime transaction_time, int employee_id, string Original_transaction_id, System.DateTime Original_transaction_time, int Original_employee_id) {
-            if ((transaction_id == null)) {
-                throw new global::System.ArgumentNullException("transaction_id");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(transaction_id));
-            }
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(transaction_time));
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(employee_id));
-            if ((Original_transaction_id == null)) {
-                throw new global::System.ArgumentNullException("Original_transaction_id");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_transaction_id));
-            }
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((System.DateTime)(Original_transaction_time));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_employee_id));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(System.DateTime transaction_time, int employee_id, string Original_transaction_id, System.DateTime Original_transaction_time, int Original_employee_id) {
-            return this.Update(Original_transaction_id, transaction_time, employee_id, Original_transaction_id, Original_transaction_time, Original_employee_id);
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
     public partial class transaction_detailTableAdapter : global::System.ComponentModel.Component {
         
         private global::Devart.Data.MySql.MySqlDataAdapter _adapter;
@@ -4551,6 +4660,722 @@ namespace Orion.oriondbDataSetTableAdapters {
     }
     
     /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class transaction_activeTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::Devart.Data.MySql.MySqlDataAdapter _adapter;
+        
+        private global::Devart.Data.MySql.MySqlConnection _connection;
+        
+        private global::System.Data.Common.DbTransaction _transaction;
+        
+        private global::Devart.Data.MySql.MySqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public transaction_activeTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected internal global::Devart.Data.MySql.MySqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::Devart.Data.MySql.MySqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::Devart.Data.MySql.MySqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::System.Data.Common.DbTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected global::Devart.Data.MySql.MySqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::Devart.Data.MySql.MySqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "transaction_active";
+            tableMapping.ColumnMappings.Add("employee_id", "employee_id");
+            tableMapping.ColumnMappings.Add("product_id", "product_id");
+            tableMapping.ColumnMappings.Add("transaction_qty", "transaction_qty");
+            tableMapping.ColumnMappings.Add("transaction_discount", "transaction_discount");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.InsertCommand = new global::Devart.Data.MySql.MySqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `oriondb`.`transaction_active` (`employee_id`, `product_id`, `transac" +
+                "tion_qty`, `transaction_discount`) VALUES (:employee_id, :product_id, :transacti" +
+                "on_qty, :transaction_discount)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            global::Devart.Data.MySql.MySqlParameter param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "employee_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
+            param.IsNullable = true;
+            param.SourceColumn = "employee_id";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "product_id";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "product_id";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "transaction_qty";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_qty";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "transaction_discount";
+            param.DbType = global::System.Data.DbType.Single;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.Float;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_discount";
+            this._adapter.InsertCommand.Parameters.Add(param);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::Devart.Data.MySql.MySqlConnection();
+            this._connection.ConnectionString = global::Orion.Properties.Settings.Default.oriondbConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::Devart.Data.MySql.MySqlCommand[1];
+            this._commandCollection[0] = new global::Devart.Data.MySql.MySqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT employee_id, product_id, transaction_qty, transaction_discount FROM oriond" +
+                "b.transaction_active";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(oriondbDataSet.transaction_activeDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual oriondbDataSet.transaction_activeDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            oriondbDataSet.transaction_activeDataTable dataTable = new oriondbDataSet.transaction_activeDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(oriondbDataSet.transaction_activeDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(oriondbDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "transaction_active");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(int employee_id, string product_id, int transaction_qty, float transaction_discount) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(employee_id));
+            if ((product_id == null)) {
+                throw new global::System.ArgumentNullException("product_id");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(product_id));
+            }
+            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(transaction_qty));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((float)(transaction_discount));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class transaction_headerTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::Devart.Data.MySql.MySqlDataAdapter _adapter;
+        
+        private global::Devart.Data.MySql.MySqlConnection _connection;
+        
+        private global::System.Data.Common.DbTransaction _transaction;
+        
+        private global::Devart.Data.MySql.MySqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public transaction_headerTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected internal global::Devart.Data.MySql.MySqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::Devart.Data.MySql.MySqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::Devart.Data.MySql.MySqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::System.Data.Common.DbTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected global::Devart.Data.MySql.MySqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::Devart.Data.MySql.MySqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "transaction_header";
+            tableMapping.ColumnMappings.Add("transaction_id", "transaction_id");
+            tableMapping.ColumnMappings.Add("transaction_timestamp", "transaction_timestamp");
+            tableMapping.ColumnMappings.Add("employee_id", "employee_id");
+            tableMapping.ColumnMappings.Add("transaction_method", "transaction_method");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::Devart.Data.MySql.MySqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `oriondb`.`transaction_header` WHERE ((`transaction_id` = :Original_transaction_id) AND (`transaction_timestamp` = :Original_transaction_timestamp) AND (`employee_id` = :Original_employee_id) AND (`transaction_method` = :Original_transaction_method))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            global::Devart.Data.MySql.MySqlParameter param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "Original_transaction_id";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "Original_transaction_timestamp";
+            param.DbType = global::System.Data.DbType.DateTime;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.TimeStamp;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_timestamp";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "Original_employee_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
+            param.IsNullable = true;
+            param.SourceColumn = "employee_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "Original_transaction_method";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_method";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            this._adapter.InsertCommand = new global::Devart.Data.MySql.MySqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `oriondb`.`transaction_header` (`transaction_id`, `transaction_timest" +
+                "amp`, `employee_id`, `transaction_method`) VALUES (:transaction_id, :transaction" +
+                "_timestamp, :employee_id, :transaction_method)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "transaction_id";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_id";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "transaction_timestamp";
+            param.DbType = global::System.Data.DbType.DateTime;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.TimeStamp;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_timestamp";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "employee_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
+            param.IsNullable = true;
+            param.SourceColumn = "employee_id";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "transaction_method";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_method";
+            this._adapter.InsertCommand.Parameters.Add(param);
+            this._adapter.UpdateCommand = new global::Devart.Data.MySql.MySqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE `oriondb`.`transaction_header` SET `transaction_id` = :transaction_id, `transaction_timestamp` = :transaction_timestamp, `employee_id` = :employee_id, `transaction_method` = :transaction_method WHERE ((`transaction_id` = :Original_transaction_id) AND (`transaction_timestamp` = :Original_transaction_timestamp) AND (`employee_id` = :Original_employee_id) AND (`transaction_method` = :Original_transaction_method))";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "transaction_id";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_id";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "transaction_timestamp";
+            param.DbType = global::System.Data.DbType.DateTime;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.TimeStamp;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_timestamp";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "employee_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
+            param.IsNullable = true;
+            param.SourceColumn = "employee_id";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "transaction_method";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_method";
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "Original_transaction_id";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "Original_transaction_timestamp";
+            param.DbType = global::System.Data.DbType.DateTime;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.TimeStamp;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_timestamp";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "Original_employee_id";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.Int;
+            param.IsNullable = true;
+            param.SourceColumn = "employee_id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::Devart.Data.MySql.MySqlParameter();
+            param.ParameterName = "Original_transaction_method";
+            param.MySqlType = global::Devart.Data.MySql.MySqlType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "transaction_method";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::Devart.Data.MySql.MySqlConnection();
+            this._connection.ConnectionString = global::Orion.Properties.Settings.Default.oriondbConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::Devart.Data.MySql.MySqlCommand[1];
+            this._commandCollection[0] = new global::Devart.Data.MySql.MySqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT transaction_id, transaction_timestamp, employee_id, transaction_method FRO" +
+                "M oriondb.transaction_header";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(oriondbDataSet.transaction_headerDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual oriondbDataSet.transaction_headerDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            oriondbDataSet.transaction_headerDataTable dataTable = new oriondbDataSet.transaction_headerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(oriondbDataSet.transaction_headerDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(oriondbDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "transaction_header");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(string Original_transaction_id, System.DateTime Original_transaction_timestamp, int Original_employee_id, string Original_transaction_method) {
+            if ((Original_transaction_id == null)) {
+                throw new global::System.ArgumentNullException("Original_transaction_id");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[0].Value = ((string)(Original_transaction_id));
+            }
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_transaction_timestamp));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_employee_id));
+            if ((Original_transaction_method == null)) {
+                throw new global::System.ArgumentNullException("Original_transaction_method");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_transaction_method));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(string transaction_id, System.DateTime transaction_timestamp, int employee_id, string transaction_method) {
+            if ((transaction_id == null)) {
+                throw new global::System.ArgumentNullException("transaction_id");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(transaction_id));
+            }
+            this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(transaction_timestamp));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(employee_id));
+            if ((transaction_method == null)) {
+                throw new global::System.ArgumentNullException("transaction_method");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(transaction_method));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string transaction_id, System.DateTime transaction_timestamp, int employee_id, string transaction_method, string Original_transaction_id, System.DateTime Original_transaction_timestamp, int Original_employee_id, string Original_transaction_method) {
+            if ((transaction_id == null)) {
+                throw new global::System.ArgumentNullException("transaction_id");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(transaction_id));
+            }
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(transaction_timestamp));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(employee_id));
+            if ((transaction_method == null)) {
+                throw new global::System.ArgumentNullException("transaction_method");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(transaction_method));
+            }
+            if ((Original_transaction_id == null)) {
+                throw new global::System.ArgumentNullException("Original_transaction_id");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_transaction_id));
+            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTime)(Original_transaction_timestamp));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_employee_id));
+            if ((Original_transaction_method == null)) {
+                throw new global::System.ArgumentNullException("Original_transaction_method");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_transaction_method));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(System.DateTime transaction_timestamp, int employee_id, string transaction_method, string Original_transaction_id, System.DateTime Original_transaction_timestamp, int Original_employee_id, string Original_transaction_method) {
+            return this.Update(Original_transaction_id, transaction_timestamp, employee_id, transaction_method, Original_transaction_id, Original_transaction_timestamp, Original_employee_id, Original_transaction_method);
+        }
+    }
+    
+    /// <summary>
     ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
     ///</summary>
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4566,9 +5391,11 @@ namespace Orion.oriondbDataSetTableAdapters {
         
         private productTableAdapter _productTableAdapter;
         
-        private transactionTableAdapter _transactionTableAdapter;
-        
         private transaction_detailTableAdapter _transaction_detailTableAdapter;
+        
+        private transaction_activeTableAdapter _transaction_activeTableAdapter;
+        
+        private transaction_headerTableAdapter _transaction_headerTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -4618,12 +5445,12 @@ namespace Orion.oriondbDataSetTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public transactionTableAdapter transactionTableAdapter {
+        public transaction_detailTableAdapter transaction_detailTableAdapter {
             get {
-                return this._transactionTableAdapter;
+                return this._transaction_detailTableAdapter;
             }
             set {
-                this._transactionTableAdapter = value;
+                this._transaction_detailTableAdapter = value;
             }
         }
         
@@ -4632,12 +5459,26 @@ namespace Orion.oriondbDataSetTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public transaction_detailTableAdapter transaction_detailTableAdapter {
+        public transaction_activeTableAdapter transaction_activeTableAdapter {
             get {
-                return this._transaction_detailTableAdapter;
+                return this._transaction_activeTableAdapter;
             }
             set {
-                this._transaction_detailTableAdapter = value;
+                this._transaction_activeTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public transaction_headerTableAdapter transaction_headerTableAdapter {
+            get {
+                return this._transaction_headerTableAdapter;
+            }
+            set {
+                this._transaction_headerTableAdapter = value;
             }
         }
         
@@ -4668,13 +5509,17 @@ namespace Orion.oriondbDataSetTableAdapters {
                             && (this._productTableAdapter.Connection != null))) {
                     return this._productTableAdapter.Connection;
                 }
-                if (((this._transactionTableAdapter != null) 
-                            && (this._transactionTableAdapter.Connection != null))) {
-                    return this._transactionTableAdapter.Connection;
-                }
                 if (((this._transaction_detailTableAdapter != null) 
                             && (this._transaction_detailTableAdapter.Connection != null))) {
                     return this._transaction_detailTableAdapter.Connection;
+                }
+                if (((this._transaction_activeTableAdapter != null) 
+                            && (this._transaction_activeTableAdapter.Connection != null))) {
+                    return this._transaction_activeTableAdapter.Connection;
+                }
+                if (((this._transaction_headerTableAdapter != null) 
+                            && (this._transaction_headerTableAdapter.Connection != null))) {
+                    return this._transaction_headerTableAdapter.Connection;
                 }
                 return null;
             }
@@ -4695,10 +5540,13 @@ namespace Orion.oriondbDataSetTableAdapters {
                 if ((this._productTableAdapter != null)) {
                     count = (count + 1);
                 }
-                if ((this._transactionTableAdapter != null)) {
+                if ((this._transaction_detailTableAdapter != null)) {
                     count = (count + 1);
                 }
-                if ((this._transaction_detailTableAdapter != null)) {
+                if ((this._transaction_activeTableAdapter != null)) {
+                    count = (count + 1);
+                }
+                if ((this._transaction_headerTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -4730,12 +5578,12 @@ namespace Orion.oriondbDataSetTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._transactionTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.transaction.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._transaction_headerTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.transaction_header.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._transactionTableAdapter.Update(updatedRows));
+                    result = (result + this._transaction_headerTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -4745,6 +5593,15 @@ namespace Orion.oriondbDataSetTableAdapters {
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._transaction_detailTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._transaction_activeTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.transaction_active.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._transaction_activeTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -4774,11 +5631,11 @@ namespace Orion.oriondbDataSetTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._transactionTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.transaction.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._transaction_headerTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.transaction_header.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._transactionTableAdapter.Update(addedRows));
+                    result = (result + this._transaction_headerTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -4787,6 +5644,14 @@ namespace Orion.oriondbDataSetTableAdapters {
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._transaction_detailTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._transaction_activeTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.transaction_active.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._transaction_activeTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -4800,6 +5665,14 @@ namespace Orion.oriondbDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateDeletedRows(oriondbDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
+            if ((this._transaction_activeTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.transaction_active.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._transaction_activeTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._transaction_detailTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.transaction_detail.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -4808,11 +5681,11 @@ namespace Orion.oriondbDataSetTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._transactionTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.transaction.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._transaction_headerTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.transaction_header.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._transactionTableAdapter.Update(deletedRows));
+                    result = (result + this._transaction_headerTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -4881,13 +5754,18 @@ namespace Orion.oriondbDataSetTableAdapters {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
-            if (((this._transactionTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._transactionTableAdapter.Connection) == false))) {
+            if (((this._transaction_detailTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._transaction_detailTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
-            if (((this._transaction_detailTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._transaction_detailTableAdapter.Connection) == false))) {
+            if (((this._transaction_activeTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._transaction_activeTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
+                        "tring.");
+            }
+            if (((this._transaction_headerTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._transaction_headerTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -4941,15 +5819,6 @@ namespace Orion.oriondbDataSetTableAdapters {
                         adaptersWithAcceptChangesDuringUpdate.Add(this._productTableAdapter.Adapter);
                     }
                 }
-                if ((this._transactionTableAdapter != null)) {
-                    revertConnections.Add(this._transactionTableAdapter, this._transactionTableAdapter.Connection);
-                    this._transactionTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(workConnection));
-                    this._transactionTableAdapter.Transaction = ((global::System.Data.Common.DbTransaction)(workTransaction));
-                    if (this._transactionTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._transactionTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._transactionTableAdapter.Adapter);
-                    }
-                }
                 if ((this._transaction_detailTableAdapter != null)) {
                     revertConnections.Add(this._transaction_detailTableAdapter, this._transaction_detailTableAdapter.Connection);
                     this._transaction_detailTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(workConnection));
@@ -4957,6 +5826,24 @@ namespace Orion.oriondbDataSetTableAdapters {
                     if (this._transaction_detailTableAdapter.Adapter.AcceptChangesDuringUpdate) {
                         this._transaction_detailTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
                         adaptersWithAcceptChangesDuringUpdate.Add(this._transaction_detailTableAdapter.Adapter);
+                    }
+                }
+                if ((this._transaction_activeTableAdapter != null)) {
+                    revertConnections.Add(this._transaction_activeTableAdapter, this._transaction_activeTableAdapter.Connection);
+                    this._transaction_activeTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(workConnection));
+                    this._transaction_activeTableAdapter.Transaction = ((global::System.Data.Common.DbTransaction)(workTransaction));
+                    if (this._transaction_activeTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._transaction_activeTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._transaction_activeTableAdapter.Adapter);
+                    }
+                }
+                if ((this._transaction_headerTableAdapter != null)) {
+                    revertConnections.Add(this._transaction_headerTableAdapter, this._transaction_headerTableAdapter.Connection);
+                    this._transaction_headerTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(workConnection));
+                    this._transaction_headerTableAdapter.Transaction = ((global::System.Data.Common.DbTransaction)(workTransaction));
+                    if (this._transaction_headerTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._transaction_headerTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._transaction_headerTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -5025,13 +5912,17 @@ namespace Orion.oriondbDataSetTableAdapters {
                     this._productTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(revertConnections[this._productTableAdapter]));
                     this._productTableAdapter.Transaction = null;
                 }
-                if ((this._transactionTableAdapter != null)) {
-                    this._transactionTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(revertConnections[this._transactionTableAdapter]));
-                    this._transactionTableAdapter.Transaction = null;
-                }
                 if ((this._transaction_detailTableAdapter != null)) {
                     this._transaction_detailTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(revertConnections[this._transaction_detailTableAdapter]));
                     this._transaction_detailTableAdapter.Transaction = null;
+                }
+                if ((this._transaction_activeTableAdapter != null)) {
+                    this._transaction_activeTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(revertConnections[this._transaction_activeTableAdapter]));
+                    this._transaction_activeTableAdapter.Transaction = null;
+                }
+                if ((this._transaction_headerTableAdapter != null)) {
+                    this._transaction_headerTableAdapter.Connection = ((global::Devart.Data.MySql.MySqlConnection)(revertConnections[this._transaction_headerTableAdapter]));
+                    this._transaction_headerTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

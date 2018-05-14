@@ -31,6 +31,9 @@
             this.RememberCB = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.reflectionImage1 = new DevComponents.DotNetBar.Controls.ReflectionImage();
             this.ProgressCP = new DevComponents.DotNetBar.Controls.CircularProgress();
+            this.oriondbDataSet = new Orion.oriondbDataSet();
+            this.employeeTableAdapter = new Orion.oriondbDataSetTableAdapters.employeeTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // LoginB
@@ -63,6 +66,7 @@
             this.UsernameTB.Size = new System.Drawing.Size(203, 22);
             this.UsernameTB.TabIndex = 0;
             this.UsernameTB.WatermarkText = "Username";
+            this.UsernameTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UsernameTB_KeyDown);
             // 
             // PasswordTB
             // 
@@ -82,6 +86,7 @@
             this.PasswordTB.Size = new System.Drawing.Size(203, 22);
             this.PasswordTB.TabIndex = 1;
             this.PasswordTB.WatermarkText = "Password";
+            this.PasswordTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PasswordTB_KeyDown);
             // 
             // SelectedH
             // 
@@ -133,6 +138,15 @@
             this.ProgressCP.TabStop = false;
             this.ProgressCP.Visible = false;
             // 
+            // oriondbDataSet
+            // 
+            this.oriondbDataSet.DataSetName = "oriondbDataSet";
+            this.oriondbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // employeeTableAdapter
+            // 
+            this.employeeTableAdapter.ClearBeforeFill = true;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -153,7 +167,9 @@
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login | Orion";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
             this.Load += new System.EventHandler(this.Login_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -167,5 +183,7 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX RememberCB;
         private DevComponents.DotNetBar.Controls.ReflectionImage reflectionImage1;
         private DevComponents.DotNetBar.Controls.CircularProgress ProgressCP;
+        private oriondbDataSet oriondbDataSet;
+        private oriondbDataSetTableAdapters.employeeTableAdapter employeeTableAdapter;
     }
 }

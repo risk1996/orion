@@ -63,17 +63,17 @@
             this.layoutControlItem2 = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.TotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.oriondbDataSet = new Orion.oriondbDataSet();
-            this.transactiondetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.transaction_detailTableAdapter = new Orion.oriondbDataSetTableAdapters.transaction_detailTableAdapter();
-            this.transactionidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transactionactiveBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.transaction_activeTableAdapter = new Orion.oriondbDataSetTableAdapters.transaction_activeTableAdapter();
+            this.employeeidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.discountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transactionqtyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transactiondiscountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             this.SalesLC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transactiondetailBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transactionactiveBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuMTP
@@ -369,11 +369,11 @@
             this.ItemsDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.ItemsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ItemsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.transactionidDataGridViewTextBoxColumn,
+            this.employeeidDataGridViewTextBoxColumn,
             this.productidDataGridViewTextBoxColumn,
-            this.quantityDataGridViewTextBoxColumn,
-            this.discountDataGridViewTextBoxColumn});
-            this.ItemsDGV.DataSource = this.transactiondetailBindingSource;
+            this.transactionqtyDataGridViewTextBoxColumn,
+            this.transactiondiscountDataGridViewTextBoxColumn});
+            this.ItemsDGV.DataSource = this.transactionactiveBindingSource;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -527,20 +527,20 @@
             this.oriondbDataSet.DataSetName = "oriondbDataSet";
             this.oriondbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // transactiondetailBindingSource
+            // transactionactiveBindingSource
             // 
-            this.transactiondetailBindingSource.DataMember = "transaction_detail";
-            this.transactiondetailBindingSource.DataSource = this.oriondbDataSet;
+            this.transactionactiveBindingSource.DataMember = "transaction_active";
+            this.transactionactiveBindingSource.DataSource = this.oriondbDataSet;
             // 
-            // transaction_detailTableAdapter
+            // transaction_activeTableAdapter
             // 
-            this.transaction_detailTableAdapter.ClearBeforeFill = true;
+            this.transaction_activeTableAdapter.ClearBeforeFill = true;
             // 
-            // transactionidDataGridViewTextBoxColumn
+            // employeeidDataGridViewTextBoxColumn
             // 
-            this.transactionidDataGridViewTextBoxColumn.DataPropertyName = "transaction_id";
-            this.transactionidDataGridViewTextBoxColumn.HeaderText = "transaction_id";
-            this.transactionidDataGridViewTextBoxColumn.Name = "transactionidDataGridViewTextBoxColumn";
+            this.employeeidDataGridViewTextBoxColumn.DataPropertyName = "employee_id";
+            this.employeeidDataGridViewTextBoxColumn.HeaderText = "employee_id";
+            this.employeeidDataGridViewTextBoxColumn.Name = "employeeidDataGridViewTextBoxColumn";
             // 
             // productidDataGridViewTextBoxColumn
             // 
@@ -548,17 +548,17 @@
             this.productidDataGridViewTextBoxColumn.HeaderText = "product_id";
             this.productidDataGridViewTextBoxColumn.Name = "productidDataGridViewTextBoxColumn";
             // 
-            // quantityDataGridViewTextBoxColumn
+            // transactionqtyDataGridViewTextBoxColumn
             // 
-            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "quantity";
-            this.quantityDataGridViewTextBoxColumn.HeaderText = "quantity";
-            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            this.transactionqtyDataGridViewTextBoxColumn.DataPropertyName = "transaction_qty";
+            this.transactionqtyDataGridViewTextBoxColumn.HeaderText = "transaction_qty";
+            this.transactionqtyDataGridViewTextBoxColumn.Name = "transactionqtyDataGridViewTextBoxColumn";
             // 
-            // discountDataGridViewTextBoxColumn
+            // transactiondiscountDataGridViewTextBoxColumn
             // 
-            this.discountDataGridViewTextBoxColumn.DataPropertyName = "discount";
-            this.discountDataGridViewTextBoxColumn.HeaderText = "discount";
-            this.discountDataGridViewTextBoxColumn.Name = "discountDataGridViewTextBoxColumn";
+            this.transactiondiscountDataGridViewTextBoxColumn.DataPropertyName = "transaction_discount";
+            this.transactiondiscountDataGridViewTextBoxColumn.HeaderText = "transaction_discount";
+            this.transactiondiscountDataGridViewTextBoxColumn.Name = "transactiondiscountDataGridViewTextBoxColumn";
             // 
             // Main
             // 
@@ -578,7 +578,7 @@
             this.SalesLC.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transactiondetailBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transactionactiveBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -620,11 +620,11 @@
         private DevComponents.DotNetBar.Layout.LayoutControlItem layoutControlItem1;
         private DevComponents.DotNetBar.Layout.LayoutControlItem layoutControlItem2;
         private oriondbDataSet oriondbDataSet;
-        private System.Windows.Forms.BindingSource transactiondetailBindingSource;
-        private oriondbDataSetTableAdapters.transaction_detailTableAdapter transaction_detailTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionidDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource transactionactiveBindingSource;
+        private oriondbDataSetTableAdapters.transaction_activeTableAdapter transaction_activeTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn employeeidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn productidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn discountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transactionqtyDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transactiondiscountDataGridViewTextBoxColumn;
     }
 }

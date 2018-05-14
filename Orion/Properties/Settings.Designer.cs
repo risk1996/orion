@@ -33,5 +33,29 @@ namespace Orion.Properties {
                 return ((string)(this["oriondbConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LoginUsername {
+            get {
+                return ((string)(this["LoginUsername"]));
+            }
+            set {
+                this["LoginUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LoginRemember {
+            get {
+                return ((bool)(this["LoginRemember"]));
+            }
+            set {
+                this["LoginRemember"] = value;
+            }
+        }
     }
 }
