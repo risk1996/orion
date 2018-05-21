@@ -29,11 +29,8 @@
             this.PasswordTB = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.SelectedH = new DevComponents.DotNetBar.Validator.Highlighter();
             this.RememberCB = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.reflectionImage1 = new DevComponents.DotNetBar.Controls.ReflectionImage();
             this.ProgressCP = new DevComponents.DotNetBar.Controls.CircularProgress();
-            this.oriondbDataSet = new Orion.oriondbDataSet();
-            this.employeeTableAdapter = new Orion.oriondbDataSetTableAdapters.employeeTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).BeginInit();
+            this.LogoRI = new DevComponents.DotNetBar.Controls.ReflectionImage();
             this.SuspendLayout();
             // 
             // LoginB
@@ -109,19 +106,6 @@
             this.RememberCB.TabIndex = 2;
             this.RememberCB.Text = "Remember Username";
             // 
-            // reflectionImage1
-            // 
-            // 
-            // 
-            // 
-            this.reflectionImage1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.reflectionImage1.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
-            this.reflectionImage1.Image = ((System.Drawing.Image)(resources.GetObject("reflectionImage1.Image")));
-            this.reflectionImage1.Location = new System.Drawing.Point(12, 12);
-            this.reflectionImage1.Name = "reflectionImage1";
-            this.reflectionImage1.Size = new System.Drawing.Size(58, 108);
-            this.reflectionImage1.TabIndex = 5;
-            // 
             // ProgressCP
             // 
             // 
@@ -138,14 +122,18 @@
             this.ProgressCP.TabStop = false;
             this.ProgressCP.Visible = false;
             // 
-            // oriondbDataSet
+            // LogoRI
             // 
-            this.oriondbDataSet.DataSetName = "oriondbDataSet";
-            this.oriondbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // employeeTableAdapter
             // 
-            this.employeeTableAdapter.ClearBeforeFill = true;
+            // 
+            this.LogoRI.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.LogoRI.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
+            this.LogoRI.Image = ((System.Drawing.Image)(resources.GetObject("LogoRI.Image")));
+            this.LogoRI.Location = new System.Drawing.Point(12, 12);
+            this.LogoRI.Name = "LogoRI";
+            this.LogoRI.Size = new System.Drawing.Size(58, 108);
+            this.LogoRI.TabIndex = 5;
             // 
             // Login
             // 
@@ -153,13 +141,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(291, 132);
             this.Controls.Add(this.ProgressCP);
-            this.Controls.Add(this.reflectionImage1);
+            this.Controls.Add(this.LogoRI);
             this.Controls.Add(this.RememberCB);
             this.Controls.Add(this.PasswordTB);
             this.Controls.Add(this.UsernameTB);
             this.Controls.Add(this.LoginB);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -169,7 +158,6 @@
             this.Text = "Login | Orion";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
             this.Load += new System.EventHandler(this.Login_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -181,9 +169,7 @@
         private DevComponents.DotNetBar.Controls.TextBoxX PasswordTB;
         private DevComponents.DotNetBar.Validator.Highlighter SelectedH;
         private DevComponents.DotNetBar.Controls.CheckBoxX RememberCB;
-        private DevComponents.DotNetBar.Controls.ReflectionImage reflectionImage1;
+        private DevComponents.DotNetBar.Controls.ReflectionImage LogoRI;
         private DevComponents.DotNetBar.Controls.CircularProgress ProgressCP;
-        private oriondbDataSet oriondbDataSet;
-        private oriondbDataSetTableAdapters.employeeTableAdapter employeeTableAdapter;
     }
 }

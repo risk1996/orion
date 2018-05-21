@@ -57,5 +57,17 @@ namespace Orion.Properties {
                 this["LoginRemember"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LoginEmployeeID {
+            get {
+                return ((int)(this["LoginEmployeeID"]));
+            }
+            set {
+                this["LoginEmployeeID"] = value;
+            }
+        }
     }
 }

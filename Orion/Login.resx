@@ -121,7 +121,7 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="reflectionImage1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="LogoRI.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACoAAAAyCAYAAAAqRkmtAAABgGlDQ1BzUkdCIElFQzYxOTY2LTIuMQAA
         KM+VkbtLA0EQh78YX2hEQQsLiyBqFd8QtLFI8AVqkUQwapOcd4mQx3F3IsFWsA0oiDa+Cv0LtBWsBUFR
@@ -1907,10 +1907,4 @@
         AQAAgAEAAIABAACAAQAAwAEAAOABAADwAwAA
 </value>
   </data>
-  <metadata name="oriondbDataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>123, 17</value>
-  </metadata>
-  <metadata name="employeeTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>260, 17</value>
-  </metadata>
 </root>

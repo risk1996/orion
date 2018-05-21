@@ -23,7 +23,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -48,7 +47,6 @@
             this.UserLI = new DevComponents.DotNetBar.LabelItem();
             this.SelectedH = new DevComponents.DotNetBar.Validator.Highlighter();
             this.SalesLC = new DevComponents.DotNetBar.Layout.LayoutControl();
-            this.listViewEx1 = new DevComponents.DotNetBar.Controls.ListViewEx();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.ItemsDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.AddB = new DevComponents.DotNetBar.ButtonX();
@@ -57,23 +55,13 @@
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.ItemSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.AddLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.layoutControlItem1 = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.ItemsLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SubtotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.layoutControlItem2 = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.TotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.oriondbDataSet = new Orion.oriondbDataSet();
-            this.transactionactiveBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.transaction_activeTableAdapter = new Orion.oriondbDataSetTableAdapters.transaction_activeTableAdapter();
-            this.employeeidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactionqtyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transactiondiscountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             this.SalesLC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transactionactiveBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuMTP
@@ -299,7 +287,6 @@
             // 
             this.SalesLC.AutoScaleLayout = false;
             this.SalesLC.BackColor = System.Drawing.Color.White;
-            this.SalesLC.Controls.Add(this.listViewEx1);
             this.SalesLC.Controls.Add(this.labelX1);
             this.SalesLC.Controls.Add(this.ItemsDGV);
             this.SalesLC.Controls.Add(this.AddB);
@@ -316,30 +303,12 @@
             this.SalesLC.RootGroup.Items.AddRange(new DevComponents.DotNetBar.Layout.LayoutItemBase[] {
             this.ItemSearchLCI,
             this.AddLCI,
-            this.layoutControlItem1,
             this.ItemsLCI,
             this.SubtotalLCI,
             this.layoutControlItem2,
             this.TotalLCI});
             this.SalesLC.Size = new System.Drawing.Size(562, 505);
             this.SalesLC.TabIndex = 9;
-            // 
-            // listViewEx1
-            // 
-            this.listViewEx1.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.listViewEx1.Border.Class = "ListViewBorder";
-            this.listViewEx1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.listViewEx1.DisabledBackColor = System.Drawing.Color.Empty;
-            this.listViewEx1.ForeColor = System.Drawing.Color.Black;
-            this.listViewEx1.Location = new System.Drawing.Point(56, 35);
-            this.listViewEx1.Margin = new System.Windows.Forms.Padding(0);
-            this.listViewEx1.Name = "listViewEx1";
-            this.listViewEx1.Size = new System.Drawing.Size(502, 97);
-            this.listViewEx1.TabIndex = 2;
-            this.listViewEx1.UseCompatibleStateImageBehavior = false;
             // 
             // labelX1
             // 
@@ -348,16 +317,15 @@
             // 
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelX1.Location = new System.Drawing.Point(56, 240);
+            this.labelX1.Location = new System.Drawing.Point(56, 335);
             this.labelX1.Margin = new System.Windows.Forms.Padding(0);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(277, 23);
-            this.labelX1.TabIndex = 4;
+            this.labelX1.TabIndex = 3;
             this.labelX1.Text = "<SUBTOTAL>";
             // 
             // ItemsDGV
             // 
-            this.ItemsDGV.AutoGenerateColumns = false;
             this.ItemsDGV.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -368,12 +336,6 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.ItemsDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.ItemsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ItemsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.employeeidDataGridViewTextBoxColumn,
-            this.productidDataGridViewTextBoxColumn,
-            this.transactionqtyDataGridViewTextBoxColumn,
-            this.transactiondiscountDataGridViewTextBoxColumn});
-            this.ItemsDGV.DataSource = this.transactionactiveBindingSource;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -384,7 +346,7 @@
             this.ItemsDGV.DefaultCellStyle = dataGridViewCellStyle2;
             this.ItemsDGV.EnableHeadersVisualStyles = false;
             this.ItemsDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
-            this.ItemsDGV.Location = new System.Drawing.Point(56, 140);
+            this.ItemsDGV.Location = new System.Drawing.Point(56, 35);
             this.ItemsDGV.Margin = new System.Windows.Forms.Padding(0);
             this.ItemsDGV.Name = "ItemsDGV";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -395,8 +357,8 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.ItemsDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.ItemsDGV.Size = new System.Drawing.Size(502, 92);
-            this.ItemsDGV.TabIndex = 3;
+            this.ItemsDGV.Size = new System.Drawing.Size(502, 292);
+            this.ItemsDGV.TabIndex = 2;
             // 
             // AddB
             // 
@@ -433,11 +395,11 @@
             // 
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelX2.Location = new System.Drawing.Point(56, 271);
+            this.labelX2.Location = new System.Drawing.Point(56, 366);
             this.labelX2.Margin = new System.Windows.Forms.Padding(0);
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(502, 23);
-            this.labelX2.TabIndex = 6;
+            this.labelX2.TabIndex = 5;
             this.labelX2.Text = "<TOTAL>";
             // 
             // labelX3
@@ -448,11 +410,11 @@
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelX3.ForeColor = System.Drawing.Color.DimGray;
-            this.labelX3.Location = new System.Drawing.Point(393, 240);
+            this.labelX3.Location = new System.Drawing.Point(393, 335);
             this.labelX3.Margin = new System.Windows.Forms.Padding(0);
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(165, 23);
-            this.labelX3.TabIndex = 5;
+            this.labelX3.TabIndex = 4;
             this.labelX3.Text = "<VAT>";
             // 
             // ItemSearchLCI
@@ -472,20 +434,10 @@
             this.AddLCI.Name = "AddLCI";
             this.AddLCI.Width = 31;
             // 
-            // layoutControlItem1
-            // 
-            this.layoutControlItem1.Control = this.listViewEx1;
-            this.layoutControlItem1.Height = 105;
-            this.layoutControlItem1.MinSize = new System.Drawing.Size(64, 18);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Text = "Label:";
-            this.layoutControlItem1.Width = 100;
-            this.layoutControlItem1.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
-            // 
             // ItemsLCI
             // 
             this.ItemsLCI.Control = this.ItemsDGV;
-            this.ItemsLCI.Height = 100;
+            this.ItemsLCI.Height = 300;
             this.ItemsLCI.MinSize = new System.Drawing.Size(64, 18);
             this.ItemsLCI.Name = "ItemsLCI";
             this.ItemsLCI.Text = "Items:";
@@ -522,44 +474,6 @@
             this.TotalLCI.Width = 100;
             this.TotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // oriondbDataSet
-            // 
-            this.oriondbDataSet.DataSetName = "oriondbDataSet";
-            this.oriondbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // transactionactiveBindingSource
-            // 
-            this.transactionactiveBindingSource.DataMember = "transaction_active";
-            this.transactionactiveBindingSource.DataSource = this.oriondbDataSet;
-            // 
-            // transaction_activeTableAdapter
-            // 
-            this.transaction_activeTableAdapter.ClearBeforeFill = true;
-            // 
-            // employeeidDataGridViewTextBoxColumn
-            // 
-            this.employeeidDataGridViewTextBoxColumn.DataPropertyName = "employee_id";
-            this.employeeidDataGridViewTextBoxColumn.HeaderText = "employee_id";
-            this.employeeidDataGridViewTextBoxColumn.Name = "employeeidDataGridViewTextBoxColumn";
-            // 
-            // productidDataGridViewTextBoxColumn
-            // 
-            this.productidDataGridViewTextBoxColumn.DataPropertyName = "product_id";
-            this.productidDataGridViewTextBoxColumn.HeaderText = "product_id";
-            this.productidDataGridViewTextBoxColumn.Name = "productidDataGridViewTextBoxColumn";
-            // 
-            // transactionqtyDataGridViewTextBoxColumn
-            // 
-            this.transactionqtyDataGridViewTextBoxColumn.DataPropertyName = "transaction_qty";
-            this.transactionqtyDataGridViewTextBoxColumn.HeaderText = "transaction_qty";
-            this.transactionqtyDataGridViewTextBoxColumn.Name = "transactionqtyDataGridViewTextBoxColumn";
-            // 
-            // transactiondiscountDataGridViewTextBoxColumn
-            // 
-            this.transactiondiscountDataGridViewTextBoxColumn.DataPropertyName = "transaction_discount";
-            this.transactiondiscountDataGridViewTextBoxColumn.HeaderText = "transaction_discount";
-            this.transactiondiscountDataGridViewTextBoxColumn.Name = "transactiondiscountDataGridViewTextBoxColumn";
-            // 
             // Main
             // 
             this.ClientSize = new System.Drawing.Size(784, 561);
@@ -577,8 +491,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).EndInit();
             this.SalesLC.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oriondbDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transactionactiveBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -615,16 +527,7 @@
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.Layout.LayoutControlItem SubtotalLCI;
         private DevComponents.DotNetBar.Layout.LayoutControlItem TotalLCI;
-        private DevComponents.DotNetBar.Controls.ListViewEx listViewEx1;
         private DevComponents.DotNetBar.LabelX labelX3;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem layoutControlItem1;
         private DevComponents.DotNetBar.Layout.LayoutControlItem layoutControlItem2;
-        private oriondbDataSet oriondbDataSet;
-        private System.Windows.Forms.BindingSource transactionactiveBindingSource;
-        private oriondbDataSetTableAdapters.transaction_activeTableAdapter transaction_activeTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn employeeidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn productidDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactionqtyDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn transactiondiscountDataGridViewTextBoxColumn;
     }
 }

@@ -14,9 +14,7 @@ namespace Orion {
         }
 
         private void Main_Load(object sender, EventArgs e) {
-            //transactionactiveBindingSource.Filter = ;
-            transaction_activeTableAdapter.Fill(oriondbDataSet.transaction_active);
-
+            
         }
 
         private void Main_Resize(object sender, EventArgs e) {
