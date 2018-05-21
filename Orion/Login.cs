@@ -33,27 +33,24 @@ namespace Orion {
         }
 
         private void LoginB_Click(object sender, EventArgs e) {
-            //DataTable dt = employeeTableAdapter.GetData();
-            MySqlDataReader emp = new DbConnect().ExecQuery("SELECT * FROM employee WHERE employee_uname = '" + PasswordTB.Text + "'");
-            //DataRow[] dr = dt.Select("employee_uname = '" + UsernameTB.Text + "'");
-            ToastNotification.Show(this, emp.FieldCount.ToString());
-            //if (dr.Length > 0) {
-            //    SHA512 sha512 = new SHA512Managed();
-            //    String salt = dr[0]["employee_salt"].ToString();
-            //    String hashedPass = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(PasswordTB.Text + salt))).Replace("-", "").ToLower();
-            //    if (hashedPass == dr[0]["employee_password"].ToString()) {
-            //        Properties.Settings.Default.LoginEmployeeID = int.Parse(dr[0]["employee_id"].ToString());
-            //        Properties.Settings.Default.Save();
-            //        ProgressCP.Visible = true;
-            //        new Thread(() => {
-            //            Thread.CurrentThread.IsBackground = true;
-            //            Main main = new Main();
-            //            Invoke((MethodInvoker)delegate { main.Show(); Close(); });
-            //        }).Start();
-            //    }
-            //} else {
-            //    ToastNotification.Show(this, "Invalid login credentials");
-            //}
+            ProgressCP.Visible = true;
+            MySqlDataReader emp = new DbConnect().ExecQuery("SELECT * FROM employee WHERE employee_uname = '" + UsernameTB.Text + "';");
+            if (emp.HasRows) {
+                SHA512 sha512 = new SHA512Managed();
+                emp.Read();
+                string salt = emp.GetString("employee_salt");
+                string hashedPass = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(PasswordTB.Text + salt))).Replace("-", "").ToLower();
+                if (hashedPass == emp.GetString("employee_password")) {
+                    Properties.Settings.Default.LoginEmployeeID = int.Parse(emp.GetString("employee_id"));
+                    Properties.Settings.Default.Save();
+                    new Thread(() => {
+                        Thread.CurrentThread.IsBackground = true;
+                        Main main = new Main();
+                        Invoke((MethodInvoker)delegate { main.Show(); Close(); });
+                    }).Start();
+                } else ToastNotification.Show(this, "Invalid login credentials");
+            } else ToastNotification.Show(this, "Invalid login credentials");
+            ProgressCP.Visible = false;
         }
 
         private void UsernameTB_KeyDown(object sender, KeyEventArgs e) {
