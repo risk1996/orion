@@ -34,10 +34,9 @@ namespace Orion {
 
         private void LoginB_Click(object sender, EventArgs e) {
             //DataTable dt = employeeTableAdapter.GetData();
-            //MySqlDataReader emp = new DbConnect().ExecQuery("SELECT * FROM employee WHERE employee_uname = '" + PasswordTB.Text + "'");
-            ToastNotification.Show(this, new DbConnect().MySQLConnectionString);
+            MySqlDataReader emp = new DbConnect().ExecQuery("SELECT * FROM employee WHERE employee_uname = '" + PasswordTB.Text + "'");
             //DataRow[] dr = dt.Select("employee_uname = '" + UsernameTB.Text + "'");
-            //ToastNotification.Show(this, emp.FieldCount.ToString());
+            ToastNotification.Show(this, emp.FieldCount.ToString());
             //if (dr.Length > 0) {
             //    SHA512 sha512 = new SHA512Managed();
             //    String salt = dr[0]["employee_salt"].ToString();

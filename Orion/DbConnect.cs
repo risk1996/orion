@@ -15,20 +15,18 @@ namespace Orion {
         public string MySQLConnectionString;
         MySqlConnection Conn;
         public DbConnect() {
-            MySQLConnectionString = String.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};", Hostname, Port, DBName, Username, Password);
+            MySQLConnectionString = String.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};CharSet=utf8;", Hostname, Port, DBName, Username, Password);
             Conn = new MySqlConnection(MySQLConnectionString);
             Conn.Open();
         }
         public MySqlDataReader ExecQuery(string command) {
-            MySqlCommand cmd = new MySqlCommand { CommandText = command };
+            MySqlCommand cmd = new MySqlCommand(command, Conn);
             return cmd.ExecuteReader();
         }
         public int ExecNonQuery(string command){
-            MySqlCommand cmd = new MySqlCommand { CommandText = command };
+            MySqlCommand cmd = new MySqlCommand(command, Conn);
             return cmd.ExecuteNonQuery();
         }
-        ~DbConnect() {
-            Conn.Close();
-        }
+        ~DbConnect() { Conn.Close(); }
     }
 }
