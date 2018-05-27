@@ -6,15 +6,24 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
+using MySql.Data.MySqlClient;
 
 namespace Orion {
     public partial class Main : DevComponents.DotNetBar.RibbonForm {
+        DataTable pendingTransaction = new DataTable();
+        DataTable productTable = new DataTable();
+
         public Main() {
             InitializeComponent();
         }
 
         private void Main_Load(object sender, EventArgs e) {
-            
+            MySqlDataReader productReader = new DbConnect().ExecQuery("SELECT product_id, product_name, product_price FROM product;");
+            productTable.Load(productReader);
+            pendingTransaction.Columns.Add("product_id");
+            pendingTransaction.Columns.Add("product_name");
+            pendingTransaction.Columns.Add("transaction_qty");
+            pendingTransaction.Columns.Add("transaction_discount");
         }
 
         private void Main_Resize(object sender, EventArgs e) {
@@ -60,6 +69,18 @@ namespace Orion {
 
         private void LocationLI_DoubleClick(object sender, EventArgs e) {
             WindowState = (WindowState == FormWindowState.Maximized) ? FormWindowState.Normal : FormWindowState.Maximized;
+        }
+
+        private void ItemSearchTB_TextChanged(object sender, EventArgs e) {
+            string[] terms = DbConnect.EscapeLikeValue(ItemSearchTB.Text).Split(' ');
+            for (int i = 0; i < terms.Length; i++) terms[i] = "(product_id + ' ' + product_name) LIKE '%" + terms[i] + "%'";
+            DataRow[] productRows = productTable.Select(String.Join(" AND ", terms));
+            DataTable productTableResult = productTable.Clone();
+            productRows.CopyToDataTable(productTableResult, LoadOption.OverwriteChanges);
+            ItemSeachResultDGV.DataSource = productTableResult;
+            ItemSeachResultDGV.Columns["product_id"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ItemSeachResultDGV.Columns["product_name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
+            ItemSeachResultDGV.Columns["product_price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
         }
     }
 }
