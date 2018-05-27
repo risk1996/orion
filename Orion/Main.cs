@@ -82,5 +82,17 @@ namespace Orion {
             ItemSeachResultDGV.Columns["product_name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
             ItemSeachResultDGV.Columns["product_price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
         }
+
+        private void ItemSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string selectedid = ItemSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+            MySqlDataReader productReader = new DbConnect().ExecQuery("SELECT product_id, product_name FROM product WHERE product_id = '" + selectedid + "'");
+            pendingTransaction.Load(productReader);
+            ItemsDGV.DataSource = pendingTransaction;
+            ItemsDGV.Columns["product_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ItemsDGV.Columns["product_name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ItemsDGV.Columns["transaction_qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ItemsDGV.Columns["transaction_discount"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+        }
     }
 }

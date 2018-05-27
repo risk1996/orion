@@ -55,15 +55,15 @@
             this.AddB = new DevComponents.DotNetBar.ButtonX();
             this.TotalL = new DevComponents.DotNetBar.LabelX();
             this.VATL = new DevComponents.DotNetBar.LabelX();
+            this.ItemSeachResultDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.ItemSearchTB = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.ItemSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.AddLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.ItemSearchResultLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.ItemsLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SubtotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.layoutControlItem2 = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.TotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.ItemSeachResultDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.ItemSearchResultLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.ItemSearchTB = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.ItemSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             this.SalesLC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).BeginInit();
@@ -409,6 +409,72 @@
             this.VATL.TabIndex = 5;
             this.VATL.Text = "<VAT>";
             // 
+            // ItemSeachResultDGV
+            // 
+            this.ItemSeachResultDGV.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ItemSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.ItemSeachResultDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ItemSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle5;
+            this.ItemSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.ItemSeachResultDGV.EnableHeadersVisualStyles = false;
+            this.ItemSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.ItemSeachResultDGV.Location = new System.Drawing.Point(56, 35);
+            this.ItemSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.ItemSeachResultDGV.Name = "ItemSeachResultDGV";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ItemSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.ItemSeachResultDGV.Size = new System.Drawing.Size(502, 92);
+            this.ItemSeachResultDGV.TabIndex = 2;
+            this.ItemSeachResultDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ItemSeachResultDGV_CellDoubleClick);
+            // 
+            // ItemSearchTB
+            // 
+            this.ItemSearchTB.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.ItemSearchTB.Border.Class = "TextBoxBorder";
+            this.ItemSearchTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ItemSearchTB.DisabledBackColor = System.Drawing.Color.White;
+            this.ItemSearchTB.ForeColor = System.Drawing.Color.Black;
+            this.ItemSearchTB.Location = new System.Drawing.Point(56, 4);
+            this.ItemSearchTB.Margin = new System.Windows.Forms.Padding(0);
+            this.ItemSearchTB.Name = "ItemSearchTB";
+            this.ItemSearchTB.PreventEnterBeep = true;
+            this.ItemSearchTB.Size = new System.Drawing.Size(440, 20);
+            this.ItemSearchTB.TabIndex = 0;
+            this.ItemSearchTB.WatermarkText = "Enter Product ID or Product Name";
+            this.ItemSearchTB.TextChanged += new System.EventHandler(this.ItemSearchTB_TextChanged);
+            // 
+            // ItemSearchLCI
+            // 
+            this.ItemSearchLCI.Control = this.ItemSearchTB;
+            this.ItemSearchLCI.Height = 28;
+            this.ItemSearchLCI.MinSize = new System.Drawing.Size(120, 0);
+            this.ItemSearchLCI.Name = "ItemSearchLCI";
+            this.ItemSearchLCI.Text = "Search:";
+            this.ItemSearchLCI.Width = 500;
+            // 
             // AddLCI
             // 
             this.AddLCI.Control = this.AddB;
@@ -416,6 +482,16 @@
             this.AddLCI.MinSize = new System.Drawing.Size(32, 20);
             this.AddLCI.Name = "AddLCI";
             this.AddLCI.Width = 31;
+            // 
+            // ItemSearchResultLCI
+            // 
+            this.ItemSearchResultLCI.Control = this.ItemSeachResultDGV;
+            this.ItemSearchResultLCI.Height = 100;
+            this.ItemSearchResultLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.ItemSearchResultLCI.Name = "ItemSearchResultLCI";
+            this.ItemSearchResultLCI.Text = "Result:";
+            this.ItemSearchResultLCI.Width = 100;
+            this.ItemSearchResultLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // ItemsLCI
             // 
@@ -456,81 +532,6 @@
             this.TotalLCI.Text = "Total:";
             this.TotalLCI.Width = 100;
             this.TotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
-            // 
-            // ItemSeachResultDGV
-            // 
-            this.ItemSeachResultDGV.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ItemSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.ItemSeachResultDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ItemSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle5;
-            this.ItemSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.ItemSeachResultDGV.EnableHeadersVisualStyles = false;
-            this.ItemSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
-            this.ItemSeachResultDGV.Location = new System.Drawing.Point(56, 35);
-            this.ItemSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.ItemSeachResultDGV.Name = "ItemSeachResultDGV";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ItemSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.ItemSeachResultDGV.Size = new System.Drawing.Size(502, 92);
-            this.ItemSeachResultDGV.TabIndex = 2;
-            // 
-            // ItemSearchResultLCI
-            // 
-            this.ItemSearchResultLCI.Control = this.ItemSeachResultDGV;
-            this.ItemSearchResultLCI.Height = 100;
-            this.ItemSearchResultLCI.MinSize = new System.Drawing.Size(64, 18);
-            this.ItemSearchResultLCI.Name = "ItemSearchResultLCI";
-            this.ItemSearchResultLCI.Text = "Result:";
-            this.ItemSearchResultLCI.Width = 100;
-            this.ItemSearchResultLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
-            // 
-            // ItemSearchTB
-            // 
-            this.ItemSearchTB.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.ItemSearchTB.Border.Class = "TextBoxBorder";
-            this.ItemSearchTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ItemSearchTB.DisabledBackColor = System.Drawing.Color.White;
-            this.ItemSearchTB.ForeColor = System.Drawing.Color.Black;
-            this.ItemSearchTB.Location = new System.Drawing.Point(56, 4);
-            this.ItemSearchTB.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
-            this.ItemSearchTB.Name = "ItemSearchTB";
-            this.ItemSearchTB.PreventEnterBeep = true;
-            this.ItemSearchTB.Size = new System.Drawing.Size(440, 20);
-            this.ItemSearchTB.TabIndex = 0;
-            this.ItemSearchTB.WatermarkText = "Enter Product ID or Product Name";
-            this.ItemSearchTB.TextChanged += new System.EventHandler(this.ItemSearchTB_TextChanged);
-            // 
-            // ItemSearchLCI
-            // 
-            this.ItemSearchLCI.Control = this.ItemSearchTB;
-            this.ItemSearchLCI.Height = 28;
-            this.ItemSearchLCI.MinSize = new System.Drawing.Size(120, 0);
-            this.ItemSearchLCI.Name = "ItemSearchLCI";
-            this.ItemSearchLCI.Text = "Search:";
-            this.ItemSearchLCI.Width = 500;
             // 
             // Main
             // 
