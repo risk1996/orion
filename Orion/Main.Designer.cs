@@ -324,7 +324,7 @@
             this.SalesSubtotalL.Location = new System.Drawing.Point(56, 432);
             this.SalesSubtotalL.Margin = new System.Windows.Forms.Padding(0);
             this.SalesSubtotalL.Name = "SalesSubtotalL";
-            this.SalesSubtotalL.Size = new System.Drawing.Size(277, 23);
+            this.SalesSubtotalL.Size = new System.Drawing.Size(277, 29);
             this.SalesSubtotalL.TabIndex = 3;
             this.SalesSubtotalL.Text = "<SUBTOTAL>";
             // 
@@ -350,6 +350,7 @@
             this.SalesCartDGV.DefaultCellStyle = dataGridViewCellStyle2;
             this.SalesCartDGV.EnableHeadersVisualStyles = false;
             this.SalesCartDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.SelectedH.SetHighlightOnFocus(this.SalesCartDGV, true);
             this.SalesCartDGV.Location = new System.Drawing.Point(56, 132);
             this.SalesCartDGV.Margin = new System.Windows.Forms.Padding(0);
             this.SalesCartDGV.Name = "SalesCartDGV";
@@ -371,10 +372,10 @@
             // 
             this.SalesTotalL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.SalesTotalL.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SalesTotalL.Location = new System.Drawing.Point(56, 463);
+            this.SalesTotalL.Location = new System.Drawing.Point(56, 469);
             this.SalesTotalL.Margin = new System.Windows.Forms.Padding(0);
             this.SalesTotalL.Name = "SalesTotalL";
-            this.SalesTotalL.Size = new System.Drawing.Size(502, 23);
+            this.SalesTotalL.Size = new System.Drawing.Size(502, 32);
             this.SalesTotalL.TabIndex = 5;
             this.SalesTotalL.Text = "<TOTAL>";
             // 
@@ -389,7 +390,7 @@
             this.SalesVATL.Location = new System.Drawing.Point(393, 432);
             this.SalesVATL.Margin = new System.Windows.Forms.Padding(0);
             this.SalesVATL.Name = "SalesVATL";
-            this.SalesVATL.Size = new System.Drawing.Size(165, 23);
+            this.SalesVATL.Size = new System.Drawing.Size(165, 29);
             this.SalesVATL.TabIndex = 4;
             this.SalesVATL.Text = "<VAT>";
             // 
@@ -416,6 +417,7 @@
             this.SalesProductSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.SalesProductSeachResultDGV.EnableHeadersVisualStyles = false;
             this.SalesProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.SelectedH.SetHighlightOnFocus(this.SalesProductSeachResultDGV, true);
             this.SalesProductSeachResultDGV.Location = new System.Drawing.Point(56, 32);
             this.SalesProductSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
             this.SalesProductSeachResultDGV.Name = "SalesProductSeachResultDGV";
@@ -441,6 +443,7 @@
             this.SalesProductSearchTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.SalesProductSearchTB.DisabledBackColor = System.Drawing.Color.White;
             this.SalesProductSearchTB.ForeColor = System.Drawing.Color.Black;
+            this.SelectedH.SetHighlightOnFocus(this.SalesProductSearchTB, true);
             this.SalesProductSearchTB.Location = new System.Drawing.Point(56, 4);
             this.SalesProductSearchTB.Margin = new System.Windows.Forms.Padding(0);
             this.SalesProductSearchTB.Name = "SalesProductSearchTB";
@@ -483,7 +486,7 @@
             // SalesSubtotalLCI
             // 
             this.SalesSubtotalLCI.Control = this.SalesSubtotalL;
-            this.SalesSubtotalLCI.Height = 31;
+            this.SalesSubtotalLCI.Height = 37;
             this.SalesSubtotalLCI.MinSize = new System.Drawing.Size(64, 18);
             this.SalesSubtotalLCI.Name = "SalesSubtotalLCI";
             this.SalesSubtotalLCI.Text = "Subtotal:";
@@ -503,7 +506,7 @@
             // SalesTotalLCI
             // 
             this.SalesTotalLCI.Control = this.SalesTotalL;
-            this.SalesTotalLCI.Height = 31;
+            this.SalesTotalLCI.Height = 40;
             this.SalesTotalLCI.MinSize = new System.Drawing.Size(64, 18);
             this.SalesTotalLCI.Name = "SalesTotalLCI";
             this.SalesTotalLCI.Text = "Total:";

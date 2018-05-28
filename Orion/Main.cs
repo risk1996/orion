@@ -58,6 +58,8 @@ namespace Orion {
 
         private void Main_Load(object sender, EventArgs e) {
             Sales_Load();
+            SalesProductSearchTB.Select();
+            SalesProductSearchTB.Focus();
         }
 
         #region Sales definition
@@ -92,6 +94,7 @@ namespace Orion {
             SalesCartDGV.Columns["product_price"].AutoSizeMode        = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["product_disc_pct"].AutoSizeMode     = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["transaction_qty"].AutoSizeMode      = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesRefreshPrice();
         }
 
         private void SalesProductSearchTB_TextChanged(object sender, EventArgs e) {
@@ -117,6 +120,18 @@ namespace Orion {
                 SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] =
                     int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"].ToString()) + 1;
             }
+            SalesRefreshPrice();
+        }
+
+        private void SalesRefreshPrice() {
+            double subtotal = 0;
+            foreach(DataRow dr in SalesPendingTransaction.Rows) {
+                subtotal += (double.Parse(dr["product_price"].ToString()) * (100.0 - double.Parse(dr["product_disc_pct"].ToString())) / 100.0) *
+                    double.Parse(dr["transaction_qty"].ToString());
+            }
+            SalesSubtotalL.Text = String.Format("Rp {0:###,##0.00}", subtotal);
+            SalesVATL.Text      = String.Format("Rp {0:###,##0.00}", subtotal * 0.1);
+            SalesTotalL.Text    = String.Format("Rp {0:###,##0.00}", subtotal * 1.1);
         }
 
         #endregion
