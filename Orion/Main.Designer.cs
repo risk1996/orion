@@ -50,24 +50,22 @@
             this.UserLI = new DevComponents.DotNetBar.LabelItem();
             this.SelectedH = new DevComponents.DotNetBar.Validator.Highlighter();
             this.SalesLC = new DevComponents.DotNetBar.Layout.LayoutControl();
-            this.SubtotalL = new DevComponents.DotNetBar.LabelX();
-            this.ItemsDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.AddB = new DevComponents.DotNetBar.ButtonX();
-            this.TotalL = new DevComponents.DotNetBar.LabelX();
-            this.VATL = new DevComponents.DotNetBar.LabelX();
-            this.ItemSeachResultDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.ItemSearchTB = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.ItemSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.AddLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.ItemSearchResultLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.ItemsLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.SubtotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.layoutControlItem2 = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.TotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.SalesSubtotalL = new DevComponents.DotNetBar.LabelX();
+            this.SalesCartDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.SalesTotalL = new DevComponents.DotNetBar.LabelX();
+            this.SalesVATL = new DevComponents.DotNetBar.LabelX();
+            this.SalesProductSeachResultDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.SalesProductSearchTB = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.SalesProductSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.SalesProductSearchResultLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.SalesCartLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.SalesSubtotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.SalesVATLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.SalesTotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             this.SalesLC.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemSeachResultDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuMTP
@@ -293,13 +291,12 @@
             // 
             this.SalesLC.AutoScaleLayout = false;
             this.SalesLC.BackColor = System.Drawing.Color.White;
-            this.SalesLC.Controls.Add(this.SubtotalL);
-            this.SalesLC.Controls.Add(this.ItemsDGV);
-            this.SalesLC.Controls.Add(this.AddB);
-            this.SalesLC.Controls.Add(this.TotalL);
-            this.SalesLC.Controls.Add(this.VATL);
-            this.SalesLC.Controls.Add(this.ItemSeachResultDGV);
-            this.SalesLC.Controls.Add(this.ItemSearchTB);
+            this.SalesLC.Controls.Add(this.SalesSubtotalL);
+            this.SalesLC.Controls.Add(this.SalesCartDGV);
+            this.SalesLC.Controls.Add(this.SalesTotalL);
+            this.SalesLC.Controls.Add(this.SalesVATL);
+            this.SalesLC.Controls.Add(this.SalesProductSeachResultDGV);
+            this.SalesLC.Controls.Add(this.SalesProductSearchTB);
             this.SalesLC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SalesLC.ForeColor = System.Drawing.Color.Black;
             this.SalesLC.Location = new System.Drawing.Point(217, 32);
@@ -308,33 +305,32 @@
             // 
             // 
             this.SalesLC.RootGroup.Items.AddRange(new DevComponents.DotNetBar.Layout.LayoutItemBase[] {
-            this.ItemSearchLCI,
-            this.AddLCI,
-            this.ItemSearchResultLCI,
-            this.ItemsLCI,
-            this.SubtotalLCI,
-            this.layoutControlItem2,
-            this.TotalLCI});
+            this.SalesProductSearchLCI,
+            this.SalesProductSearchResultLCI,
+            this.SalesCartLCI,
+            this.SalesSubtotalLCI,
+            this.SalesVATLCI,
+            this.SalesTotalLCI});
             this.SalesLC.Size = new System.Drawing.Size(562, 505);
             this.SalesLC.TabIndex = 9;
             // 
-            // SubtotalL
+            // SalesSubtotalL
             // 
             // 
             // 
             // 
-            this.SubtotalL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.SubtotalL.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SubtotalL.Location = new System.Drawing.Point(56, 435);
-            this.SubtotalL.Margin = new System.Windows.Forms.Padding(0);
-            this.SubtotalL.Name = "SubtotalL";
-            this.SubtotalL.Size = new System.Drawing.Size(277, 23);
-            this.SubtotalL.TabIndex = 4;
-            this.SubtotalL.Text = "<SUBTOTAL>";
+            this.SalesSubtotalL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SalesSubtotalL.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalesSubtotalL.Location = new System.Drawing.Point(56, 432);
+            this.SalesSubtotalL.Margin = new System.Windows.Forms.Padding(0);
+            this.SalesSubtotalL.Name = "SalesSubtotalL";
+            this.SalesSubtotalL.Size = new System.Drawing.Size(277, 23);
+            this.SalesSubtotalL.TabIndex = 3;
+            this.SalesSubtotalL.Text = "<SUBTOTAL>";
             // 
-            // ItemsDGV
+            // SalesCartDGV
             // 
-            this.ItemsDGV.BackgroundColor = System.Drawing.Color.White;
+            this.SalesCartDGV.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -342,8 +338,8 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ItemsDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.ItemsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SalesCartDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.SalesCartDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -351,12 +347,12 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ItemsDGV.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ItemsDGV.EnableHeadersVisualStyles = false;
-            this.ItemsDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
-            this.ItemsDGV.Location = new System.Drawing.Point(56, 135);
-            this.ItemsDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.ItemsDGV.Name = "ItemsDGV";
+            this.SalesCartDGV.DefaultCellStyle = dataGridViewCellStyle2;
+            this.SalesCartDGV.EnableHeadersVisualStyles = false;
+            this.SalesCartDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.SalesCartDGV.Location = new System.Drawing.Point(56, 132);
+            this.SalesCartDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.SalesCartDGV.Name = "SalesCartDGV";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -364,54 +360,42 @@
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ItemsDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.ItemsDGV.Size = new System.Drawing.Size(502, 292);
-            this.ItemsDGV.TabIndex = 3;
+            this.SalesCartDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.SalesCartDGV.Size = new System.Drawing.Size(502, 292);
+            this.SalesCartDGV.TabIndex = 2;
             // 
-            // AddB
-            // 
-            this.AddB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.AddB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.AddB.Location = new System.Drawing.Point(504, 4);
-            this.AddB.Margin = new System.Windows.Forms.Padding(0);
-            this.AddB.Name = "AddB";
-            this.AddB.Size = new System.Drawing.Size(24, 23);
-            this.AddB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.AddB.Symbol = "";
-            this.AddB.TabIndex = 1;
-            // 
-            // TotalL
+            // SalesTotalL
             // 
             // 
             // 
             // 
-            this.TotalL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TotalL.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TotalL.Location = new System.Drawing.Point(56, 466);
-            this.TotalL.Margin = new System.Windows.Forms.Padding(0);
-            this.TotalL.Name = "TotalL";
-            this.TotalL.Size = new System.Drawing.Size(502, 23);
-            this.TotalL.TabIndex = 6;
-            this.TotalL.Text = "<TOTAL>";
+            this.SalesTotalL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SalesTotalL.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalesTotalL.Location = new System.Drawing.Point(56, 463);
+            this.SalesTotalL.Margin = new System.Windows.Forms.Padding(0);
+            this.SalesTotalL.Name = "SalesTotalL";
+            this.SalesTotalL.Size = new System.Drawing.Size(502, 23);
+            this.SalesTotalL.TabIndex = 5;
+            this.SalesTotalL.Text = "<TOTAL>";
             // 
-            // VATL
-            // 
-            // 
+            // SalesVATL
             // 
             // 
-            this.VATL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.VATL.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VATL.ForeColor = System.Drawing.Color.DimGray;
-            this.VATL.Location = new System.Drawing.Point(393, 435);
-            this.VATL.Margin = new System.Windows.Forms.Padding(0);
-            this.VATL.Name = "VATL";
-            this.VATL.Size = new System.Drawing.Size(165, 23);
-            this.VATL.TabIndex = 5;
-            this.VATL.Text = "<VAT>";
             // 
-            // ItemSeachResultDGV
             // 
-            this.ItemSeachResultDGV.BackgroundColor = System.Drawing.Color.White;
+            this.SalesVATL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SalesVATL.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalesVATL.ForeColor = System.Drawing.Color.DimGray;
+            this.SalesVATL.Location = new System.Drawing.Point(393, 432);
+            this.SalesVATL.Margin = new System.Windows.Forms.Padding(0);
+            this.SalesVATL.Name = "SalesVATL";
+            this.SalesVATL.Size = new System.Drawing.Size(165, 23);
+            this.SalesVATL.TabIndex = 4;
+            this.SalesVATL.Text = "<VAT>";
+            // 
+            // SalesProductSeachResultDGV
+            // 
+            this.SalesProductSeachResultDGV.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -419,8 +403,8 @@
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ItemSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.ItemSeachResultDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SalesProductSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.SalesProductSeachResultDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -428,13 +412,13 @@
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ItemSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle5;
-            this.ItemSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.ItemSeachResultDGV.EnableHeadersVisualStyles = false;
-            this.ItemSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
-            this.ItemSeachResultDGV.Location = new System.Drawing.Point(56, 35);
-            this.ItemSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.ItemSeachResultDGV.Name = "ItemSeachResultDGV";
+            this.SalesProductSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle5;
+            this.SalesProductSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.SalesProductSeachResultDGV.EnableHeadersVisualStyles = false;
+            this.SalesProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.SalesProductSeachResultDGV.Location = new System.Drawing.Point(56, 32);
+            this.SalesProductSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.SalesProductSeachResultDGV.Name = "SalesProductSeachResultDGV";
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -442,96 +426,89 @@
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ItemSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.ItemSeachResultDGV.Size = new System.Drawing.Size(502, 92);
-            this.ItemSeachResultDGV.TabIndex = 2;
-            this.ItemSeachResultDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ItemSeachResultDGV_CellDoubleClick);
+            this.SalesProductSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.SalesProductSeachResultDGV.Size = new System.Drawing.Size(502, 92);
+            this.SalesProductSeachResultDGV.TabIndex = 1;
+            this.SalesProductSeachResultDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SalesProductSeachResultDGV_CellDoubleClick);
             // 
-            // ItemSearchTB
+            // SalesProductSearchTB
             // 
-            this.ItemSearchTB.BackColor = System.Drawing.Color.White;
+            this.SalesProductSearchTB.BackColor = System.Drawing.Color.White;
             // 
             // 
             // 
-            this.ItemSearchTB.Border.Class = "TextBoxBorder";
-            this.ItemSearchTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ItemSearchTB.DisabledBackColor = System.Drawing.Color.White;
-            this.ItemSearchTB.ForeColor = System.Drawing.Color.Black;
-            this.ItemSearchTB.Location = new System.Drawing.Point(56, 4);
-            this.ItemSearchTB.Margin = new System.Windows.Forms.Padding(0);
-            this.ItemSearchTB.Name = "ItemSearchTB";
-            this.ItemSearchTB.PreventEnterBeep = true;
-            this.ItemSearchTB.Size = new System.Drawing.Size(440, 20);
-            this.ItemSearchTB.TabIndex = 0;
-            this.ItemSearchTB.WatermarkText = "Enter Product ID or Product Name";
-            this.ItemSearchTB.TextChanged += new System.EventHandler(this.ItemSearchTB_TextChanged);
+            this.SalesProductSearchTB.Border.Class = "TextBoxBorder";
+            this.SalesProductSearchTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SalesProductSearchTB.DisabledBackColor = System.Drawing.Color.White;
+            this.SalesProductSearchTB.ForeColor = System.Drawing.Color.Black;
+            this.SalesProductSearchTB.Location = new System.Drawing.Point(56, 4);
+            this.SalesProductSearchTB.Margin = new System.Windows.Forms.Padding(0);
+            this.SalesProductSearchTB.Name = "SalesProductSearchTB";
+            this.SalesProductSearchTB.PreventEnterBeep = true;
+            this.SalesProductSearchTB.Size = new System.Drawing.Size(502, 20);
+            this.SalesProductSearchTB.TabIndex = 0;
+            this.SalesProductSearchTB.WatermarkText = "Enter Product ID or Product Name";
+            this.SalesProductSearchTB.TextChanged += new System.EventHandler(this.SalesProductSearchTB_TextChanged);
             // 
-            // ItemSearchLCI
+            // SalesProductSearchLCI
             // 
-            this.ItemSearchLCI.Control = this.ItemSearchTB;
-            this.ItemSearchLCI.Height = 28;
-            this.ItemSearchLCI.MinSize = new System.Drawing.Size(120, 0);
-            this.ItemSearchLCI.Name = "ItemSearchLCI";
-            this.ItemSearchLCI.Text = "Search:";
-            this.ItemSearchLCI.Width = 500;
+            this.SalesProductSearchLCI.Control = this.SalesProductSearchTB;
+            this.SalesProductSearchLCI.Height = 28;
+            this.SalesProductSearchLCI.MinSize = new System.Drawing.Size(120, 0);
+            this.SalesProductSearchLCI.Name = "SalesProductSearchLCI";
+            this.SalesProductSearchLCI.Text = "Search:";
+            this.SalesProductSearchLCI.Width = 100;
+            this.SalesProductSearchLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // AddLCI
+            // SalesProductSearchResultLCI
             // 
-            this.AddLCI.Control = this.AddB;
-            this.AddLCI.Height = 31;
-            this.AddLCI.MinSize = new System.Drawing.Size(32, 20);
-            this.AddLCI.Name = "AddLCI";
-            this.AddLCI.Width = 31;
+            this.SalesProductSearchResultLCI.Control = this.SalesProductSeachResultDGV;
+            this.SalesProductSearchResultLCI.Height = 100;
+            this.SalesProductSearchResultLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.SalesProductSearchResultLCI.Name = "SalesProductSearchResultLCI";
+            this.SalesProductSearchResultLCI.Text = "Result:";
+            this.SalesProductSearchResultLCI.Width = 100;
+            this.SalesProductSearchResultLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // ItemSearchResultLCI
+            // SalesCartLCI
             // 
-            this.ItemSearchResultLCI.Control = this.ItemSeachResultDGV;
-            this.ItemSearchResultLCI.Height = 100;
-            this.ItemSearchResultLCI.MinSize = new System.Drawing.Size(64, 18);
-            this.ItemSearchResultLCI.Name = "ItemSearchResultLCI";
-            this.ItemSearchResultLCI.Text = "Result:";
-            this.ItemSearchResultLCI.Width = 100;
-            this.ItemSearchResultLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            this.SalesCartLCI.Control = this.SalesCartDGV;
+            this.SalesCartLCI.Height = 300;
+            this.SalesCartLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.SalesCartLCI.Name = "SalesCartLCI";
+            this.SalesCartLCI.Text = "Cart:";
+            this.SalesCartLCI.Width = 100;
+            this.SalesCartLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // ItemsLCI
+            // SalesSubtotalLCI
             // 
-            this.ItemsLCI.Control = this.ItemsDGV;
-            this.ItemsLCI.Height = 300;
-            this.ItemsLCI.MinSize = new System.Drawing.Size(64, 18);
-            this.ItemsLCI.Name = "ItemsLCI";
-            this.ItemsLCI.Text = "Items:";
-            this.ItemsLCI.Width = 100;
-            this.ItemsLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            this.SalesSubtotalLCI.Control = this.SalesSubtotalL;
+            this.SalesSubtotalLCI.Height = 31;
+            this.SalesSubtotalLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.SalesSubtotalLCI.Name = "SalesSubtotalLCI";
+            this.SalesSubtotalLCI.Text = "Subtotal:";
+            this.SalesSubtotalLCI.Width = 60;
+            this.SalesSubtotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // SubtotalLCI
+            // SalesVATLCI
             // 
-            this.SubtotalLCI.Control = this.SubtotalL;
-            this.SubtotalLCI.Height = 31;
-            this.SubtotalLCI.MinSize = new System.Drawing.Size(64, 18);
-            this.SubtotalLCI.Name = "SubtotalLCI";
-            this.SubtotalLCI.Text = "Subtotal:";
-            this.SubtotalLCI.Width = 60;
-            this.SubtotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            this.SalesVATLCI.Control = this.SalesVATL;
+            this.SalesVATLCI.Height = 31;
+            this.SalesVATLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.SalesVATLCI.Name = "SalesVATLCI";
+            this.SalesVATLCI.Text = "VAT:";
+            this.SalesVATLCI.Width = 40;
+            this.SalesVATLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // layoutControlItem2
+            // SalesTotalLCI
             // 
-            this.layoutControlItem2.Control = this.VATL;
-            this.layoutControlItem2.Height = 31;
-            this.layoutControlItem2.MinSize = new System.Drawing.Size(64, 18);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Text = "VAT:";
-            this.layoutControlItem2.Width = 40;
-            this.layoutControlItem2.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
-            // 
-            // TotalLCI
-            // 
-            this.TotalLCI.Control = this.TotalL;
-            this.TotalLCI.Height = 31;
-            this.TotalLCI.MinSize = new System.Drawing.Size(64, 18);
-            this.TotalLCI.Name = "TotalLCI";
-            this.TotalLCI.Text = "Total:";
-            this.TotalLCI.Width = 100;
-            this.TotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            this.SalesTotalLCI.Control = this.SalesTotalL;
+            this.SalesTotalLCI.Height = 31;
+            this.SalesTotalLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.SalesTotalLCI.Name = "SalesTotalLCI";
+            this.SalesTotalLCI.Text = "Total:";
+            this.SalesTotalLCI.Width = 100;
+            this.SalesTotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // Main
             // 
@@ -546,11 +523,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main | Orion";
             this.Load += new System.EventHandler(this.Main_Load);
-            this.Resize += new System.EventHandler(this.Main_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).EndInit();
             this.SalesLC.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ItemsDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemSeachResultDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -577,19 +553,17 @@
         private DevComponents.DotNetBar.LabelItem StatusLI;
         private DevComponents.DotNetBar.LabelItem UserLI;
         private DevComponents.DotNetBar.Layout.LayoutControl SalesLC;
-        private DevComponents.DotNetBar.ButtonX AddB;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem AddLCI;
-        private DevComponents.DotNetBar.Controls.DataGridViewX ItemsDGV;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem ItemsLCI;
-        private DevComponents.DotNetBar.LabelX SubtotalL;
-        private DevComponents.DotNetBar.LabelX TotalL;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem SubtotalLCI;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem TotalLCI;
-        private DevComponents.DotNetBar.LabelX VATL;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem layoutControlItem2;
-        private DevComponents.DotNetBar.Controls.DataGridViewX ItemSeachResultDGV;
-        private DevComponents.DotNetBar.Controls.TextBoxX ItemSearchTB;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem ItemSearchLCI;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem ItemSearchResultLCI;
+        private DevComponents.DotNetBar.Controls.DataGridViewX SalesCartDGV;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem SalesCartLCI;
+        private DevComponents.DotNetBar.LabelX SalesSubtotalL;
+        private DevComponents.DotNetBar.LabelX SalesTotalL;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem SalesSubtotalLCI;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem SalesTotalLCI;
+        private DevComponents.DotNetBar.LabelX SalesVATL;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem SalesVATLCI;
+        private DevComponents.DotNetBar.Controls.DataGridViewX SalesProductSeachResultDGV;
+        private DevComponents.DotNetBar.Controls.TextBoxX SalesProductSearchTB;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem SalesProductSearchLCI;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem SalesProductSearchResultLCI;
     }
 }

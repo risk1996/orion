@@ -9,32 +9,17 @@ using DevComponents.DotNetBar;
 using MySql.Data.MySqlClient;
 
 namespace Orion {
-    public partial class Main : DevComponents.DotNetBar.RibbonForm {
-        DataTable pendingTransaction = new DataTable();
-        DataTable productTable = new DataTable();
+    public partial class Main : RibbonForm {
 
         public Main() {
             InitializeComponent();
         }
 
-        private void Main_Load(object sender, EventArgs e) {
-            MySqlDataReader productReader = new DbConnect().ExecQuery("SELECT product_id, product_name, product_price FROM product;");
-            productTable.Load(productReader);
-            pendingTransaction.Columns.Add("product_id");
-            pendingTransaction.Columns.Add("product_name");
-            pendingTransaction.Columns.Add("transaction_qty");
-            pendingTransaction.Columns.Add("transaction_discount");
-        }
-
-        private void Main_Resize(object sender, EventArgs e) {
-            ItemSearchLCI.Width = SalesLC.Width - AddLCI.Width - 1;
-        }
-
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
-        [System.Runtime.InteropServices.DllImportAttribute("user32.dll")]
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [System.Runtime.InteropServices.DllImportAttribute("user32.dll")]
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
         private void LocationLI_MouseDown(object sender, MouseEventArgs e) {
             if (e.Button == MouseButtons.Left) {
@@ -71,28 +56,69 @@ namespace Orion {
             WindowState = (WindowState == FormWindowState.Maximized) ? FormWindowState.Normal : FormWindowState.Maximized;
         }
 
-        private void ItemSearchTB_TextChanged(object sender, EventArgs e) {
-            string[] terms = DbConnect.EscapeLikeValue(ItemSearchTB.Text).Split(' ');
-            for (int i = 0; i < terms.Length; i++) terms[i] = "(product_id + ' ' + product_name) LIKE '%" + terms[i] + "%'";
-            DataRow[] productRows = productTable.Select(String.Join(" AND ", terms));
-            DataTable productTableResult = productTable.Clone();
-            productRows.CopyToDataTable(productTableResult, LoadOption.OverwriteChanges);
-            ItemSeachResultDGV.DataSource = productTableResult;
-            ItemSeachResultDGV.Columns["product_id"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ItemSeachResultDGV.Columns["product_name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
-            ItemSeachResultDGV.Columns["product_price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+        private void Main_Load(object sender, EventArgs e) {
+            Sales_Load();
         }
 
-        private void ItemSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            string selectedid = ItemSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-            MySqlDataReader productReader = new DbConnect().ExecQuery("SELECT product_id, product_name FROM product WHERE product_id = '" + selectedid + "'");
-            pendingTransaction.Load(productReader);
-            ItemsDGV.DataSource = pendingTransaction;
-            ItemsDGV.Columns["product_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ItemsDGV.Columns["product_name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ItemsDGV.Columns["transaction_qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ItemsDGV.Columns["transaction_discount"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+        #region Sales definition
+
+        DataTable SalesProductTable = new DataTable();
+        DataTable SalesProductTableResult = new DataTable();
+        DataTable SalesPendingTransaction = new DataTable();
+        
+        private void Sales_Load() {
+            MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
+            SalesProductTable.Load(SalesProductReader);
+            SalesProductTable.PrimaryKey = new DataColumn[] { SalesProductTable.Columns["product_id"] };
+            SalesProductTableResult.PrimaryKey = new DataColumn[] { SalesProductTableResult.Columns["product_id"] };
+            SalesProductTableResult.Columns.Add("product_id");
+            SalesProductTableResult.Columns.Add("product_name");
+            SalesProductTableResult.Columns.Add("product_price");
+            SalesProductTableResult.Columns.Add("product_stock");
+            SalesProductSeachResultDGV.DataSource                            = SalesProductTableResult;
+            SalesProductSeachResultDGV.Columns["product_id"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesProductSeachResultDGV.Columns["product_name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
+            SalesProductSeachResultDGV.Columns["product_price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesProductSeachResultDGV.Columns["product_stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["product_id"] };
+            SalesPendingTransaction.Columns.Add("product_id");
+            SalesPendingTransaction.Columns.Add("product_name");
+            SalesPendingTransaction.Columns.Add("product_price");
+            SalesPendingTransaction.Columns.Add("product_disc_pct");
+            SalesPendingTransaction.Columns.Add("transaction_qty");
+            SalesCartDGV.DataSource                                   = SalesPendingTransaction;
+            SalesCartDGV.Columns["product_id"].AutoSizeMode           = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["product_name"].AutoSizeMode         = DataGridViewAutoSizeColumnMode.Fill;
+            SalesCartDGV.Columns["product_price"].AutoSizeMode        = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["product_disc_pct"].AutoSizeMode     = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["transaction_qty"].AutoSizeMode      = DataGridViewAutoSizeColumnMode.DisplayedCells;
         }
+
+        private void SalesProductSearchTB_TextChanged(object sender, EventArgs e) {
+            string[] SalesSearchTerms = DbConnect.EscapeLikeValue(SalesProductSearchTB.Text).Split(' ');
+            for (int i = 0; i < SalesSearchTerms.Length; i++) SalesSearchTerms[i] = "(product_id + ' ' + product_name) LIKE '%" + SalesSearchTerms[i] + "%'";
+            string[] SalesProductSeachResultColumns = new string[] { "product_id", "product_name", "product_price", "product_stock" };
+            DataRow[] SalesProductSeachResultProductRows = new DataView(SalesProductTable).ToTable(false, SalesProductSeachResultColumns).Select(String.Join(" AND ", SalesSearchTerms));
+            SalesProductTableResult.Rows.Clear();
+            SalesProductSeachResultProductRows.CopyToDataTable(SalesProductTableResult, LoadOption.OverwriteChanges);
+        }
+
+        private void SalesProductSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            string SelectedProductResultID = DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString());
+            SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["product_id"] };
+            DataRow SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
+            if(SelectedProductRow == null) {
+                string[] ProductsColumn = new string[] { "product_id", "product_name", "product_price", "product_disc_pct" };
+                DataRow NewPendingProductRow = new DataView(SalesProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
+                SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
+                SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
+                SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] = 1;
+            } else {
+                SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] =
+                    int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"].ToString()) + 1;
+            }
+        }
+
+        #endregion
     }
 }
