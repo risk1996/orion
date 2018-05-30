@@ -108,26 +108,41 @@ namespace Orion {
 
         private void SalesProductSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
             string SelectedProductResultID = DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString());
+            int SelectedProductResultStock = int.Parse(DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[3].FormattedValue.ToString()));
             SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["product_id"] };
             DataRow SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
-            if(SelectedProductRow == null) {
-                string[] ProductsColumn = new string[] { "product_id", "product_name", "product_price", "product_disc_pct" };
-                DataRow NewPendingProductRow = new DataView(SalesProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
-                SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
-                SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
-                SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] = 1;
-            } else {
-                SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] =
-                    int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"].ToString()) + 1;
+            if (SelectedProductResultStock == 0)
+            {
+                MessageBox.Show("Stock Empty Please Restock");
             }
-            SalesRefreshPrice();
+            else {
+                if (SelectedProductRow == null)
+                {
+                    string[] ProductsColumn = new string[] { "product_id", "product_name", "product_price", "product_disc_pct" };
+                    DataRow NewPendingProductRow = new DataView(SalesProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
+                    SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
+                    SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
+                    SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] = 1;
+                }
+                else
+                {
+                     int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"].ToString()) + 1;
+                }
+                SalesRefreshPrice();
+            }
         }
 
         private void SalesRefreshPrice() {
             double subtotal = 0;
             foreach(DataRow dr in SalesPendingTransaction.Rows) {
-                subtotal += (double.Parse(dr["product_price"].ToString()) * (100.0 - double.Parse(dr["product_disc_pct"].ToString())) / 100.0) *
-                    double.Parse(dr["transaction_qty"].ToString());
+                if(String.IsNullOrEmpty(dr["product_disc_pct"].ToString()))
+                {
+                    subtotal += double.Parse(dr["product_price"].ToString()) * double.Parse(dr["transaction_qty"].ToString());
+                }
+                else {
+                    subtotal += (double.Parse(dr["product_price"].ToString()) * (100.0 - double.Parse(dr["product_disc_pct"].ToString())) / 100.0) *
+                 double.Parse(dr["transaction_qty"].ToString());
+                }
             }
             SalesSubtotalL.Text = String.Format("Rp {0:###,##0.00}", subtotal);
             SalesVATL.Text      = String.Format("Rp {0:###,##0.00}", subtotal * 0.1);
