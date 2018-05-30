@@ -126,6 +126,7 @@ namespace Orion {
                 }
                 else
                 {
+                    SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] =
                      int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"].ToString()) + 1;
                 }
                 SalesRefreshPrice();
