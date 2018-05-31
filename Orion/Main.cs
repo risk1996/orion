@@ -109,24 +109,26 @@ namespace Orion {
         }
 
         private void SalesProductSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            string SelectedProductResultID = DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString());
-            int SelectedProductResultStock = int.Parse(DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[3].FormattedValue.ToString()));
-            SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["product_id"] };
-            DataRow SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
-            if (SelectedProductResultStock == 0) ToastNotification.Show(this, "Insuficient Stock");
-            else {
-                if (SelectedProductRow == null) {
-                    string[] ProductsColumn = new string[] { "product_id", "product_name", "product_price", "product_disc_pct" };
-                    DataRow NewPendingProductRow = new DataView(SalesProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
-                    SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
-                    SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
-                    SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] = 1;
-                } else if (SelectedProductResultStock >= int.Parse(SelectedProductRow["transaction_qty"].ToString()) + 1) {
-                    SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] =
-                     int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"].ToString()) + 1;
-                } else ToastNotification.Show(this, "Insuficient Stock");
-                SalesRefreshPrice();
-            }
+            if(e.RowIndex >= 0) {
+                string SelectedProductResultID = DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString());
+                int SelectedProductResultStock = int.Parse(DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[3].FormattedValue.ToString()));
+                SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["product_id"] };
+                DataRow SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
+                if (SelectedProductResultStock == 0) ToastNotification.Show(this, "Insuficient Stock");
+                else {
+                    if (SelectedProductRow == null) {
+                        string[] ProductsColumn = new string[] { "product_id", "product_name", "product_price", "product_disc_pct" };
+                        DataRow NewPendingProductRow = new DataView(SalesProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
+                        SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
+                        SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
+                        SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] = 1;
+                    } else if (SelectedProductResultStock >= int.Parse(SelectedProductRow["transaction_qty"].ToString()) + 1) {
+                        SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] =
+                         int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"].ToString()) + 1;
+                    } else ToastNotification.Show(this, "Insuficient Stock");
+                    SalesRefreshPrice();
+                }
+            } 
         }
 
         private void SalesCartDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
