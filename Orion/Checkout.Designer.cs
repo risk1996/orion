@@ -120,8 +120,8 @@ namespace Orion {
             this.CheckoutChangeL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutChangeL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutChangeL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 133);
-            this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 159);
+            this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutChangeL.Name = "CheckoutChangeL";
             this.CheckoutChangeL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutChangeL.TabIndex = 3;
@@ -136,8 +136,8 @@ namespace Orion {
             this.CheckoutPriceL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutPriceL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutPriceL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 83);
-            this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 109);
+            this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutPriceL.Name = "CheckoutPriceL";
             this.CheckoutPriceL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutPriceL.TabIndex = 2;
@@ -157,12 +157,15 @@ namespace Orion {
             this.CheckoutPaymentMTB.ForeColor = System.Drawing.Color.Black;
             this.CheckoutPaymentMTB.Location = new System.Drawing.Point(67, 54);
             this.CheckoutPaymentMTB.Margin = new System.Windows.Forms.Padding(0);
-            this.CheckoutPaymentMTB.Mask = "Rp ###.###.##0,00";
+            this.CheckoutPaymentMTB.Mask = "Rp 99999999000";
             this.CheckoutPaymentMTB.Name = "CheckoutPaymentMTB";
+            this.CheckoutPaymentMTB.PromptChar = ' ';
+            this.CheckoutPaymentMTB.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.CheckoutPaymentMTB.Size = new System.Drawing.Size(313, 47);
             this.CheckoutPaymentMTB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CheckoutPaymentMTB.TabIndex = 1;
             this.CheckoutPaymentMTB.Text = "";
+            this.CheckoutPaymentMTB.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // CheckoutInvoiceNoLCI
             // 
@@ -230,7 +233,6 @@ namespace Orion {
             this.Controls.Add(this.CheckoutLC);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
