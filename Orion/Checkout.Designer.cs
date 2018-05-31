@@ -71,7 +71,7 @@ namespace Orion {
             this.CheckoutCancelB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CheckoutCancelB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.CheckoutCancelB.Font = new System.Drawing.Font("Segoe UI", 15.75F);
-            this.CheckoutCancelB.Location = new System.Drawing.Point(4, 183);
+            this.CheckoutCancelB.Location = new System.Drawing.Point(4, 209);
             this.CheckoutCancelB.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutCancelB.Name = "CheckoutCancelB";
             this.CheckoutCancelB.Size = new System.Drawing.Size(107, 42);
@@ -85,7 +85,7 @@ namespace Orion {
             this.CheckoutConfirmB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CheckoutConfirmB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.CheckoutConfirmB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
-            this.CheckoutConfirmB.Location = new System.Drawing.Point(119, 183);
+            this.CheckoutConfirmB.Location = new System.Drawing.Point(119, 209);
             this.CheckoutConfirmB.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutConfirmB.Name = "CheckoutConfirmB";
             this.CheckoutConfirmB.Size = new System.Drawing.Size(261, 42);
@@ -119,7 +119,7 @@ namespace Orion {
             this.CheckoutChangeL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutChangeL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutChangeL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 133);
+            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 159);
             this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutChangeL.Name = "CheckoutChangeL";
             this.CheckoutChangeL.Size = new System.Drawing.Size(313, 42);
@@ -135,7 +135,7 @@ namespace Orion {
             this.CheckoutPriceL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutPriceL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutPriceL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 83);
+            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 109);
             this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutPriceL.Name = "CheckoutPriceL";
             this.CheckoutPriceL.Size = new System.Drawing.Size(313, 42);
@@ -152,11 +152,13 @@ namespace Orion {
             this.CheckoutPaymentMTB.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutPaymentMTB.ButtonClear.Visible = true;
             this.CheckoutPaymentMTB.DisabledBackColor = System.Drawing.Color.White;
+            this.CheckoutPaymentMTB.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CheckoutPaymentMTB.ForeColor = System.Drawing.Color.Black;
             this.CheckoutPaymentMTB.Location = new System.Drawing.Point(67, 54);
             this.CheckoutPaymentMTB.Margin = new System.Windows.Forms.Padding(0);
+            this.CheckoutPaymentMTB.Mask = "Rp ###.###.##0,00";
             this.CheckoutPaymentMTB.Name = "CheckoutPaymentMTB";
-            this.CheckoutPaymentMTB.Size = new System.Drawing.Size(313, 21);
+            this.CheckoutPaymentMTB.Size = new System.Drawing.Size(313, 47);
             this.CheckoutPaymentMTB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CheckoutPaymentMTB.TabIndex = 1;
             this.CheckoutPaymentMTB.Text = "";
@@ -174,7 +176,7 @@ namespace Orion {
             // CheckoutPaymentLCI
             // 
             this.CheckoutPaymentLCI.Control = this.CheckoutPaymentMTB;
-            this.CheckoutPaymentLCI.Height = 29;
+            this.CheckoutPaymentLCI.Height = 55;
             this.CheckoutPaymentLCI.MinSize = new System.Drawing.Size(64, 18);
             this.CheckoutPaymentLCI.Name = "CheckoutPaymentLCI";
             this.CheckoutPaymentLCI.Text = "Payment:";
