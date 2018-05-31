@@ -63,7 +63,7 @@ namespace Orion {
             this.CheckoutChangeLCI,
             this.CheckoutCancelLCI,
             this.CheckoutConfirmLCI});
-            this.CheckoutLC.Size = new System.Drawing.Size(384, 261);
+            this.CheckoutLC.Size = new System.Drawing.Size(384, 251);
             this.CheckoutLC.TabIndex = 0;
             // 
             // CheckoutCancelB
@@ -71,7 +71,7 @@ namespace Orion {
             this.CheckoutCancelB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CheckoutCancelB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.CheckoutCancelB.Font = new System.Drawing.Font("Segoe UI", 15.75F);
-            this.CheckoutCancelB.Location = new System.Drawing.Point(4, 209);
+            this.CheckoutCancelB.Location = new System.Drawing.Point(4, 204);
             this.CheckoutCancelB.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutCancelB.Name = "CheckoutCancelB";
             this.CheckoutCancelB.Size = new System.Drawing.Size(107, 42);
@@ -86,7 +86,7 @@ namespace Orion {
             this.CheckoutConfirmB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CheckoutConfirmB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.CheckoutConfirmB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
-            this.CheckoutConfirmB.Location = new System.Drawing.Point(119, 209);
+            this.CheckoutConfirmB.Location = new System.Drawing.Point(119, 204);
             this.CheckoutConfirmB.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutConfirmB.Name = "CheckoutConfirmB";
             this.CheckoutConfirmB.Size = new System.Drawing.Size(261, 42);
@@ -102,12 +102,12 @@ namespace Orion {
             // 
             // 
             this.CheckoutInvoiceNoL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.CheckoutInvoiceNoL.Font = new System.Drawing.Font("Segoe UI", 24F);
+            this.CheckoutInvoiceNoL.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CheckoutInvoiceNoL.ForeColor = System.Drawing.Color.Black;
             this.CheckoutInvoiceNoL.Location = new System.Drawing.Point(67, 4);
             this.CheckoutInvoiceNoL.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutInvoiceNoL.Name = "CheckoutInvoiceNoL";
-            this.CheckoutInvoiceNoL.Size = new System.Drawing.Size(313, 42);
+            this.CheckoutInvoiceNoL.Size = new System.Drawing.Size(313, 37);
             this.CheckoutInvoiceNoL.TabIndex = 0;
             this.CheckoutInvoiceNoL.Text = "<INVOICE NO>";
             // 
@@ -120,8 +120,8 @@ namespace Orion {
             this.CheckoutChangeL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutChangeL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutChangeL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 133);
-            this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 154);
+            this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutChangeL.Name = "CheckoutChangeL";
             this.CheckoutChangeL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutChangeL.TabIndex = 3;
@@ -136,8 +136,8 @@ namespace Orion {
             this.CheckoutPriceL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutPriceL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutPriceL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 83);
-            this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 104);
+            this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutPriceL.Name = "CheckoutPriceL";
             this.CheckoutPriceL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutPriceL.TabIndex = 2;
@@ -155,7 +155,7 @@ namespace Orion {
             this.CheckoutPaymentMTB.DisabledBackColor = System.Drawing.Color.White;
             this.CheckoutPaymentMTB.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CheckoutPaymentMTB.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutPaymentMTB.Location = new System.Drawing.Point(67, 54);
+            this.CheckoutPaymentMTB.Location = new System.Drawing.Point(67, 49);
             this.CheckoutPaymentMTB.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutPaymentMTB.Mask = "Rp ###.###.##0,00";
             this.CheckoutPaymentMTB.Name = "CheckoutPaymentMTB";
@@ -167,7 +167,7 @@ namespace Orion {
             // CheckoutInvoiceNoLCI
             // 
             this.CheckoutInvoiceNoLCI.Control = this.CheckoutInvoiceNoL;
-            this.CheckoutInvoiceNoLCI.Height = 50;
+            this.CheckoutInvoiceNoLCI.Height = 45;
             this.CheckoutInvoiceNoLCI.MinSize = new System.Drawing.Size(64, 18);
             this.CheckoutInvoiceNoLCI.Name = "CheckoutInvoiceNoLCI";
             this.CheckoutInvoiceNoLCI.Text = "Invoice No:";
@@ -226,11 +226,10 @@ namespace Orion {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 261);
+            this.ClientSize = new System.Drawing.Size(384, 251);
             this.Controls.Add(this.CheckoutLC);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
