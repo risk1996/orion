@@ -96,7 +96,14 @@ namespace Orion {
             SalesCartDGV.Columns["product_price"].AutoSizeMode        = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["product_disc_pct"].AutoSizeMode     = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["transaction_qty"].AutoSizeMode      = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesLC_SizeChanged(new object(), new EventArgs());
             SalesRefreshPrice();
+        }
+
+        private void SalesLC_SizeChanged(object sender, EventArgs e) {
+            int SalesOtherComponentHeight = SalesProductSearchLCI.Height + SalesSubtotalLCI.Height + SalesTotalLCI.Height;
+            SalesProductSearchResultLCI.Height = (int)((SalesLC.Height - SalesOtherComponentHeight) * 1 / 3.5);
+            SalesCartLCI.Height = (int)((SalesLC.Height - SalesOtherComponentHeight) * 2.5 / 3.5);
         }
 
         private void SalesProductSearchTB_TextChanged(object sender, EventArgs e) {
@@ -149,6 +156,11 @@ namespace Orion {
             SalesVATL.Text      = String.Format("Rp {0:###,##0.00}", subtotal * 0.1);
             SalesTotalL.Text    = String.Format("Rp {0:###,##0.00}", subtotal * 1.1);
             return subtotal * 1.1;
+        }
+
+        private void SalesClearCartBI_Click(object sender, EventArgs e) {
+            SalesPendingTransaction.Clear();
+            SalesRefreshPrice();
         }
 
         private void SalesCheckoutB_Click(object sender, EventArgs e) {

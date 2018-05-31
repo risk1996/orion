@@ -19,7 +19,7 @@ namespace Orion {
         private void Login_Load(object sender, EventArgs e) {
             ProgressCP.IsRunning = true;
             if (Properties.Settings.Default.LoginRemember) {
-                UsernameTB.Text = Properties.Settings.Default.LoginUsername;
+                UsernameTB.Text    = Properties.Settings.Default.LoginUsername;
                 RememberCB.Checked = Properties.Settings.Default.LoginRemember;
                 PasswordTB.Select();
                 PasswordTB.Focus();
