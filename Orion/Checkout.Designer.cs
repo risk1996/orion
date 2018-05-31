@@ -157,12 +157,15 @@ namespace Orion {
             this.CheckoutPaymentMTB.ForeColor = System.Drawing.Color.Black;
             this.CheckoutPaymentMTB.Location = new System.Drawing.Point(67, 49);
             this.CheckoutPaymentMTB.Margin = new System.Windows.Forms.Padding(0);
-            this.CheckoutPaymentMTB.Mask = "Rp ###.###.##0,00";
+            this.CheckoutPaymentMTB.Mask = "Rp 99999999000";
             this.CheckoutPaymentMTB.Name = "CheckoutPaymentMTB";
+            this.CheckoutPaymentMTB.PromptChar = ' ';
+            this.CheckoutPaymentMTB.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.CheckoutPaymentMTB.Size = new System.Drawing.Size(313, 47);
             this.CheckoutPaymentMTB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CheckoutPaymentMTB.TabIndex = 1;
             this.CheckoutPaymentMTB.Text = "";
+            this.CheckoutPaymentMTB.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // CheckoutInvoiceNoLCI
             // 

@@ -74,28 +74,28 @@ namespace Orion {
             MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
             SalesProductTable.Load(SalesProductReader);
             SalesProductTable.PrimaryKey = new DataColumn[] { SalesProductTable.Columns["product_id"] };
-            SalesProductTableResult.PrimaryKey = new DataColumn[] { SalesProductTableResult.Columns["product_id"] };
-            SalesProductTableResult.Columns.Add("product_id");
-            SalesProductTableResult.Columns.Add("product_name");
-            SalesProductTableResult.Columns.Add("product_price");
-            SalesProductTableResult.Columns.Add("product_stock");
-            SalesProductSeachResultDGV.DataSource                            = SalesProductTableResult;
-            SalesProductSeachResultDGV.Columns["product_id"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesProductSeachResultDGV.Columns["product_name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
-            SalesProductSeachResultDGV.Columns["product_price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesProductSeachResultDGV.Columns["product_stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["product_id"] };
-            SalesPendingTransaction.Columns.Add("product_id");
-            SalesPendingTransaction.Columns.Add("product_name");
-            SalesPendingTransaction.Columns.Add("product_price");
-            SalesPendingTransaction.Columns.Add("product_disc_pct");
-            SalesPendingTransaction.Columns.Add("transaction_qty");
-            SalesCartDGV.DataSource                                   = SalesPendingTransaction;
-            SalesCartDGV.Columns["product_id"].AutoSizeMode           = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesCartDGV.Columns["product_name"].AutoSizeMode         = DataGridViewAutoSizeColumnMode.Fill;
-            SalesCartDGV.Columns["product_price"].AutoSizeMode        = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesCartDGV.Columns["product_disc_pct"].AutoSizeMode     = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesCartDGV.Columns["transaction_qty"].AutoSizeMode      = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesProductTableResult.Columns.Add("ID");
+            SalesProductTableResult.Columns.Add("Name");
+            SalesProductTableResult.Columns.Add("Price");
+            SalesProductTableResult.Columns.Add("Stock");
+            SalesProductSeachResultDGV.DataSource                    = SalesProductTableResult;
+            SalesProductSeachResultDGV.Columns["ID"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesProductSeachResultDGV.Columns["Name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
+            SalesProductSeachResultDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesProductSeachResultDGV.Columns["Stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["ID"] };
+            SalesPendingTransaction.Columns.Add("ID");
+            SalesPendingTransaction.Columns.Add("Name");
+            SalesPendingTransaction.Columns.Add("Price");
+            SalesPendingTransaction.Columns.Add("Disc");
+            SalesPendingTransaction.Columns.Add("Qty");
+            SalesCartDGV.DataSource                    = SalesPendingTransaction;
+            SalesCartDGV.Columns["ID"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["Name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
+            SalesCartDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["Disc"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["Qty"].AutoSizeMode   = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesProductTableResult.PrimaryKey = new DataColumn[] { SalesProductTableResult.Columns["ID"] };
             SalesLC_SizeChanged(new object(), new EventArgs());
             SalesRefreshPrice();
         }
@@ -119,7 +119,7 @@ namespace Orion {
             if(e.RowIndex >= 0) {
                 string SelectedProductResultID = DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString());
                 int SelectedProductResultStock = int.Parse(DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[3].FormattedValue.ToString()));
-                SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["product_id"] };
+                SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["ID"] };
                 DataRow SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
                 if (SelectedProductResultStock == 0) ToastNotification.Show(this, "Insuficient Stock");
                 else {
@@ -128,10 +128,10 @@ namespace Orion {
                         DataRow NewPendingProductRow = new DataView(SalesProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
                         SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
                         SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
-                        SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] = 1;
-                    } else if (SelectedProductResultStock >= int.Parse(SelectedProductRow["transaction_qty"].ToString()) + 1) {
-                        SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"] =
-                         int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["transaction_qty"].ToString()) + 1;
+                        SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"] = 1;
+                    } else if (SelectedProductResultStock >= int.Parse(SelectedProductRow["Qty"].ToString()) + 1) {
+                        SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"] =
+                         int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"].ToString()) + 1;
                     } else ToastNotification.Show(this, "Insuficient Stock");
                     SalesRefreshPrice();
                 }
@@ -139,18 +139,18 @@ namespace Orion {
         }
 
         private void SalesCartDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            int SelectedProductResultStock = int.Parse(DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[3].FormattedValue.ToString()));
-            int.TryParse(SalesPendingTransaction.Rows[e.RowIndex]["transaction_qty"].ToString(), out int NewSelectedProductResultStock);
-            SalesPendingTransaction.Rows[e.RowIndex]["transaction_qty"] = Math.Max(Math.Min(NewSelectedProductResultStock, SelectedProductResultStock), 0).ToString();
-            if(int.Parse(SalesPendingTransaction.Rows[e.RowIndex]["transaction_qty"].ToString()) == 0) SalesPendingTransaction.Rows.RemoveAt(e.RowIndex);
+            int SelectedProductResultStock = int.Parse(SalesProductTable.Rows.Find(SalesCartDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString())["product_stock"].ToString());
+            int.TryParse(SalesPendingTransaction.Rows[e.RowIndex]["Qty"].ToString(), out int NewSelectedProductResultStock);
+            SalesPendingTransaction.Rows[e.RowIndex]["Qty"] = Math.Max(Math.Min(NewSelectedProductResultStock, SelectedProductResultStock), 0).ToString();
+            ToastNotification.Show(this, SelectedProductResultStock.ToString() + " " + NewSelectedProductResultStock.ToString());
             SalesRefreshPrice();
         }
 
         private double SalesRefreshPrice() {
             double subtotal = 0;
             foreach(DataRow dr in SalesPendingTransaction.Rows) {
-                subtotal += double.Parse(dr["product_price"].ToString()) * double.Parse(dr["transaction_qty"].ToString())
-                    * (String.IsNullOrEmpty(dr["product_disc_pct"].ToString())?1: ((100.0 - double.Parse(dr["product_disc_pct"].ToString())) / 100.0));
+                subtotal += double.Parse(dr["Price"].ToString()) * double.Parse(dr["Qty"].ToString())
+                    * (String.IsNullOrEmpty(dr["Disc"].ToString())?1: ((100.0 - double.Parse(dr["Qty"].ToString())) / 100.0));
             }
             SalesSubtotalL.Text = String.Format("Rp {0:###,##0.00}", subtotal);
             SalesVATL.Text      = String.Format("Rp {0:###,##0.00}", subtotal * 0.1);
