@@ -45,11 +45,6 @@ namespace Orion {
                     Properties.Settings.Default.Save();
                     new Main().Show();
                     Close();
-                    //new Thread(() => {
-                    //    Thread.CurrentThread.IsBackground = true;
-                    //    Main main = new Main();
-                    //    Invoke((MethodInvoker)delegate { main.Show(); Close(); });
-                    //}).Start();
                 } else ToastNotification.Show(this, "Invalid login credentials");
             } else ToastNotification.Show(this, "Invalid login credentials");
             ProgressCP.Visible = false;

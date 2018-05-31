@@ -13,6 +13,7 @@ namespace Orion {
 
         public Main() {
             InitializeComponent();
+            UserLI.Text = Properties.Settings.Default.LoginUsername;
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -21,6 +22,7 @@ namespace Orion {
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
+        public static string totalPrice = "";
         private void LocationLI_MouseDown(object sender, MouseEventArgs e) {
             if (e.Button == MouseButtons.Left) {
                 ReleaseCapture();
@@ -45,7 +47,7 @@ namespace Orion {
         }
 
         private void MaximizeBI_Click(object sender, EventArgs e) {
-            WindowState = FormWindowState.Maximized;
+            WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
         }
 
         private void ExitBI_Click(object sender, EventArgs e) {
@@ -53,7 +55,7 @@ namespace Orion {
         }
 
         private void LocationLI_DoubleClick(object sender, EventArgs e) {
-            WindowState = (WindowState == FormWindowState.Maximized) ? FormWindowState.Normal : FormWindowState.Maximized;
+            MaximizeBI_Click(sender, e);
         }
 
         private void Main_Load(object sender, EventArgs e) {
@@ -147,5 +149,11 @@ namespace Orion {
         }
 
         #endregion
+
+        private void CheckoutB_Click(object sender, EventArgs e) {
+            totalPrice = SalesTotalL.Text;
+            new Checkout().Show();
+            this.Enabled = false;
+        }
     }
 }

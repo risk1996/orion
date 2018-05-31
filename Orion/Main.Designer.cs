@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -56,12 +57,15 @@
             this.SalesSubtotalL = new DevComponents.DotNetBar.LabelX();
             this.SalesTotalL = new DevComponents.DotNetBar.LabelX();
             this.SalesVATL = new DevComponents.DotNetBar.LabelX();
+            this.CheckoutB = new DevComponents.DotNetBar.ButtonX();
             this.SalesProductSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesProductSearchResultLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesCartLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesSubtotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesVATLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesTotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.SalesCheckoutLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).BeginInit();
@@ -211,7 +215,6 @@
             this.LocationLI.Stretch = true;
             this.LocationLI.Text = "Orion";
             this.LocationLI.TextAlignment = System.Drawing.StringAlignment.Center;
-            this.LocationLI.DoubleClick += new System.EventHandler(this.LocationLI_DoubleClick);
             this.LocationLI.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LocationLI_MouseDown);
             // 
             // CalcBI
@@ -402,6 +405,7 @@
             this.SalesLC.Controls.Add(this.SalesVATL);
             this.SalesLC.Controls.Add(this.SalesProductSeachResultDGV);
             this.SalesLC.Controls.Add(this.SalesProductSearchTB);
+            this.SalesLC.Controls.Add(this.CheckoutB);
             this.SalesLC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SalesLC.ForeColor = System.Drawing.Color.Black;
             this.SalesLC.Location = new System.Drawing.Point(217, 32);
@@ -415,7 +419,8 @@
             this.SalesCartLCI,
             this.SalesSubtotalLCI,
             this.SalesVATLCI,
-            this.SalesTotalLCI});
+            this.SalesTotalLCI,
+            this.SalesCheckoutLCI});
             this.SalesLC.Size = new System.Drawing.Size(562, 505);
             this.SalesLC.TabIndex = 9;
             // 
@@ -443,7 +448,7 @@
             this.SalesTotalL.Location = new System.Drawing.Point(56, 469);
             this.SalesTotalL.Margin = new System.Windows.Forms.Padding(0);
             this.SalesTotalL.Name = "SalesTotalL";
-            this.SalesTotalL.Size = new System.Drawing.Size(502, 32);
+            this.SalesTotalL.Size = new System.Drawing.Size(277, 32);
             this.SalesTotalL.TabIndex = 5;
             this.SalesTotalL.Text = "<TOTAL>";
             // 
@@ -461,6 +466,19 @@
             this.SalesVATL.Size = new System.Drawing.Size(165, 29);
             this.SalesVATL.TabIndex = 4;
             this.SalesVATL.Text = "<VAT>";
+            // 
+            // CheckoutB
+            // 
+            this.CheckoutB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.CheckoutB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.CheckoutB.Location = new System.Drawing.Point(341, 469);
+            this.CheckoutB.Margin = new System.Windows.Forms.Padding(0);
+            this.CheckoutB.Name = "CheckoutB";
+            this.CheckoutB.Size = new System.Drawing.Size(217, 32);
+            this.CheckoutB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CheckoutB.TabIndex = 6;
+            this.CheckoutB.Text = "Checkout";
+            this.CheckoutB.Click += new System.EventHandler(this.CheckoutB_Click);
             // 
             // SalesProductSearchLCI
             // 
@@ -519,8 +537,22 @@
             this.SalesTotalLCI.MinSize = new System.Drawing.Size(64, 18);
             this.SalesTotalLCI.Name = "SalesTotalLCI";
             this.SalesTotalLCI.Text = "Total:";
-            this.SalesTotalLCI.Width = 100;
+            this.SalesTotalLCI.Width = 60;
             this.SalesTotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // SalesCheckoutLCI
+            // 
+            this.SalesCheckoutLCI.Control = this.CheckoutB;
+            this.SalesCheckoutLCI.Height = 31;
+            this.SalesCheckoutLCI.MinSize = new System.Drawing.Size(32, 20);
+            this.SalesCheckoutLCI.Name = "SalesCheckoutLCI";
+            this.SalesCheckoutLCI.Width = 40;
+            this.SalesCheckoutLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // styleManager1
+            // 
+            this.styleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro;
+            this.styleManager1.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(115)))), ((int)(((byte)(199))))));
             // 
             // Main
             // 
@@ -577,5 +609,8 @@
         private DevComponents.DotNetBar.Controls.TextBoxX SalesProductSearchTB;
         private DevComponents.DotNetBar.Layout.LayoutControlItem SalesProductSearchLCI;
         private DevComponents.DotNetBar.Layout.LayoutControlItem SalesProductSearchResultLCI;
+        private DevComponents.DotNetBar.StyleManager styleManager1;
+        private DevComponents.DotNetBar.ButtonX CheckoutB;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem SalesCheckoutLCI;
     }
 }
