@@ -14,11 +14,15 @@ namespace Orion {
         }
 
         private void Checkout_Load(object sender, EventArgs e) {
-            
+            CheckoutPriceL.Text = String.Format("Rp {0:###,##0.00}", Main.SalesTotalPrice);
         }
 
         private void Checkout_FormClosed(object sender, FormClosedEventArgs e) {
-            
+
+        }
+
+        private void CheckoutCancelB_Click(object sender, EventArgs e) {
+            this.Hide();
         }
     }
 }

@@ -79,6 +79,7 @@ namespace Orion {
             this.CheckoutCancelB.Symbol = "";
             this.CheckoutCancelB.TabIndex = 4;
             this.CheckoutCancelB.Text = "Cancel";
+            this.CheckoutCancelB.Click += new System.EventHandler(this.CheckoutCancelB_Click);
             // 
             // CheckoutConfirmB
             // 
@@ -119,8 +120,8 @@ namespace Orion {
             this.CheckoutChangeL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutChangeL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutChangeL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 159);
-            this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0);
+            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 133);
+            this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutChangeL.Name = "CheckoutChangeL";
             this.CheckoutChangeL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutChangeL.TabIndex = 3;
@@ -135,8 +136,8 @@ namespace Orion {
             this.CheckoutPriceL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutPriceL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutPriceL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 109);
-            this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0);
+            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 83);
+            this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutPriceL.Name = "CheckoutPriceL";
             this.CheckoutPriceL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutPriceL.TabIndex = 2;

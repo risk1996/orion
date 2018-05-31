@@ -22,7 +22,6 @@ namespace Orion {
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
-        public static string totalPrice = "";
         private void LocationLI_MouseDown(object sender, MouseEventArgs e) {
             if (e.Button == MouseButtons.Left) {
                 ReleaseCapture();
@@ -65,7 +64,8 @@ namespace Orion {
         }
 
         #region Sales definition
-
+        
+        public static double SalesTotalPrice = 0;
         DataTable SalesProductTable = new DataTable();
         DataTable SalesProductTableResult = new DataTable();
         DataTable SalesPendingTransaction = new DataTable();
@@ -144,7 +144,7 @@ namespace Orion {
             SalesRefreshPrice();
         }
 
-        private void SalesRefreshPrice() {
+        private double SalesRefreshPrice() {
             double subtotal = 0;
             foreach(DataRow dr in SalesPendingTransaction.Rows) {
                 subtotal += double.Parse(dr["product_price"].ToString()) * double.Parse(dr["transaction_qty"].ToString())
@@ -153,6 +153,7 @@ namespace Orion {
             SalesSubtotalL.Text = String.Format("Rp {0:###,##0.00}", subtotal);
             SalesVATL.Text      = String.Format("Rp {0:###,##0.00}", subtotal * 0.1);
             SalesTotalL.Text    = String.Format("Rp {0:###,##0.00}", subtotal * 1.1);
+            return subtotal * 1.1;
         }
 
         private void SalesClearCartBI_Click(object sender, EventArgs e) {
@@ -161,7 +162,7 @@ namespace Orion {
         }
 
         private void SalesCheckoutB_Click(object sender, EventArgs e) {
-            totalPrice = SalesTotalL.Text;
+            SalesTotalPrice = SalesRefreshPrice();
             Opacity = .5;
             new Checkout().ShowDialog();
             Opacity = 1.0;
