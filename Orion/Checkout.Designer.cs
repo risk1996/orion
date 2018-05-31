@@ -30,13 +30,13 @@ namespace Orion {
             this.CheckoutInvoiceNoL = new DevComponents.DotNetBar.LabelX();
             this.CheckoutChangeL = new DevComponents.DotNetBar.LabelX();
             this.CheckoutPriceL = new DevComponents.DotNetBar.LabelX();
-            this.CheckoutInputAmountMTB = new DevComponents.DotNetBar.Controls.MaskedTextBoxAdv();
+            this.CheckoutPaymentMTB = new DevComponents.DotNetBar.Controls.MaskedTextBoxAdv();
             this.CheckoutCancelLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutConfirmLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutInvoiceNoLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutChangeLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutPriceLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.CheckoutInputAmmountLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.CheckoutPaymentLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutLC.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +48,7 @@ namespace Orion {
             this.CheckoutLC.Controls.Add(this.CheckoutInvoiceNoL);
             this.CheckoutLC.Controls.Add(this.CheckoutChangeL);
             this.CheckoutLC.Controls.Add(this.CheckoutPriceL);
-            this.CheckoutLC.Controls.Add(this.CheckoutInputAmountMTB);
+            this.CheckoutLC.Controls.Add(this.CheckoutPaymentMTB);
             this.CheckoutLC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CheckoutLC.ForeColor = System.Drawing.Color.Black;
             this.CheckoutLC.Location = new System.Drawing.Point(0, 0);
@@ -58,7 +58,7 @@ namespace Orion {
             // 
             this.CheckoutLC.RootGroup.Items.AddRange(new DevComponents.DotNetBar.Layout.LayoutItemBase[] {
             this.CheckoutInvoiceNoLCI,
-            this.CheckoutInputAmmountLCI,
+            this.CheckoutPaymentLCI,
             this.CheckoutPriceLCI,
             this.CheckoutChangeLCI,
             this.CheckoutCancelLCI,
@@ -98,10 +98,10 @@ namespace Orion {
             // 
             this.CheckoutInvoiceNoL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutInvoiceNoL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutInvoiceNoL.Location = new System.Drawing.Point(70, 4);
+            this.CheckoutInvoiceNoL.Location = new System.Drawing.Point(67, 4);
             this.CheckoutInvoiceNoL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutInvoiceNoL.Name = "CheckoutInvoiceNoL";
-            this.CheckoutInvoiceNoL.Size = new System.Drawing.Size(310, 23);
+            this.CheckoutInvoiceNoL.Size = new System.Drawing.Size(313, 23);
             this.CheckoutInvoiceNoL.TabIndex = 0;
             this.CheckoutInvoiceNoL.Text = "<INVOICE NO>";
             // 
@@ -113,10 +113,10 @@ namespace Orion {
             // 
             this.CheckoutChangeL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutChangeL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutChangeL.Location = new System.Drawing.Point(70, 95);
+            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 95);
             this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutChangeL.Name = "CheckoutChangeL";
-            this.CheckoutChangeL.Size = new System.Drawing.Size(310, 23);
+            this.CheckoutChangeL.Size = new System.Drawing.Size(313, 23);
             this.CheckoutChangeL.TabIndex = 3;
             this.CheckoutChangeL.Text = "<CHANGE>";
             // 
@@ -128,31 +128,31 @@ namespace Orion {
             // 
             this.CheckoutPriceL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.CheckoutPriceL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutPriceL.Location = new System.Drawing.Point(70, 64);
+            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 64);
             this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutPriceL.Name = "CheckoutPriceL";
-            this.CheckoutPriceL.Size = new System.Drawing.Size(310, 23);
+            this.CheckoutPriceL.Size = new System.Drawing.Size(313, 23);
             this.CheckoutPriceL.TabIndex = 2;
             this.CheckoutPriceL.Text = "<PRICE>";
             // 
-            // CheckoutInputAmountMTB
+            // CheckoutPaymentMTB
             // 
-            this.CheckoutInputAmountMTB.BackColor = System.Drawing.Color.White;
+            this.CheckoutPaymentMTB.BackColor = System.Drawing.Color.White;
             // 
             // 
             // 
-            this.CheckoutInputAmountMTB.BackgroundStyle.Class = "TextBoxBorder";
-            this.CheckoutInputAmountMTB.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.CheckoutInputAmountMTB.ButtonClear.Visible = true;
-            this.CheckoutInputAmountMTB.DisabledBackColor = System.Drawing.Color.White;
-            this.CheckoutInputAmountMTB.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutInputAmountMTB.Location = new System.Drawing.Point(70, 35);
-            this.CheckoutInputAmountMTB.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
-            this.CheckoutInputAmountMTB.Name = "CheckoutInputAmountMTB";
-            this.CheckoutInputAmountMTB.Size = new System.Drawing.Size(310, 21);
-            this.CheckoutInputAmountMTB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.CheckoutInputAmountMTB.TabIndex = 1;
-            this.CheckoutInputAmountMTB.Text = "";
+            this.CheckoutPaymentMTB.BackgroundStyle.Class = "TextBoxBorder";
+            this.CheckoutPaymentMTB.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.CheckoutPaymentMTB.ButtonClear.Visible = true;
+            this.CheckoutPaymentMTB.DisabledBackColor = System.Drawing.Color.White;
+            this.CheckoutPaymentMTB.ForeColor = System.Drawing.Color.Black;
+            this.CheckoutPaymentMTB.Location = new System.Drawing.Point(67, 35);
+            this.CheckoutPaymentMTB.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.CheckoutPaymentMTB.Name = "CheckoutPaymentMTB";
+            this.CheckoutPaymentMTB.Size = new System.Drawing.Size(313, 21);
+            this.CheckoutPaymentMTB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CheckoutPaymentMTB.TabIndex = 1;
+            this.CheckoutPaymentMTB.Text = "";
             // 
             // CheckoutCancelLCI
             // 
@@ -178,7 +178,7 @@ namespace Orion {
             this.CheckoutInvoiceNoLCI.Height = 31;
             this.CheckoutInvoiceNoLCI.MinSize = new System.Drawing.Size(64, 18);
             this.CheckoutInvoiceNoLCI.Name = "CheckoutInvoiceNoLCI";
-            this.CheckoutInvoiceNoLCI.Text = "Invoice No.:";
+            this.CheckoutInvoiceNoLCI.Text = "Invoice No:";
             this.CheckoutInvoiceNoLCI.Width = 100;
             this.CheckoutInvoiceNoLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
@@ -202,15 +202,15 @@ namespace Orion {
             this.CheckoutPriceLCI.Width = 100;
             this.CheckoutPriceLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // CheckoutInputAmmountLCI
+            // CheckoutPaymentLCI
             // 
-            this.CheckoutInputAmmountLCI.Control = this.CheckoutInputAmountMTB;
-            this.CheckoutInputAmmountLCI.Height = 29;
-            this.CheckoutInputAmmountLCI.MinSize = new System.Drawing.Size(64, 18);
-            this.CheckoutInputAmmountLCI.Name = "CheckoutInputAmmountLCI";
-            this.CheckoutInputAmmountLCI.Text = "Label:";
-            this.CheckoutInputAmmountLCI.Width = 100;
-            this.CheckoutInputAmmountLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            this.CheckoutPaymentLCI.Control = this.CheckoutPaymentMTB;
+            this.CheckoutPaymentLCI.Height = 29;
+            this.CheckoutPaymentLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.CheckoutPaymentLCI.Name = "CheckoutPaymentLCI";
+            this.CheckoutPaymentLCI.Text = "Payment:";
+            this.CheckoutPaymentLCI.Width = 100;
+            this.CheckoutPaymentLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // Checkout
             // 
@@ -220,9 +220,13 @@ namespace Orion {
             this.Controls.Add(this.CheckoutLC);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Checkout";
             this.Text = "Checkout | Orion";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Checkout_FormClosed);
             this.Load += new System.EventHandler(this.Checkout_Load);
             this.CheckoutLC.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -237,9 +241,9 @@ namespace Orion {
         private DevComponents.DotNetBar.LabelX CheckoutInvoiceNoL;
         private DevComponents.DotNetBar.LabelX CheckoutChangeL;
         private DevComponents.DotNetBar.LabelX CheckoutPriceL;
-        private DevComponents.DotNetBar.Controls.MaskedTextBoxAdv CheckoutInputAmountMTB;
+        private DevComponents.DotNetBar.Controls.MaskedTextBoxAdv CheckoutPaymentMTB;
         private DevComponents.DotNetBar.Layout.LayoutControlItem CheckoutInvoiceNoLCI;
-        private DevComponents.DotNetBar.Layout.LayoutControlItem CheckoutInputAmmountLCI;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem CheckoutPaymentLCI;
         private DevComponents.DotNetBar.Layout.LayoutControlItem CheckoutPriceLCI;
         private DevComponents.DotNetBar.Layout.LayoutControlItem CheckoutChangeLCI;
         private DevComponents.DotNetBar.Layout.LayoutControlItem CheckoutCancelLCI;

@@ -16,5 +16,9 @@ namespace Orion {
         private void Checkout_Load(object sender, EventArgs e) {
             
         }
+
+        private void Checkout_FormClosed(object sender, FormClosedEventArgs e) {
+            
+        }
     }
 }

@@ -148,12 +148,12 @@ namespace Orion {
             SalesTotalL.Text    = String.Format("Rp {0:###,##0.00}", subtotal * 1.1);
         }
 
-        #endregion
-
-        private void CheckoutB_Click(object sender, EventArgs e) {
+        private void SalesCheckoutB_Click(object sender, EventArgs e) {
             totalPrice = SalesTotalL.Text;
             new Checkout().Show();
             this.Enabled = false;
         }
+
+        #endregion
     }
 }
