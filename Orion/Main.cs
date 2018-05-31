@@ -150,8 +150,9 @@ namespace Orion {
 
         private void SalesCheckoutB_Click(object sender, EventArgs e) {
             totalPrice = SalesTotalL.Text;
-            new Checkout().Show();
-            this.Enabled = false;
+            Opacity = .5;
+            new Checkout().ShowDialog();
+            Opacity = 1.0;
         }
 
         #endregion

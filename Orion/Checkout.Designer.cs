@@ -70,7 +70,7 @@ namespace Orion {
             // 
             this.CheckoutCancelB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CheckoutCancelB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.CheckoutCancelB.Location = new System.Drawing.Point(4, 126);
+            this.CheckoutCancelB.Location = new System.Drawing.Point(4, 183);
             this.CheckoutCancelB.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutCancelB.Name = "CheckoutCancelB";
             this.CheckoutCancelB.Size = new System.Drawing.Size(184, 23);
@@ -82,7 +82,7 @@ namespace Orion {
             // 
             this.CheckoutConfirmB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CheckoutConfirmB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.CheckoutConfirmB.Location = new System.Drawing.Point(196, 126);
+            this.CheckoutConfirmB.Location = new System.Drawing.Point(196, 183);
             this.CheckoutConfirmB.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutConfirmB.Name = "CheckoutConfirmB";
             this.CheckoutConfirmB.Size = new System.Drawing.Size(184, 23);
@@ -97,11 +97,12 @@ namespace Orion {
             // 
             // 
             this.CheckoutInvoiceNoL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.CheckoutInvoiceNoL.Font = new System.Drawing.Font("Segoe UI", 24F);
             this.CheckoutInvoiceNoL.ForeColor = System.Drawing.Color.Black;
             this.CheckoutInvoiceNoL.Location = new System.Drawing.Point(67, 4);
             this.CheckoutInvoiceNoL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutInvoiceNoL.Name = "CheckoutInvoiceNoL";
-            this.CheckoutInvoiceNoL.Size = new System.Drawing.Size(313, 23);
+            this.CheckoutInvoiceNoL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutInvoiceNoL.TabIndex = 0;
             this.CheckoutInvoiceNoL.Text = "<INVOICE NO>";
             // 
@@ -112,11 +113,12 @@ namespace Orion {
             // 
             // 
             this.CheckoutChangeL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.CheckoutChangeL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutChangeL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 95);
+            this.CheckoutChangeL.Location = new System.Drawing.Point(67, 133);
             this.CheckoutChangeL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutChangeL.Name = "CheckoutChangeL";
-            this.CheckoutChangeL.Size = new System.Drawing.Size(313, 23);
+            this.CheckoutChangeL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutChangeL.TabIndex = 3;
             this.CheckoutChangeL.Text = "<CHANGE>";
             // 
@@ -127,11 +129,12 @@ namespace Orion {
             // 
             // 
             this.CheckoutPriceL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.CheckoutPriceL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.CheckoutPriceL.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 64);
+            this.CheckoutPriceL.Location = new System.Drawing.Point(67, 83);
             this.CheckoutPriceL.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutPriceL.Name = "CheckoutPriceL";
-            this.CheckoutPriceL.Size = new System.Drawing.Size(313, 23);
+            this.CheckoutPriceL.Size = new System.Drawing.Size(313, 42);
             this.CheckoutPriceL.TabIndex = 2;
             this.CheckoutPriceL.Text = "<PRICE>";
             // 
@@ -146,7 +149,7 @@ namespace Orion {
             this.CheckoutPaymentMTB.ButtonClear.Visible = true;
             this.CheckoutPaymentMTB.DisabledBackColor = System.Drawing.Color.White;
             this.CheckoutPaymentMTB.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutPaymentMTB.Location = new System.Drawing.Point(67, 35);
+            this.CheckoutPaymentMTB.Location = new System.Drawing.Point(67, 54);
             this.CheckoutPaymentMTB.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.CheckoutPaymentMTB.Name = "CheckoutPaymentMTB";
             this.CheckoutPaymentMTB.Size = new System.Drawing.Size(313, 21);
@@ -175,7 +178,7 @@ namespace Orion {
             // CheckoutInvoiceNoLCI
             // 
             this.CheckoutInvoiceNoLCI.Control = this.CheckoutInvoiceNoL;
-            this.CheckoutInvoiceNoLCI.Height = 31;
+            this.CheckoutInvoiceNoLCI.Height = 50;
             this.CheckoutInvoiceNoLCI.MinSize = new System.Drawing.Size(64, 18);
             this.CheckoutInvoiceNoLCI.Name = "CheckoutInvoiceNoLCI";
             this.CheckoutInvoiceNoLCI.Text = "Invoice No:";
@@ -185,7 +188,7 @@ namespace Orion {
             // CheckoutChangeLCI
             // 
             this.CheckoutChangeLCI.Control = this.CheckoutChangeL;
-            this.CheckoutChangeLCI.Height = 31;
+            this.CheckoutChangeLCI.Height = 50;
             this.CheckoutChangeLCI.MinSize = new System.Drawing.Size(64, 18);
             this.CheckoutChangeLCI.Name = "CheckoutChangeLCI";
             this.CheckoutChangeLCI.Text = "Change:";
@@ -195,7 +198,7 @@ namespace Orion {
             // CheckoutPriceLCI
             // 
             this.CheckoutPriceLCI.Control = this.CheckoutPriceL;
-            this.CheckoutPriceLCI.Height = 31;
+            this.CheckoutPriceLCI.Height = 50;
             this.CheckoutPriceLCI.MinSize = new System.Drawing.Size(64, 18);
             this.CheckoutPriceLCI.Name = "CheckoutPriceLCI";
             this.CheckoutPriceLCI.Text = "Price:";
@@ -225,6 +228,8 @@ namespace Orion {
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Checkout";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Checkout | Orion";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Checkout_FormClosed);
             this.Load += new System.EventHandler(this.Checkout_Load);
