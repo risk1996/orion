@@ -24,12 +24,12 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.MenuMTP = new DevComponents.DotNetBar.Metro.MetroTilePanel();
             this.ContainerIC = new DevComponents.DotNetBar.ItemContainer();
             this.SalesMTI = new DevComponents.DotNetBar.Metro.MetroTileItem();
@@ -65,6 +65,7 @@
             this.SalesVATLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesTotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesCheckoutLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.SalesTotalLG = new DevComponents.DotNetBar.Layout.LayoutGroup();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).BeginInit();
@@ -297,38 +298,38 @@
             this.SalesCartDGV.AllowUserToResizeColumns = false;
             this.SalesCartDGV.AllowUserToResizeRows = false;
             this.SalesCartDGV.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SalesCartDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SalesCartDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.SalesCartDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.SalesCartDGV.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.SalesCartDGV.DefaultCellStyle = dataGridViewCellStyle14;
             this.SalesCartDGV.EnableHeadersVisualStyles = false;
             this.SalesCartDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.SelectedH.SetHighlightOnFocus(this.SalesCartDGV, true);
-            this.SalesCartDGV.Location = new System.Drawing.Point(56, 64);
+            this.SalesCartDGV.Location = new System.Drawing.Point(50, 64);
             this.SalesCartDGV.Margin = new System.Windows.Forms.Padding(0);
             this.SalesCartDGV.Name = "SalesCartDGV";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SalesCartDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.SalesCartDGV.Size = new System.Drawing.Size(485, 12);
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SalesCartDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            this.SalesCartDGV.Size = new System.Drawing.Size(491, 12);
             this.SalesCartDGV.TabIndex = 2;
             this.SalesCartDGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SalesCartDGV_CellEndEdit);
             // 
@@ -339,39 +340,39 @@
             this.SalesProductSeachResultDGV.AllowUserToResizeColumns = false;
             this.SalesProductSeachResultDGV.AllowUserToResizeRows = false;
             this.SalesProductSeachResultDGV.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SalesProductSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SalesProductSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.SalesProductSeachResultDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.SalesProductSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.SalesProductSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle17;
             this.SalesProductSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.SalesProductSeachResultDGV.EnableHeadersVisualStyles = false;
             this.SalesProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.SelectedH.SetHighlightOnFocus(this.SalesProductSeachResultDGV, true);
-            this.SalesProductSeachResultDGV.Location = new System.Drawing.Point(56, 44);
+            this.SalesProductSeachResultDGV.Location = new System.Drawing.Point(50, 44);
             this.SalesProductSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
             this.SalesProductSeachResultDGV.Name = "SalesProductSeachResultDGV";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SalesProductSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.SalesProductSeachResultDGV.Size = new System.Drawing.Size(485, 12);
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SalesProductSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            this.SalesProductSeachResultDGV.Size = new System.Drawing.Size(491, 12);
             this.SalesProductSeachResultDGV.TabIndex = 1;
             this.SalesProductSeachResultDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SalesProductSeachResultDGV_CellDoubleClick);
             // 
@@ -387,12 +388,13 @@
             this.SalesProductSearchTB.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SalesProductSearchTB.ForeColor = System.Drawing.Color.Black;
             this.SelectedH.SetHighlightOnFocus(this.SalesProductSearchTB, true);
-            this.SalesProductSearchTB.Location = new System.Drawing.Point(56, 4);
+            this.SalesProductSearchTB.Location = new System.Drawing.Point(50, 4);
             this.SalesProductSearchTB.Margin = new System.Windows.Forms.Padding(0);
             this.SalesProductSearchTB.Name = "SalesProductSearchTB";
             this.SalesProductSearchTB.PreventEnterBeep = true;
-            this.SalesProductSearchTB.Size = new System.Drawing.Size(485, 33);
+            this.SalesProductSearchTB.Size = new System.Drawing.Size(491, 33);
             this.SalesProductSearchTB.TabIndex = 0;
+            this.SalesProductSearchTB.WatermarkBehavior = DevComponents.DotNetBar.eWatermarkBehavior.HideNonEmpty;
             this.SalesProductSearchTB.WatermarkText = "Enter Product ID or Product Name";
             this.SalesProductSearchTB.TextChanged += new System.EventHandler(this.SalesProductSearchTB_TextChanged);
             // 
@@ -402,17 +404,17 @@
             this.SalesCheckoutB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.SalesCheckoutB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
             this.SelectedH.SetHighlightOnFocus(this.SalesCheckoutB, true);
-            this.SalesCheckoutB.Location = new System.Drawing.Point(276, 134);
+            this.SalesCheckoutB.Location = new System.Drawing.Point(4, 84);
             this.SalesCheckoutB.Margin = new System.Windows.Forms.Padding(0);
             this.SalesCheckoutB.Name = "SalesCheckoutB";
             this.SalesCheckoutB.PopupSide = DevComponents.DotNetBar.ePopupSide.Bottom;
-            this.SalesCheckoutB.Size = new System.Drawing.Size(265, 42);
+            this.SalesCheckoutB.Size = new System.Drawing.Size(210, 112);
             this.SalesCheckoutB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.SalesCheckoutB.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.SalesClearCartBI});
             this.SalesCheckoutB.SubItemsExpandWidth = 50;
             this.SalesCheckoutB.Symbol = "";
-            this.SalesCheckoutB.TabIndex = 6;
+            this.SalesCheckoutB.TabIndex = 3;
             this.SalesCheckoutB.Text = "Checkout";
             this.SalesCheckoutB.Click += new System.EventHandler(this.SalesCheckoutB_Click);
             // 
@@ -446,10 +448,8 @@
             this.SalesProductSearchLCI,
             this.SalesProductSearchResultLCI,
             this.SalesCartLCI,
-            this.SalesSubtotalLCI,
-            this.SalesVATLCI,
-            this.SalesTotalLCI,
-            this.SalesCheckoutLCI});
+            this.SalesCheckoutLCI,
+            this.SalesTotalLG});
             this.SalesLC.Size = new System.Drawing.Size(562, 100);
             this.SalesLC.TabIndex = 9;
             this.SalesLC.SizeChanged += new System.EventHandler(this.SalesLC_SizeChanged);
@@ -460,13 +460,15 @@
             // 
             // 
             this.SalesSubtotalL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.SalesSubtotalL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SalesSubtotalL.Location = new System.Drawing.Point(56, 84);
+            this.SalesSubtotalL.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalesSubtotalL.Location = new System.Drawing.Point(278, 88);
             this.SalesSubtotalL.Margin = new System.Windows.Forms.Padding(0);
             this.SalesSubtotalL.Name = "SalesSubtotalL";
-            this.SalesSubtotalL.Size = new System.Drawing.Size(212, 42);
-            this.SalesSubtotalL.TabIndex = 3;
+            this.SalesSubtotalL.Size = new System.Drawing.Size(259, 32);
+            this.SalesSubtotalL.Symbol = "Rp";
+            this.SalesSubtotalL.TabIndex = 4;
             this.SalesSubtotalL.Text = "<SUBTOTAL>";
+            this.SalesSubtotalL.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // SalesTotalL
             // 
@@ -474,13 +476,15 @@
             // 
             // 
             this.SalesTotalL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.SalesTotalL.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.SalesTotalL.Location = new System.Drawing.Point(56, 134);
+            this.SalesTotalL.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalesTotalL.Location = new System.Drawing.Point(278, 163);
             this.SalesTotalL.Margin = new System.Windows.Forms.Padding(0);
             this.SalesTotalL.Name = "SalesTotalL";
-            this.SalesTotalL.Size = new System.Drawing.Size(212, 42);
-            this.SalesTotalL.TabIndex = 5;
+            this.SalesTotalL.Size = new System.Drawing.Size(259, 32);
+            this.SalesTotalL.Symbol = "Rp";
+            this.SalesTotalL.TabIndex = 6;
             this.SalesTotalL.Text = "<TOTAL>";
+            this.SalesTotalL.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // SalesVATL
             // 
@@ -488,14 +492,16 @@
             // 
             // 
             this.SalesVATL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.SalesVATL.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic);
-            this.SalesVATL.ForeColor = System.Drawing.Color.DimGray;
-            this.SalesVATL.Location = new System.Drawing.Point(328, 84);
+            this.SalesVATL.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalesVATL.ForeColor = System.Drawing.Color.Black;
+            this.SalesVATL.Location = new System.Drawing.Point(278, 128);
             this.SalesVATL.Margin = new System.Windows.Forms.Padding(0);
             this.SalesVATL.Name = "SalesVATL";
-            this.SalesVATL.Size = new System.Drawing.Size(213, 42);
-            this.SalesVATL.TabIndex = 4;
+            this.SalesVATL.Size = new System.Drawing.Size(259, 27);
+            this.SalesVATL.Symbol = "Rp";
+            this.SalesVATL.TabIndex = 5;
             this.SalesVATL.Text = "<VAT>";
+            this.SalesVATL.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // SalesProductSearchLCI
             // 
@@ -530,41 +536,54 @@
             // SalesSubtotalLCI
             // 
             this.SalesSubtotalLCI.Control = this.SalesSubtotalL;
-            this.SalesSubtotalLCI.Height = 50;
+            this.SalesSubtotalLCI.Height = 40;
             this.SalesSubtotalLCI.MinSize = new System.Drawing.Size(64, 18);
             this.SalesSubtotalLCI.Name = "SalesSubtotalLCI";
             this.SalesSubtotalLCI.Text = "Subtotal:";
-            this.SalesSubtotalLCI.Width = 50;
+            this.SalesSubtotalLCI.Width = 100;
             this.SalesSubtotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // SalesVATLCI
             // 
             this.SalesVATLCI.Control = this.SalesVATL;
-            this.SalesVATLCI.Height = 40;
+            this.SalesVATLCI.Height = 35;
             this.SalesVATLCI.MinSize = new System.Drawing.Size(64, 18);
             this.SalesVATLCI.Name = "SalesVATLCI";
             this.SalesVATLCI.Text = "VAT:";
-            this.SalesVATLCI.Width = 50;
+            this.SalesVATLCI.Width = 100;
             this.SalesVATLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // SalesTotalLCI
             // 
             this.SalesTotalLCI.Control = this.SalesTotalL;
-            this.SalesTotalLCI.Height = 50;
+            this.SalesTotalLCI.Height = 40;
             this.SalesTotalLCI.MinSize = new System.Drawing.Size(64, 18);
             this.SalesTotalLCI.Name = "SalesTotalLCI";
             this.SalesTotalLCI.Text = "Total:";
-            this.SalesTotalLCI.Width = 50;
+            this.SalesTotalLCI.Width = 100;
             this.SalesTotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // SalesCheckoutLCI
             // 
             this.SalesCheckoutLCI.Control = this.SalesCheckoutB;
-            this.SalesCheckoutLCI.Height = 31;
+            this.SalesCheckoutLCI.Height = 50;
             this.SalesCheckoutLCI.MinSize = new System.Drawing.Size(32, 20);
             this.SalesCheckoutLCI.Name = "SalesCheckoutLCI";
-            this.SalesCheckoutLCI.Width = 50;
+            this.SalesCheckoutLCI.Width = 40;
             this.SalesCheckoutLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // SalesTotalLG
+            // 
+            this.SalesTotalLG.Height = 120;
+            this.SalesTotalLG.Items.AddRange(new DevComponents.DotNetBar.Layout.LayoutItemBase[] {
+            this.SalesSubtotalLCI,
+            this.SalesVATLCI,
+            this.SalesTotalLCI});
+            this.SalesTotalLG.MinSize = new System.Drawing.Size(120, 32);
+            this.SalesTotalLG.Name = "SalesTotalLG";
+            this.SalesTotalLG.TextPosition = DevComponents.DotNetBar.Layout.eLayoutPosition.Top;
+            this.SalesTotalLG.Width = 60;
+            this.SalesTotalLG.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // Main
             // 
@@ -624,5 +643,6 @@
         private DevComponents.DotNetBar.ButtonX SalesCheckoutB;
         private DevComponents.DotNetBar.Layout.LayoutControlItem SalesCheckoutLCI;
         private DevComponents.DotNetBar.ButtonItem SalesClearCartBI;
+        private DevComponents.DotNetBar.Layout.LayoutGroup SalesTotalLG;
     }
 }

@@ -102,7 +102,7 @@ namespace Orion {
         }
 
         private void SalesLC_SizeChanged(object sender, EventArgs e) {
-            int SalesOtherComponentHeight = SalesProductSearchLCI.Height + SalesSubtotalLCI.Height + SalesTotalLCI.Height;
+            int SalesOtherComponentHeight = SalesProductSearchLCI.Height + SalesTotalLG.Height;
             SalesProductSearchResultLCI.Height = (int)((SalesLC.Height - SalesOtherComponentHeight) * 1 / 3.5);
             SalesCartLCI.Height = (int)((SalesLC.Height - SalesOtherComponentHeight) * 2.5 / 3.5);
         }
@@ -122,7 +122,7 @@ namespace Orion {
                 int SelectedProductResultStock = int.Parse(DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[3].FormattedValue.ToString()));
                 SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["ID"] };
                 DataRow SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
-                if (SelectedProductResultStock == 0) ToastNotification.Show(this, "Insuficient Stock");
+                if (SelectedProductResultStock == 0) ToastNotification.Show(this, "Insufficient Stock");
                 else {
                     if (SelectedProductRow == null) {
                         string[] ProductsColumn = new string[] { "product_id", "product_name", "product_price", "product_disc_pct" };
@@ -133,7 +133,7 @@ namespace Orion {
                     } else if (SelectedProductResultStock >= int.Parse(SelectedProductRow["Qty"].ToString()) + 1) {
                         SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"] =
                          int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"].ToString()) + 1;
-                    } else ToastNotification.Show(this, "Insuficient Stock");
+                    } else ToastNotification.Show(this, "Insufficient Stock");
                     SalesRefreshPrice();
                 }
             } 
@@ -143,6 +143,7 @@ namespace Orion {
             int SelectedProductResultStock = int.Parse(SalesProductTable.Rows.Find(SalesCartDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString())["product_stock"].ToString());
             int.TryParse(SalesPendingTransaction.Rows[e.RowIndex]["Qty"].ToString(), out int NewSelectedProductResultStock);
             SalesPendingTransaction.Rows[e.RowIndex]["Qty"] = Math.Max(Math.Min(NewSelectedProductResultStock, SelectedProductResultStock), 0).ToString();
+            if (int.Parse(SalesPendingTransaction.Rows[e.RowIndex]["Qty"].ToString()) == 0) SalesPendingTransaction.Rows.RemoveAt(e.RowIndex);
             SalesRefreshPrice();
         }
 
@@ -152,9 +153,9 @@ namespace Orion {
                 subtotal += double.Parse(dr["Price"].ToString()) * double.Parse(dr["Qty"].ToString())
                     * (String.IsNullOrEmpty(dr["Disc"].ToString())?1: ((100.0 - double.Parse(dr["Disc"].ToString())) / 100.0));
             }
-            SalesSubtotalL.Text = String.Format("Rp {0:###,##0.00}", subtotal);
-            SalesVATL.Text      = String.Format("Rp {0:###,##0.00}", subtotal * 0.1);
-            SalesTotalL.Text    = String.Format("Rp {0:###,##0.00}", subtotal * 1.1);
+            SalesSubtotalL.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", subtotal);
+            SalesVATL.Text      = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", subtotal * 0.1);
+            SalesTotalL.Text    = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", subtotal * 1.1);
             return subtotal * 1.1;
         }
 

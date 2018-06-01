@@ -19,5 +19,8 @@
     <Setting Name="LoginEmployeeID" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="CurrencyFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">###,##0.00;(###,##0.00)</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
