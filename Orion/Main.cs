@@ -14,6 +14,7 @@ namespace Orion {
         public Main() {
             InitializeComponent();
             UserLI.Text = Properties.Settings.Default.LoginUsername;
+            SalesLC.Dock = DockStyle.Fill;
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -142,7 +143,6 @@ namespace Orion {
             int SelectedProductResultStock = int.Parse(SalesProductTable.Rows.Find(SalesCartDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString())["product_stock"].ToString());
             int.TryParse(SalesPendingTransaction.Rows[e.RowIndex]["Qty"].ToString(), out int NewSelectedProductResultStock);
             SalesPendingTransaction.Rows[e.RowIndex]["Qty"] = Math.Max(Math.Min(NewSelectedProductResultStock, SelectedProductResultStock), 0).ToString();
-            ToastNotification.Show(this, SelectedProductResultStock.ToString() + " " + NewSelectedProductResultStock.ToString());
             SalesRefreshPrice();
         }
 
@@ -150,7 +150,7 @@ namespace Orion {
             double subtotal = 0;
             foreach(DataRow dr in SalesPendingTransaction.Rows) {
                 subtotal += double.Parse(dr["Price"].ToString()) * double.Parse(dr["Qty"].ToString())
-                    * (String.IsNullOrEmpty(dr["Disc"].ToString())?1: ((100.0 - double.Parse(dr["Qty"].ToString())) / 100.0));
+                    * (String.IsNullOrEmpty(dr["Disc"].ToString())?1: ((100.0 - double.Parse(dr["Disc"].ToString())) / 100.0));
             }
             SalesSubtotalL.Text = String.Format("Rp {0:###,##0.00}", subtotal);
             SalesVATL.Text      = String.Format("Rp {0:###,##0.00}", subtotal * 0.1);
