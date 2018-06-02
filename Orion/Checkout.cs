@@ -23,7 +23,7 @@ namespace Orion {
             int NextInvoiceNoBase10 = CheckoutTransactionTable.Rows.Count + 1;
             String InvoiceNoBase36 = ConvertToBase(NextInvoiceNoBase10, 36).PadLeft(8, '0');
             CheckoutInvoiceNoL.Text = String.Format("O-INV-" + CheckoutDate + InvoiceNoBase36);
-            CheckoutPriceL.Text = String.Format("Rp {0:###,##0.00}", Main.SalesTotalPrice);
+            CheckoutPriceL.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", Main.SalesTotalPrice);
             RefreshPaymentAmount();
         }
 
@@ -66,7 +66,6 @@ namespace Orion {
             e.SuppressKeyPress = true;
             List<Keys> PaymentValidNumbers = new List<Keys>{ Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9,
             Keys.NumPad0, Keys.NumPad1, Keys.NumPad2, Keys.NumPad3, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6, Keys.NumPad7, Keys.NumPad8, Keys.NumPad9 };
-            ToastNotification.Show(this, e.KeyValue.ToString() + " " + e.KeyCode.ToString() + " " + e.KeyData.ToString());
             if (PaymentValidNumbers.Contains(e.KeyCode) && PaymentAmount < 100000000000) {
                 PaymentAmount *= 10;
                 PaymentAmount += (decimal)(PaymentValidNumbers.IndexOf(e.KeyCode) % 10) / 100;
@@ -78,13 +77,20 @@ namespace Orion {
         }
 
         private void RefreshPaymentAmount() {
-            CheckoutPaymentTB.Text = String.Format("Rp {0:###,##0.00}", PaymentAmount);
+            CheckoutPaymentTB.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", PaymentAmount);
             CheckoutPaymentTB.Select(CheckoutPaymentTB.Text.Length, 0);
             RefreshChange();
         }
 
         private void RefreshChange() {
-            CheckoutChangeL.Text = String.Format("Rp {0:###,##0.00}", PaymentAmount  - (decimal)Main.SalesTotalPrice);
+            CheckoutChangeL.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", PaymentAmount  - (decimal)Main.SalesTotalPrice);
+            if (PaymentAmount - (decimal)Main.SalesTotalPrice < 0) {
+                CheckoutChangeL.ForeColor = Color.Red;
+                CheckoutConfirmB.Enabled = false;
+            } else {
+                CheckoutChangeL.ForeColor = Color.Black;
+                CheckoutConfirmB.Enabled = true;
+            }
         }
 
         private void CheckoutConfirmB_Click(object sender, EventArgs e) {

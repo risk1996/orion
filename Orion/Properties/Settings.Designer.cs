@@ -69,5 +69,17 @@ namespace Orion.Properties {
                 this["LoginEmployeeID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("###,##0.00;(###,##0.00)")]
+        public string CurrencyFormat {
+            get {
+                return ((string)(this["CurrencyFormat"]));
+            }
+            set {
+                this["CurrencyFormat"] = value;
+            }
+        }
     }
 }
