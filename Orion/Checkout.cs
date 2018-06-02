@@ -86,5 +86,16 @@ namespace Orion {
         private void RefreshChange() {
             CheckoutChangeL.Text = String.Format("Rp {0:###,##0.00}", PaymentAmount  - (decimal)Main.SalesTotalPrice);
         }
+
+        private void CheckoutConfirmB_Click(object sender, EventArgs e) {
+            if (CheckoutPriceL.Text == "Rp 0.00") {
+                ToastNotification.Show(this, "Please input item first");
+            } else {
+                String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("INSERT transaction_header (transaction_id, transaction_timestamp, employee_id, transaction_method) " +
+                    "VALUES ('" + CheckoutInvoiceNoL.Text.ToString() + "', '" + TimeStamp + "', '" + Properties.Settings.Default.LoginEmployeeID + "', 'Cash');");
+                this.Hide();
+            }
+        }
     }
 }

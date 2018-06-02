@@ -115,6 +115,7 @@ namespace Orion {
             this.CheckoutConfirmB.Symbol = "";
             this.CheckoutConfirmB.TabIndex = 5;
             this.CheckoutConfirmB.Text = "Confirm Checkout";
+            this.CheckoutConfirmB.Click += new System.EventHandler(this.CheckoutConfirmB_Click);
             // 
             // CheckoutInvoiceNoL
             // 
@@ -230,6 +231,7 @@ namespace Orion {
             this.Controls.Add(this.CheckoutLC);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
