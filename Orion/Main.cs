@@ -165,10 +165,20 @@ namespace Orion {
         }
 
         private void SalesCheckoutB_Click(object sender, EventArgs e) {
-            SalesTotalPrice = SalesRefreshPrice();
-            Opacity = .5;
-            new Checkout().ShowDialog();
-            Opacity = 1.0;
+            using (var Checkout = new Checkout()) {
+                SalesTotalPrice = SalesRefreshPrice();
+                Opacity = .5;
+                var result = Checkout.ShowDialog();
+                if (result == DialogResult.OK) {
+                    string salesTransactionId = Checkout.transaction_id;
+                    foreach (DataRow dr in SalesPendingTransaction.Rows) {
+                        MySqlDataReader SalesTransactionDetailReader = new DbConnect().ExecQuery("INSERT transaction_detail (transaction_id, product_id, transaction_qty, transaction_discount) " +
+                    "VALUES ('" + salesTransactionId + "', '" + dr["ID"].ToString() + "', '" + dr["Qty"].ToString() + "', '" + dr["Disc"].ToString() + "');");
+                    }
+                    Opacity = 1.0;
+                    SalesClearCartBI_Click(sender, e);
+                }
+            }
         }
 
         #endregion

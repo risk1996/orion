@@ -15,6 +15,7 @@ namespace Orion {
         }
 
         DataTable CheckoutTransactionTable = new DataTable();
+        public string transaction_id { get; set; }
 
         private void Checkout_Load(object sender, EventArgs e) {
             String CheckoutDate = DateTime.Today.ToString("yyMMdd");
@@ -100,7 +101,9 @@ namespace Orion {
                 String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                 MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("INSERT transaction_header (transaction_id, transaction_timestamp, employee_id, transaction_method) " +
                     "VALUES ('" + CheckoutInvoiceNoL.Text.ToString() + "', '" + TimeStamp + "', '" + Properties.Settings.Default.LoginEmployeeID + "', 'Cash');");
-                this.Hide();
+                this.transaction_id = CheckoutInvoiceNoL.Text.ToString();
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
     }
