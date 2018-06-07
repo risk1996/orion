@@ -174,12 +174,13 @@ namespace Orion {
                     foreach (DataRow dr in SalesPendingTransaction.Rows) {
                         MySqlDataReader SalesTransactionDetailReader = new DbConnect().ExecQuery("INSERT transaction_detail (transaction_id, product_id, transaction_qty, transaction_discount) " +
                     "VALUES ('" + salesTransactionId + "', '" + dr["ID"].ToString() + "', '" + dr["Qty"].ToString() + "', '" + dr["Disc"].ToString() + "');");
-                        MySqlDataReader ProductStockUpdateReader = new DbConnect().ExecQuery("UPDATE product SET product_stock = product_stock - 1 WHERE product_id = '" + dr["ID"].ToString() + "'");
+                        MySqlDataReader ProductStockUpdateReader = new DbConnect().ExecQuery("UPDATE product SET product_stock = product_stock - " + dr["Qty"] + " WHERE product_id = '" + dr["ID"].ToString() + "'");
                     }
                     MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
                     SalesProductTable.Load(SalesProductReader);
                     SalesProductSeachResultDGV.DataSource = SalesProductTableResult;
                     SalesProductTableResult.Clear();
+                    SalesProductSearchTB.Clear();
                     Opacity = 1.0;
                     SalesClearCartBI_Click(sender, e);
                 }
