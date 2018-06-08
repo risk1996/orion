@@ -16,7 +16,6 @@ namespace Orion {
         public Main() {
             InitializeComponent();
             UserLI.Text = Properties.Settings.Default.LoginUsername;
-            SalesLC.Dock = DockStyle.Fill;
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -62,9 +61,20 @@ namespace Orion {
 
         private void Main_Load(object sender, EventArgs e) {
             DefineUserRole();
+            LayoutControlFloat();
             if (MainAvailableMTIs[0] == SalesMTI) Sales_Load();
             else if (MainAvailableMTIs[0] == RestockMTI) ;
             else if (MainAvailableMTIs[0] == ProductsMTI) ;
+        }
+
+        private void LayoutControlFloat() {
+            SalesLC.Dock = DockStyle.Fill;
+            RestockLC.Dock = DockStyle.Fill;
+        }
+
+        public void LayoutControlHide() {
+            SalesLC.Visible = false;
+            RestockLC.Visible = false;
         }
 
         private void DefineUserRole() {
@@ -90,22 +100,37 @@ namespace Orion {
 
         #region Sales definition
 
+        public bool SalesLoaded = false;
         public static double SalesTotalPrice = 0;
         DataTable SalesProductTable = new DataTable();
         DataTable SalesProductTableResult = new DataTable();
         DataTable SalesPendingTransaction = new DataTable();
-        
+
+        private void SalesMTI_Click(object sender, EventArgs e) {
+            Sales_Load();
+        }
+
         private void Sales_Load() {
+            LayoutControlHide();
+            SalesLC.Visible = true;
+            SalesLC_SizeChanged(new object(), new EventArgs());
+            SalesRefreshPrice();
+            SalesProductSearchTB.Select();
+            SalesProductSearchTB.Focus();
+            if (!SalesLoaded) Sales_LoadOnce();
+        }
+
+        private void Sales_LoadOnce() {
             MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
             SalesProductTable.Load(SalesProductReader);
-            SalesProductTable.PrimaryKey = new DataColumn[] { SalesProductTable.Columns["product_id"] };
+            SalesProductTableResult.Columns.Clear();
             SalesProductTableResult.Columns.Add("ID");
             SalesProductTableResult.Columns.Add("Name");
             SalesProductTableResult.Columns.Add("Price");
             SalesProductTableResult.Columns.Add("Stock");
-            SalesProductSeachResultDGV.DataSource                    = SalesProductTableResult;
-            SalesProductSeachResultDGV.Columns["ID"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesProductSeachResultDGV.Columns["Name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
+            SalesProductSeachResultDGV.DataSource = SalesProductTableResult;
+            SalesProductSeachResultDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesProductSeachResultDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             SalesProductSeachResultDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesProductSeachResultDGV.Columns["Stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["ID"] };
@@ -114,17 +139,14 @@ namespace Orion {
             SalesPendingTransaction.Columns.Add("Price");
             SalesPendingTransaction.Columns.Add("Disc");
             SalesPendingTransaction.Columns.Add("Qty");
-            SalesCartDGV.DataSource                    = SalesPendingTransaction;
-            SalesCartDGV.Columns["ID"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesCartDGV.Columns["Name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.Fill;
+            SalesCartDGV.DataSource = SalesPendingTransaction;
+            SalesCartDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             SalesCartDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesCartDGV.Columns["Disc"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesCartDGV.Columns["Qty"].AutoSizeMode   = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["Disc"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["Qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesProductTableResult.PrimaryKey = new DataColumn[] { SalesProductTableResult.Columns["ID"] };
-            SalesLC_SizeChanged(new object(), new EventArgs());
-            SalesRefreshPrice();
-            SalesProductSearchTB.Select();
-            SalesProductSearchTB.Focus();
+            SalesLoaded = true;
         }
 
         private void SalesLC_SizeChanged(object sender, EventArgs e) {
@@ -211,6 +233,31 @@ namespace Orion {
                     SalesClearCartBI_Click(sender, e);
                 }
             }
+        }
+
+        #endregion
+
+        #region Restock definition
+
+        public bool RestockLoaded = false;
+
+        private void RestockMTI_Click(object sender, EventArgs e) {
+            Restock_Load();
+        }
+
+        private void Restock_Load() {
+            LayoutControlHide();
+            RestockLC.Visible = true;
+        }
+
+        private void Restock_LoadOnce() {
+
+        }
+
+        private void RestockLC_SizeChanged(object sender, EventArgs e) {
+            int RestockOtherComponentHeight = RestockProductSearchLCI.Height + RestockCommitLCI.Height;
+            RestockProductSeachResultLCI.Height = (int)((RestockLC.Height - RestockOtherComponentHeight) * 1 / 3.5);
+            RestockPendingChangesLCI.Height = (int)((RestockLC.Height - RestockOtherComponentHeight) * 2.5 / 3.5);
         }
 
         #endregion

@@ -32,7 +32,7 @@ namespace Orion {
             MySqlCommand cmd = new MySqlCommand(command, Conn);
             return cmd.ExecuteNonQuery();
         }
-        ~DbConnect() { Conn.Close(); }
+        //~DbConnect() { Conn.Close(); }
         static public string EscapeLikeValue(string value) {
             StringBuilder sb = new StringBuilder(value.Length);
             for (int i = 0; i < value.Length; i++) {

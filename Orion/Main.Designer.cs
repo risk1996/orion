@@ -24,6 +24,12 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -54,6 +60,9 @@
             this.SalesProductSearchTB = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.SalesCheckoutB = new DevComponents.DotNetBar.ButtonX();
             this.SalesClearCartBI = new DevComponents.DotNetBar.ButtonItem();
+            this.RestockProductSearchTB = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.RestockProductSeachResultDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.RestockPendingChangesDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.SalesLC = new DevComponents.DotNetBar.Layout.LayoutControl();
             this.SalesSubtotalL = new DevComponents.DotNetBar.LabelX();
             this.SalesTotalL = new DevComponents.DotNetBar.LabelX();
@@ -66,10 +75,19 @@
             this.SalesSubtotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesVATLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SalesTotalLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.RestockLC = new DevComponents.DotNetBar.Layout.LayoutControl();
+            this.RestockProductSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.RestockProductSeachResultLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.RestockPendingChangesLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.RestockCommitB = new DevComponents.DotNetBar.ButtonX();
+            this.RestockCommitLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestockProductSeachResultDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestockPendingChangesDGV)).BeginInit();
             this.SalesLC.SuspendLayout();
+            this.RestockLC.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuMTP
@@ -124,6 +142,7 @@
             this.SalesMTI.TileStyle.BackColor2 = System.Drawing.Color.Green;
             this.SalesMTI.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.SalesMTI.TitleText = "Sales";
+            this.SalesMTI.Click += new System.EventHandler(this.SalesMTI_Click);
             // 
             // RestockMTI
             // 
@@ -139,6 +158,7 @@
             this.RestockMTI.TileStyle.BackColor2 = System.Drawing.Color.SaddleBrown;
             this.RestockMTI.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.RestockMTI.TitleText = "Restock";
+            this.RestockMTI.Click += new System.EventHandler(this.RestockMTI_Click);
             // 
             // ProductsMTI
             // 
@@ -298,37 +318,37 @@
             this.SalesCartDGV.AllowUserToResizeColumns = false;
             this.SalesCartDGV.AllowUserToResizeRows = false;
             this.SalesCartDGV.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SalesCartDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SalesCartDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.SalesCartDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.SalesCartDGV.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.SalesCartDGV.DefaultCellStyle = dataGridViewCellStyle8;
             this.SalesCartDGV.EnableHeadersVisualStyles = false;
             this.SalesCartDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.SelectedH.SetHighlightOnFocus(this.SalesCartDGV, true);
             this.SalesCartDGV.Location = new System.Drawing.Point(50, 64);
             this.SalesCartDGV.Margin = new System.Windows.Forms.Padding(0);
             this.SalesCartDGV.Name = "SalesCartDGV";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SalesCartDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SalesCartDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.SalesCartDGV.Size = new System.Drawing.Size(491, 12);
             this.SalesCartDGV.TabIndex = 2;
             this.SalesCartDGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SalesCartDGV_CellEndEdit);
@@ -340,23 +360,23 @@
             this.SalesProductSeachResultDGV.AllowUserToResizeColumns = false;
             this.SalesProductSeachResultDGV.AllowUserToResizeRows = false;
             this.SalesProductSeachResultDGV.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SalesProductSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SalesProductSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.SalesProductSeachResultDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.SalesProductSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.SalesProductSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle11;
             this.SalesProductSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.SalesProductSeachResultDGV.EnableHeadersVisualStyles = false;
             this.SalesProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
@@ -364,14 +384,14 @@
             this.SalesProductSeachResultDGV.Location = new System.Drawing.Point(50, 44);
             this.SalesProductSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
             this.SalesProductSeachResultDGV.Name = "SalesProductSeachResultDGV";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SalesProductSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SalesProductSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.SalesProductSeachResultDGV.Size = new System.Drawing.Size(491, 12);
             this.SalesProductSeachResultDGV.TabIndex = 1;
             this.SalesProductSeachResultDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SalesProductSeachResultDGV_CellDoubleClick);
@@ -425,6 +445,110 @@
             this.SalesClearCartBI.Symbol = "";
             this.SalesClearCartBI.Text = "Clear Cart";
             this.SalesClearCartBI.Click += new System.EventHandler(this.SalesClearCartBI_Click);
+            // 
+            // RestockProductSearchTB
+            // 
+            this.RestockProductSearchTB.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.RestockProductSearchTB.Border.Class = "TextBoxBorder";
+            this.RestockProductSearchTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.RestockProductSearchTB.DisabledBackColor = System.Drawing.Color.White;
+            this.RestockProductSearchTB.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RestockProductSearchTB.ForeColor = System.Drawing.Color.Black;
+            this.SelectedH.SetHighlightOnFocus(this.RestockProductSearchTB, true);
+            this.RestockProductSearchTB.Location = new System.Drawing.Point(60, 4);
+            this.RestockProductSearchTB.Margin = new System.Windows.Forms.Padding(0);
+            this.RestockProductSearchTB.Name = "RestockProductSearchTB";
+            this.RestockProductSearchTB.PreventEnterBeep = true;
+            this.RestockProductSearchTB.Size = new System.Drawing.Size(481, 33);
+            this.RestockProductSearchTB.TabIndex = 0;
+            this.RestockProductSearchTB.WatermarkBehavior = DevComponents.DotNetBar.eWatermarkBehavior.HideNonEmpty;
+            this.RestockProductSearchTB.WatermarkText = "Enter Product ID or Product Name";
+            // 
+            // RestockProductSeachResultDGV
+            // 
+            this.RestockProductSeachResultDGV.AllowUserToAddRows = false;
+            this.RestockProductSeachResultDGV.AllowUserToDeleteRows = false;
+            this.RestockProductSeachResultDGV.AllowUserToResizeColumns = false;
+            this.RestockProductSeachResultDGV.AllowUserToResizeRows = false;
+            this.RestockProductSeachResultDGV.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.RestockProductSeachResultDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.RestockProductSeachResultDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.RestockProductSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle2;
+            this.RestockProductSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.RestockProductSeachResultDGV.EnableHeadersVisualStyles = false;
+            this.RestockProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.SelectedH.SetHighlightOnFocus(this.RestockProductSeachResultDGV, true);
+            this.RestockProductSeachResultDGV.Location = new System.Drawing.Point(60, 45);
+            this.RestockProductSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.RestockProductSeachResultDGV.Name = "RestockProductSeachResultDGV";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.RestockProductSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.RestockProductSeachResultDGV.Size = new System.Drawing.Size(481, 12);
+            this.RestockProductSeachResultDGV.TabIndex = 1;
+            // 
+            // RestockPendingChangesDGV
+            // 
+            this.RestockPendingChangesDGV.AllowUserToAddRows = false;
+            this.RestockPendingChangesDGV.AllowUserToDeleteRows = false;
+            this.RestockPendingChangesDGV.AllowUserToResizeColumns = false;
+            this.RestockPendingChangesDGV.AllowUserToResizeRows = false;
+            this.RestockPendingChangesDGV.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.RestockPendingChangesDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.RestockPendingChangesDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.RestockPendingChangesDGV.DefaultCellStyle = dataGridViewCellStyle5;
+            this.RestockPendingChangesDGV.EnableHeadersVisualStyles = false;
+            this.RestockPendingChangesDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.SelectedH.SetHighlightOnFocus(this.RestockPendingChangesDGV, true);
+            this.RestockPendingChangesDGV.Location = new System.Drawing.Point(60, 65);
+            this.RestockPendingChangesDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.RestockPendingChangesDGV.Name = "RestockPendingChangesDGV";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.RestockPendingChangesDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.RestockPendingChangesDGV.Size = new System.Drawing.Size(481, 12);
+            this.RestockPendingChangesDGV.TabIndex = 2;
             // 
             // SalesLC
             // 
@@ -585,9 +709,89 @@
             this.SalesTotalLCI.Width = 100;
             this.SalesTotalLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
+            // RestockLC
+            // 
+            this.RestockLC.BackColor = System.Drawing.Color.White;
+            this.RestockLC.Controls.Add(this.RestockProductSearchTB);
+            this.RestockLC.Controls.Add(this.RestockProductSeachResultDGV);
+            this.RestockLC.Controls.Add(this.RestockPendingChangesDGV);
+            this.RestockLC.Controls.Add(this.RestockCommitB);
+            this.RestockLC.Dock = System.Windows.Forms.DockStyle.Top;
+            this.RestockLC.ForeColor = System.Drawing.Color.Black;
+            this.RestockLC.Location = new System.Drawing.Point(217, 132);
+            this.RestockLC.Name = "RestockLC";
+            // 
+            // 
+            // 
+            this.RestockLC.RootGroup.Items.AddRange(new DevComponents.DotNetBar.Layout.LayoutItemBase[] {
+            this.RestockProductSearchLCI,
+            this.RestockProductSeachResultLCI,
+            this.RestockPendingChangesLCI,
+            this.RestockCommitLCI});
+            this.RestockLC.Size = new System.Drawing.Size(562, 100);
+            this.RestockLC.TabIndex = 10;
+            this.RestockLC.SizeChanged += new System.EventHandler(this.RestockLC_SizeChanged);
+            // 
+            // RestockProductSearchLCI
+            // 
+            this.RestockProductSearchLCI.Control = this.RestockProductSearchTB;
+            this.RestockProductSearchLCI.Height = 41;
+            this.RestockProductSearchLCI.MinSize = new System.Drawing.Size(120, 0);
+            this.RestockProductSearchLCI.Name = "RestockProductSearchLCI";
+            this.RestockProductSearchLCI.Text = "Search:";
+            this.RestockProductSearchLCI.Width = 100;
+            this.RestockProductSearchLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // RestockProductSeachResultLCI
+            // 
+            this.RestockProductSeachResultLCI.Control = this.RestockProductSeachResultDGV;
+            this.RestockProductSeachResultLCI.Height = 20;
+            this.RestockProductSeachResultLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.RestockProductSeachResultLCI.Name = "RestockProductSeachResultLCI";
+            this.RestockProductSeachResultLCI.Text = "Result:";
+            this.RestockProductSeachResultLCI.Width = 100;
+            this.RestockProductSeachResultLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // RestockPendingChangesLCI
+            // 
+            this.RestockPendingChangesLCI.Control = this.RestockPendingChangesDGV;
+            this.RestockPendingChangesLCI.Height = 20;
+            this.RestockPendingChangesLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.RestockPendingChangesLCI.Name = "RestockPendingChangesLCI";
+            this.RestockPendingChangesLCI.Text = "Pending\r\nChanges:";
+            this.RestockPendingChangesLCI.Width = 100;
+            this.RestockPendingChangesLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // RestockCommitB
+            // 
+            this.RestockCommitB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.RestockCommitB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.RestockCommitB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.SelectedH.SetHighlightOnFocus(this.RestockCommitB, true);
+            this.RestockCommitB.Location = new System.Drawing.Point(4, 85);
+            this.RestockCommitB.Margin = new System.Windows.Forms.Padding(0);
+            this.RestockCommitB.Name = "RestockCommitB";
+            this.RestockCommitB.PopupSide = DevComponents.DotNetBar.ePopupSide.Bottom;
+            this.RestockCommitB.Size = new System.Drawing.Size(537, 42);
+            this.RestockCommitB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.RestockCommitB.SubItemsExpandWidth = 50;
+            this.RestockCommitB.Symbol = "";
+            this.RestockCommitB.TabIndex = 4;
+            this.RestockCommitB.Text = "Commit Pending Changes";
+            // 
+            // RestockCommitLCI
+            // 
+            this.RestockCommitLCI.Control = this.RestockCommitB;
+            this.RestockCommitLCI.Height = 50;
+            this.RestockCommitLCI.MinSize = new System.Drawing.Size(32, 20);
+            this.RestockCommitLCI.Name = "RestockCommitLCI";
+            this.RestockCommitLCI.Width = 100;
+            this.RestockCommitLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
             // Main
             // 
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.RestockLC);
             this.Controls.Add(this.SalesLC);
             this.Controls.Add(this.MenuMTP);
             this.Controls.Add(this.TopBar);
@@ -601,7 +805,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestockProductSeachResultDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestockPendingChangesDGV)).EndInit();
             this.SalesLC.ResumeLayout(false);
+            this.RestockLC.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -644,5 +851,14 @@
         private DevComponents.DotNetBar.Layout.LayoutControlItem SalesCheckoutLCI;
         public DevComponents.DotNetBar.ButtonItem SalesClearCartBI;
         private DevComponents.DotNetBar.Layout.LayoutGroup SalesTotalLG;
+        private DevComponents.DotNetBar.Layout.LayoutControl RestockLC;
+        private DevComponents.DotNetBar.Controls.TextBoxX RestockProductSearchTB;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem RestockProductSearchLCI;
+        private DevComponents.DotNetBar.Controls.DataGridViewX RestockProductSeachResultDGV;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem RestockProductSeachResultLCI;
+        private DevComponents.DotNetBar.Controls.DataGridViewX RestockPendingChangesDGV;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem RestockPendingChangesLCI;
+        private DevComponents.DotNetBar.ButtonX RestockCommitB;
+        private DevComponents.DotNetBar.Layout.LayoutControlItem RestockCommitLCI;
     }
 }
