@@ -63,7 +63,7 @@ namespace Orion {
             DefineUserRole();
             LayoutControlFloat();
             if (MainAvailableMTIs[0] == SalesMTI) Sales_Load();
-            else if (MainAvailableMTIs[0] == RestockMTI) ;
+            else if (MainAvailableMTIs[0] == RestockMTI) Restock_Load();
             else if (MainAvailableMTIs[0] == ProductsMTI) ;
         }
 
@@ -123,29 +123,28 @@ namespace Orion {
         private void Sales_LoadOnce() {
             MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
             SalesProductTable.Load(SalesProductReader);
-            SalesProductTableResult.Columns.Clear();
             SalesProductTableResult.Columns.Add("ID");
             SalesProductTableResult.Columns.Add("Name");
             SalesProductTableResult.Columns.Add("Price");
             SalesProductTableResult.Columns.Add("Stock");
+            SalesProductTableResult.PrimaryKey = new DataColumn[] { SalesProductTableResult.Columns["ID"] };
             SalesProductSeachResultDGV.DataSource = SalesProductTableResult;
             SalesProductSeachResultDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesProductSeachResultDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             SalesProductSeachResultDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesProductSeachResultDGV.Columns["Stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["ID"] };
             SalesPendingTransaction.Columns.Add("ID");
             SalesPendingTransaction.Columns.Add("Name");
             SalesPendingTransaction.Columns.Add("Price");
             SalesPendingTransaction.Columns.Add("Disc");
             SalesPendingTransaction.Columns.Add("Qty");
+            SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["ID"] };
             SalesCartDGV.DataSource = SalesPendingTransaction;
             SalesCartDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             SalesCartDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["Disc"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["Qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            SalesProductTableResult.PrimaryKey = new DataColumn[] { SalesProductTableResult.Columns["ID"] };
             SalesLoaded = true;
         }
 
@@ -178,6 +177,8 @@ namespace Orion {
                         SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
                         SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
                         SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"] = 1;
+                        SalesCartDGV.CurrentCell = SalesCartDGV.Rows[SalesCartDGV.Rows.Count - 1].Cells[4];
+                        SalesCartDGV.BeginEdit(true);
                     } else if (SelectedProductResultStock >= int.Parse(SelectedProductRow["Qty"].ToString()) + 1) {
                         SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"] =
                          int.Parse(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"].ToString()) + 1;
@@ -240,6 +241,9 @@ namespace Orion {
         #region Restock definition
 
         public bool RestockLoaded = false;
+        DataTable RestockProductTable = new DataTable();
+        DataTable RestockProductTableResult = new DataTable();
+        DataTable RestockPendingChanges = new DataTable();
 
         private void RestockMTI_Click(object sender, EventArgs e) {
             Restock_Load();
@@ -248,16 +252,70 @@ namespace Orion {
         private void Restock_Load() {
             LayoutControlHide();
             RestockLC.Visible = true;
+            RestockLC_SizeChanged(new object(), new EventArgs());
+            RestockProductSearchTB.Select();
+            RestockProductSearchTB.Focus();
+            if (!RestockLoaded) Restock_LoadOnce();
         }
 
         private void Restock_LoadOnce() {
-
+            MySqlDataReader RestockProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
+            RestockProductTable.Load(RestockProductReader);
+            RestockProductTableResult.Columns.Add("ID");
+            RestockProductTableResult.Columns.Add("Name");
+            RestockProductTableResult.Columns.Add("Stock");
+            RestockProductTableResult.PrimaryKey = new DataColumn[] { RestockProductTableResult.Columns["ID"] };
+            RestockProductSeachResultDGV.DataSource = RestockProductTableResult;
+            RestockProductSeachResultDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            RestockProductSeachResultDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            RestockProductSeachResultDGV.Columns["Stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            RestockPendingChanges.Columns.Add("ID");
+            RestockPendingChanges.Columns.Add("Name");
+            RestockPendingChanges.Columns.Add("Qty");
+            RestockPendingChanges.PrimaryKey = new DataColumn[] { RestockPendingChanges.Columns["ID"] };
+            RestockPendingChangesDGV.DataSource = RestockPendingChanges;
+            RestockPendingChangesDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            RestockPendingChangesDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            RestockPendingChangesDGV.Columns["Qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            RestockLoaded = true;
         }
 
         private void RestockLC_SizeChanged(object sender, EventArgs e) {
             int RestockOtherComponentHeight = RestockProductSearchLCI.Height + RestockCommitLCI.Height;
             RestockProductSeachResultLCI.Height = (int)((RestockLC.Height - RestockOtherComponentHeight) * 1 / 3.5);
             RestockPendingChangesLCI.Height = (int)((RestockLC.Height - RestockOtherComponentHeight) * 2.5 / 3.5);
+        }
+
+        private void RestockProductSearchTB_TextChanged(object sender, EventArgs e) {
+            string[] RestockSearchTerms = DbConnect.EscapeLikeValue(RestockProductSearchTB.Text).Split(' ');
+            for (int i = 0; i < RestockSearchTerms.Length; i++) RestockSearchTerms[i] = "(product_id + ' ' + product_name) LIKE '%" + RestockSearchTerms[i] + "%'";
+            string[] RestockProductSeachResultColumns = new string[] { "product_id", "product_name", "product_stock" };
+            DataRow[] RestockProductSeachResultProductRows = new DataView(RestockProductTable).ToTable(false, RestockProductSeachResultColumns).Select(String.Join(" AND ", RestockSearchTerms));
+            RestockProductTableResult.Rows.Clear();
+            RestockProductSeachResultProductRows.CopyToDataTable(RestockProductTableResult, LoadOption.OverwriteChanges);
+        }
+
+        private void RestockProductSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            if (e.RowIndex >= 0) {
+                string SelectedProductResultID = DbConnect.EscapeLikeValue(RestockProductSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString());
+                RestockPendingChanges.PrimaryKey = new DataColumn[] { RestockPendingChanges.Columns["ID"] };
+                DataRow SelectedProductRow = RestockPendingChanges.Rows.Find(SelectedProductResultID);
+                if (SelectedProductRow == null) {
+                    string[] ProductsColumn = new string[] { "product_id", "product_name", "product_disc_pct" };
+                    DataRow NewPendingProductRow = new DataView(RestockProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
+                    RestockPendingChanges.Rows.Add(NewPendingProductRow.ItemArray);
+                    SelectedProductRow = RestockPendingChanges.Rows.Find(SelectedProductResultID);
+                    RestockPendingChanges.Rows[RestockPendingChanges.Rows.IndexOf(SelectedProductRow)]["Qty"] = 1;
+                    RestockPendingChangesDGV.CurrentCell = RestockPendingChangesDGV.Rows[RestockPendingChangesDGV.Rows.Count - 1].Cells[2];
+                    RestockPendingChangesDGV.BeginEdit(true);
+                } else ToastNotification.Show(this, "Product Exists on Pending Changes.");
+            }
+        }
+
+        private void RestockPendingChangesDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+            int.TryParse(RestockPendingChanges.Rows[e.RowIndex]["Qty"].ToString(), out int NewSelectedProductResultStock);
+            RestockPendingChanges.Rows[e.RowIndex]["Qty"] = Math.Max(NewSelectedProductResultStock, 0).ToString();
+            if (int.Parse(RestockPendingChanges.Rows[e.RowIndex]["Qty"].ToString()) == 0) RestockPendingChanges.Rows.RemoveAt(e.RowIndex);
         }
 
         #endregion

@@ -81,6 +81,7 @@
             this.RestockPendingChangesLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.RestockCommitB = new DevComponents.DotNetBar.ButtonX();
             this.RestockCommitLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.RestockClearPendingChangesBI = new DevComponents.DotNetBar.ButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).BeginInit();
@@ -466,6 +467,7 @@
             this.RestockProductSearchTB.TabIndex = 0;
             this.RestockProductSearchTB.WatermarkBehavior = DevComponents.DotNetBar.eWatermarkBehavior.HideNonEmpty;
             this.RestockProductSearchTB.WatermarkText = "Enter Product ID or Product Name";
+            this.RestockProductSearchTB.TextChanged += new System.EventHandler(this.RestockProductSearchTB_TextChanged);
             // 
             // RestockProductSeachResultDGV
             // 
@@ -508,6 +510,7 @@
             this.RestockProductSeachResultDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.RestockProductSeachResultDGV.Size = new System.Drawing.Size(481, 12);
             this.RestockProductSeachResultDGV.TabIndex = 1;
+            this.RestockProductSeachResultDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RestockProductSeachResultDGV_CellDoubleClick);
             // 
             // RestockPendingChangesDGV
             // 
@@ -549,6 +552,7 @@
             this.RestockPendingChangesDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.RestockPendingChangesDGV.Size = new System.Drawing.Size(481, 12);
             this.RestockPendingChangesDGV.TabIndex = 2;
+            this.RestockPendingChangesDGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RestockPendingChangesDGV_CellEndEdit);
             // 
             // SalesLC
             // 
@@ -774,6 +778,8 @@
             this.RestockCommitB.PopupSide = DevComponents.DotNetBar.ePopupSide.Bottom;
             this.RestockCommitB.Size = new System.Drawing.Size(537, 42);
             this.RestockCommitB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.RestockCommitB.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.RestockClearPendingChangesBI});
             this.RestockCommitB.SubItemsExpandWidth = 50;
             this.RestockCommitB.Symbol = "";
             this.RestockCommitB.TabIndex = 4;
@@ -787,6 +793,13 @@
             this.RestockCommitLCI.Name = "RestockCommitLCI";
             this.RestockCommitLCI.Width = 100;
             this.RestockCommitLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // RestockClearPendingChangesBI
+            // 
+            this.RestockClearPendingChangesBI.GlobalItem = false;
+            this.RestockClearPendingChangesBI.Name = "RestockClearPendingChangesBI";
+            this.RestockClearPendingChangesBI.Symbol = "";
+            this.RestockClearPendingChangesBI.Text = "Clear Pending Changes";
             // 
             // Main
             // 
@@ -860,5 +873,6 @@
         private DevComponents.DotNetBar.Layout.LayoutControlItem RestockPendingChangesLCI;
         private DevComponents.DotNetBar.ButtonX RestockCommitB;
         private DevComponents.DotNetBar.Layout.LayoutControlItem RestockCommitLCI;
+        public DevComponents.DotNetBar.ButtonItem RestockClearPendingChangesBI;
     }
 }
