@@ -42,6 +42,7 @@ namespace Orion {
                 string hashedPass = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(PasswordTB.Text + salt))).Replace("-", "").ToLower();
                 if (hashedPass == emp.GetString("employee_password")) {
                     Properties.Settings.Default.LoginEmployeeID = int.Parse(emp.GetString("employee_id"));
+                    Properties.Settings.Default.LoginRole = emp.GetString("employee_role");
                     Properties.Settings.Default.Save();
                     new Main().Show();
                     Close();

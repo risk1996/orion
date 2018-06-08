@@ -11,6 +11,8 @@ using MySql.Data.MySqlClient;
 namespace Orion {
     public partial class Main : RibbonForm {
 
+        List<DevComponents.DotNetBar.Metro.MetroTileItem> MainAvailableMTIs = new List<DevComponents.DotNetBar.Metro.MetroTileItem>();
+
         public Main() {
             InitializeComponent();
             UserLI.Text = Properties.Settings.Default.LoginUsername;
@@ -59,13 +61,35 @@ namespace Orion {
         }
 
         private void Main_Load(object sender, EventArgs e) {
-            Sales_Load();
-            SalesProductSearchTB.Select();
-            SalesProductSearchTB.Focus();
+            DefineUserRole();
+            if (MainAvailableMTIs[0] == SalesMTI) Sales_Load();
+            else if (MainAvailableMTIs[0] == RestockMTI) ;
+            else if (MainAvailableMTIs[0] == ProductsMTI) ;
+        }
+
+        private void DefineUserRole() {
+            SalesMTI.Enabled = ReportMTI.Enabled = ProductsMTI.Enabled = EmployeesMTI.Enabled = ReportMTI.Enabled = false;
+            if (Properties.Settings.Default.LoginRole == "SUPER") {
+                MainAvailableMTIs.Add(SalesMTI);
+                MainAvailableMTIs.Add(RestockMTI);
+                MainAvailableMTIs.Add(ProductsMTI);
+                MainAvailableMTIs.Add(EmployeesMTI);
+                MainAvailableMTIs.Add(ReportMTI);
+            } else if (Properties.Settings.Default.LoginRole == "MANAGER") {
+                MainAvailableMTIs.Add(ProductsMTI);
+                MainAvailableMTIs.Add(EmployeesMTI);
+                MainAvailableMTIs.Add(ReportMTI);
+            } else if (Properties.Settings.Default.LoginRole == "CLERK") {
+                MainAvailableMTIs.Add(SalesMTI);
+            } else if (Properties.Settings.Default.LoginRole == "WAREHOUSE") {
+                MainAvailableMTIs.Add(RestockMTI);
+                MainAvailableMTIs.Add(ProductsMTI);
+            }
+            foreach(DevComponents.DotNetBar.Metro.MetroTileItem MTI in MainAvailableMTIs) MTI.Enabled = true;
         }
 
         #region Sales definition
-        
+
         public static double SalesTotalPrice = 0;
         DataTable SalesProductTable = new DataTable();
         DataTable SalesProductTableResult = new DataTable();
@@ -99,6 +123,8 @@ namespace Orion {
             SalesProductTableResult.PrimaryKey = new DataColumn[] { SalesProductTableResult.Columns["ID"] };
             SalesLC_SizeChanged(new object(), new EventArgs());
             SalesRefreshPrice();
+            SalesProductSearchTB.Select();
+            SalesProductSearchTB.Focus();
         }
 
         private void SalesLC_SizeChanged(object sender, EventArgs e) {

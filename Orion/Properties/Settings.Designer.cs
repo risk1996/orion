@@ -81,5 +81,17 @@ namespace Orion.Properties {
                 this["CurrencyFormat"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LoginRole {
+            get {
+                return ((string)(this["LoginRole"]));
+            }
+            set {
+                this["LoginRole"] = value;
+            }
+        }
     }
 }
