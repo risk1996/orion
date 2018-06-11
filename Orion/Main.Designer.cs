@@ -674,10 +674,8 @@
             this.ProductsListDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.ProductsListDGV.Size = new System.Drawing.Size(499, 12);
             this.ProductsListDGV.TabIndex = 1;
-            this.ProductsListDGV.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ProductsListDGV_RowsAdded);
-            this.ProductsListDGV.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductsListDGV_RowValidated);
-            this.ProductsListDGV.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.ProductsListDGV_RowValidating);
-            this.ProductsListDGV.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.ProductsListDGV_UserAddedRow);
+            this.ProductsListDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductsListDGV_CellDoubleClick);
+            this.ProductsListDGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductsListDGV_CellEndEdit);
             // 
             // SalesLC
             // 

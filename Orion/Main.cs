@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Orion {
     public partial class Main : RibbonForm {
-
-        List<DevComponents.DotNetBar.Metro.MetroTileItem> MainAvailableMTIs = new List<DevComponents.DotNetBar.Metro.MetroTileItem>();
-        DataTable ProductViewTable = new DataTable();
+        private List<DevComponents.DotNetBar.Metro.MetroTileItem> MainAvailableMTIs = new List<DevComponents.DotNetBar.Metro.MetroTileItem>();
+        private DataTable ProductViewTable = new DataTable();
 
         public Main() {
             InitializeComponent();
@@ -22,8 +19,10 @@ namespace Orion {
         public const int HT_CAPTION = 0x2;
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
+
         private void LocationLI_MouseDown(object sender, MouseEventArgs e) {
             if (e.Button == MouseButtons.Left) {
                 ReleaseCapture();
@@ -36,11 +35,9 @@ namespace Orion {
         }
 
         private void SettingsBI_Click(object sender, EventArgs e) {
-
         }
 
         private void AboutBI_Click(object sender, EventArgs e) {
-
         }
 
         private void MinimizeBI_Click(object sender, EventArgs e) {
@@ -104,7 +101,7 @@ namespace Orion {
                 MainAvailableMTIs.Add(RestockMTI);
                 MainAvailableMTIs.Add(ProductsMTI);
             }
-            foreach(DevComponents.DotNetBar.Metro.MetroTileItem MTI in MainAvailableMTIs) MTI.Enabled = true;
+            foreach (DevComponents.DotNetBar.Metro.MetroTileItem MTI in MainAvailableMTIs) MTI.Enabled = true;
         }
 
         private void LoadData() {
@@ -116,8 +113,8 @@ namespace Orion {
 
         public bool SalesLoaded = false;
         public static double SalesTotalPrice = 0;
-        DataTable SalesProductViewTableResult = new DataTable();
-        DataTable SalesPendingTransaction = new DataTable();
+        private DataTable SalesProductViewTableResult = new DataTable();
+        private DataTable SalesPendingTransaction = new DataTable();
 
         private void SalesMTI_Click(object sender, EventArgs e) {
             Sales_Load();
@@ -185,7 +182,7 @@ namespace Orion {
         }
 
         private void SalesProductSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            if(e.RowIndex >= 0) {
+            if (e.RowIndex >= 0) {
                 string SelectedProductResultID = DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString());
                 int SelectedProductResultStock = int.Parse(DbConnect.EscapeLikeValue(SalesProductSeachResultDGV.Rows[e.RowIndex].Cells[3].FormattedValue.ToString()));
                 SalesPendingTransaction.PrimaryKey = new DataColumn[] { SalesPendingTransaction.Columns["ID"] };
@@ -197,7 +194,7 @@ namespace Orion {
                         DataRow NewPendingProductRow = new DataView(ProductViewTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
                         SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
                         SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
-                        if(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Disc"].ToString()=="") SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Disc"] = 0;
+                        if (SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Disc"].ToString() == "") SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Disc"] = 0;
                         SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"] = 1;
                         SalesCartDGV.CurrentCell = SalesCartDGV.Rows[SalesCartDGV.Rows.Count - 1].Cells[4];
                         SalesCartDGV.BeginEdit(true);
@@ -207,7 +204,7 @@ namespace Orion {
                     } else ToastNotification.Show(this, "Insufficient Stock");
                     SalesRefreshPrice();
                 }
-            } 
+            }
         }
 
         private void SalesCartDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
@@ -225,15 +222,15 @@ namespace Orion {
 
         private double SalesRefreshPrice() {
             double subtotal = 0, vat, total;
-            foreach(DataRow dr in SalesPendingTransaction.Rows) {
+            foreach (DataRow dr in SalesPendingTransaction.Rows) {
                 subtotal += double.Parse(dr["Price"].ToString()) * double.Parse(dr["Qty"].ToString())
-                    * (String.IsNullOrEmpty(dr["Disc"].ToString())?1: ((100.0 - double.Parse(dr["Disc"].ToString())) / 100.0));
+                    * (String.IsNullOrEmpty(dr["Disc"].ToString()) ? 1 : ((100.0 - double.Parse(dr["Disc"].ToString())) / 100.0));
             }
             SalesSubtotalL.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", subtotal);
             total = Math.Ceiling(subtotal * 1.1 / 500) * 500;
             vat = total - subtotal;
-            SalesVATL.Text      = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", vat);
-            SalesTotalL.Text    = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", total);
+            SalesVATL.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", vat);
+            SalesTotalL.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", total);
             return total;
         }
 
@@ -266,13 +263,13 @@ namespace Orion {
             }
         }
 
-        #endregion
+        #endregion Sales definition
 
         #region Restock definition
 
         public bool RestockLoaded = false;
-        DataTable RestockProductViewTableResult = new DataTable();
-        DataTable RestockPendingChanges = new DataTable();
+        private DataTable RestockProductViewTableResult = new DataTable();
+        private DataTable RestockPendingChanges = new DataTable();
 
         private void RestockMTI_Click(object sender, EventArgs e) {
             Restock_Load();
@@ -399,12 +396,13 @@ namespace Orion {
             RestockProductSearchTB.Enabled = false;
         }
 
-        #endregion
+        #endregion Restock definition
 
         #region Products definition
 
         public bool ProductsLoaded = false;
-        DataTable ProductsProductView = new DataTable();
+        private DataTable ProductsProductView = new DataTable();
+        private DataTable ProductsSearchResult = new DataTable();
 
         private void ProductsMTI_Click(object sender, EventArgs e) {
             Products_Load();
@@ -421,18 +419,19 @@ namespace Orion {
         }
 
         private void Products_LoadOnce() {
-            ProductsProductView.Columns.Add("ID");
-            ProductsProductView.Columns.Add("Name");
-            ProductsProductView.Columns.Add("Package");
-            ProductsProductView.Columns.Add("Substance");
-            ProductsProductView.Columns.Add("Registrar");
-            ProductsProductView.Columns.Add("Distributor");
-            ProductsProductView.Columns.Add("Price");
-            ProductsProductView.Columns.Add("Stock");
-            ProductsProductView.Columns.Add("Disc");
-            ProductsProductView.RowChanged += new DataRowChangeEventHandler(ProductsProductView_RowChanged);
-            ProductsProductView.PrimaryKey = new DataColumn[] { ProductsProductView.Columns["ID"] };
-            ProductsListDGV.DataSource = ProductsProductView;
+            ProductsProductView = ProductViewTable.Copy();
+            ProductsProductView.Columns.Add("product_status");
+            ProductsSearchResult.Columns.Add("ID");
+            ProductsSearchResult.Columns.Add("Name");
+            ProductsSearchResult.Columns.Add("Package");
+            ProductsSearchResult.Columns.Add("Substance");
+            ProductsSearchResult.Columns.Add("Registrar");
+            ProductsSearchResult.Columns.Add("Distributor");
+            ProductsSearchResult.Columns.Add("Price");
+            ProductsSearchResult.Columns.Add("Stock");
+            ProductsSearchResult.Columns.Add("Disc");
+            ProductsSearchResult.PrimaryKey = new DataColumn[] { ProductsSearchResult.Columns["ID"] };
+            ProductsListDGV.DataSource = ProductsSearchResult;
             ProductsListDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             ProductsListDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             ProductsListDGV.Columns["Package"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -454,39 +453,61 @@ namespace Orion {
             string[] ProductsSearchTerms = DbConnect.EscapeLikeValue(ProductsProductSearchTB.Text).Split(' ');
             for (int i = 0; i < ProductsSearchTerms.Length; i++) ProductsSearchTerms[i] = "(product_id + ' ' + product_name + ' ' + product_package + ' ' + product_substance + ' ' + product_registrar + ' ' + product_distributor) LIKE '%" + ProductsSearchTerms[i] + "%'";
             string[] ProductsProductSeachResultColumns = new string[] { "product_id", "product_name", "product_package", "product_substance", "product_registrar", "product_distributor", "product_price", "product_stock", "product_disc_pct" };
-            DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductViewTable).ToTable(false, ProductsProductSeachResultColumns).Select(String.Join(" AND ", ProductsSearchTerms));
-            ProductsProductView.Rows.Clear();
-            ProductsProductSeachResultProductRows.CopyToDataTable(ProductsProductView, LoadOption.OverwriteChanges);
+            DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductsProductView).ToTable(false, ProductsProductSeachResultColumns).Select(String.Join(" AND ", ProductsSearchTerms));
+            ProductsSearchResult.Rows.Clear();
+            //ProductsProductSeachResultProductRows.CopyToDataTable(ProductsSearchResult, LoadOption.OverwriteChanges);
+            //DataRow[] ProductsProductChange = new DataView(ProductsProductView).ToTable(false, new string[] { "product_id", "product_status" }).Select("product_status IS NOT NULL");
+            //foreach (DataRow dr in ProductsProductChange) {
+            //    DataRow sr = ProductsSearchResult.Rows.Find(dr[0].ToString());
+            //    if (sr != null) {
+            //        int isr = ProductsSearchResult.Rows.IndexOf(sr);
+            //        if (dr[1].ToString() == "UPDATE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Yellow;
+            //        else if (dr[1].ToString() == "DELETE") {
+            //            ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
+            //            ProductsListDGV.Rows[isr].ReadOnly = true;
+            //        } else if (dr[1].ToString() == "INSERT") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
+            //    }
+            //}
         }
 
-        #endregion
+        #endregion Products definition
 
-        private void ProductsListDGV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
-            //ToastNotification.Show(this, "Row Added");
+        private void ProductsListDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+            //if (e.RowIndex > 0 && e.RowIndex < ProductsProductView.Rows.Count) {
+            //    DataRow dr = ProductsProductView.Rows.Find(ProductsSearchResult.Rows[e.RowIndex][0]);
+            //    if (dr != null && dr["product_status"].ToString() != "INSERT") {
+            //        ToastNotification.Show(this, dr[0].ToString() + dr.ItemArray.Length.ToString());
+            //        if (ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != ProductViewTable.Rows.Find(dr[0])[e.ColumnIndex].ToString()) {
+            //            dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            //            dr["product_status"] = "UDATE";
+            //            dr.AcceptChanges();
+            //            ToastNotification.Show(this, dr["product_status"].ToString());
+            //            ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+            //        } else if(dr["product_status"].ToString() == "UPDATE") {
+            //            dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            //            ToastNotification.Show(this, "Hai");
+            //        }
+            //    } else if (dr != null && dr["product_status"].ToString() == "INSERT") {
+            //        dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            //    }
+            //} else if(e.RowIndex > 0) {
+            //    object[] val = { "", "", "", "", "", "", 0, 0, 0 };
+            //    val[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            //    DataRow dr = ProductsProductView.Rows.Add(val);
+            //    dr["product_status"] = "INSERT";
+            //    ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
+            //}
         }
 
-        private void ProductsListDGV_RowValidating(object sender, DataGridViewCellCancelEventArgs e) {
-            DataGridViewRow dr = ProductsListDGV.Rows[e.RowIndex];
-            if (dr.Cells[0].ToString() == "" || ProductsProductView.Rows.Find(dr.Cells[0].ToString()) != null) {
-                e.Cancel = true;
-            }
-        }
-
-        private void ProductsListDGV_RowValidated(object sender, DataGridViewCellEventArgs e) {
-            DataRowView d = (DataRowView)(ProductsListDGV.Rows[e.RowIndex].DataBoundItem);
-            if (d!=null && !d.IsEdit) {
-                d.Row.AcceptChanges();
-            }
-        }
-
-        private void ProductsListDGV_UserAddedRow(object sender, DataGridViewRowEventArgs e) {
-            //ToastNotification.Show(this, "User Added Row");
-        }
-
-        private void ProductsProductView_RowChanged(object sender, DataRowChangeEventArgs e) {
-            if (e.Action == DataRowAction.Commit) {
-                ToastNotification.Show(this, "Hore bisa");
-            }
+        private void ProductsListDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            //if (e.RowIndex > 0) {
+            //    DataRow dr = ProductsProductView.Rows.Find(ProductsSearchResult.Rows[e.RowIndex][0]);
+            //    if (dr != null) {
+            //        dr["product_status"] = "DELETE";
+            //        ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+            //        ProductsListDGV.Rows[e.RowIndex].ReadOnly = true;
+            //    }
+            //}
         }
     }
 }
