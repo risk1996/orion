@@ -42,6 +42,8 @@
             this.LoginB.Name = "LoginB";
             this.LoginB.Size = new System.Drawing.Size(75, 23);
             this.LoginB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.LoginB.Symbol = "";
+            this.LoginB.SymbolSize = 10F;
             this.LoginB.TabIndex = 3;
             this.LoginB.Text = "Login";
             this.LoginB.Click += new System.EventHandler(this.LoginB_Click);
@@ -158,7 +160,6 @@
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login | Orion";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
 

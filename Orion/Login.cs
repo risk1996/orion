@@ -26,12 +26,6 @@ namespace Orion {
             }
         }
 
-        private void Login_FormClosing(object sender, FormClosingEventArgs e) {
-            Properties.Settings.Default.LoginUsername = UsernameTB.Text;
-            Properties.Settings.Default.LoginRemember = RememberCB.Checked;
-            Properties.Settings.Default.Save();
-        }
-
         private void LoginB_Click(object sender, EventArgs e) {
             ProgressCP.Visible = true;
             MySqlDataReader emp = new DbConnect().ExecQuery("SELECT * FROM employee WHERE employee_uname = '" + UsernameTB.Text + "';");
@@ -41,6 +35,8 @@ namespace Orion {
                 string salt = emp.GetString("employee_salt");
                 string hashedPass = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(PasswordTB.Text + salt))).Replace("-", "").ToLower();
                 if (hashedPass == emp.GetString("employee_password")) {
+                    Properties.Settings.Default.LoginUsername = UsernameTB.Text;
+                    Properties.Settings.Default.LoginRemember = RememberCB.Checked;
                     Properties.Settings.Default.LoginEmployeeID = int.Parse(emp.GetString("employee_id"));
                     Properties.Settings.Default.LoginRole = emp.GetString("employee_role");
                     Properties.Settings.Default.Save();

@@ -12,10 +12,10 @@ namespace Orion {
     public partial class Main : RibbonForm {
 
         List<DevComponents.DotNetBar.Metro.MetroTileItem> MainAvailableMTIs = new List<DevComponents.DotNetBar.Metro.MetroTileItem>();
+        DataTable ProductViewTable = new DataTable();
 
         public Main() {
             InitializeComponent();
-            UserLI.Text = Properties.Settings.Default.LoginUsername;
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -55,11 +55,17 @@ namespace Orion {
             Close();
         }
 
+        private void LogoutBI_Click(object sender, EventArgs e) {
+            new Login().Show();
+            Close();
+        }
+
         private void LocationLI_DoubleClick(object sender, EventArgs e) {
             MaximizeBI_Click(sender, e);
         }
 
         private void Main_Load(object sender, EventArgs e) {
+            UserLI.Text = Properties.Settings.Default.LoginUsername;
             DefineUserRole();
             LayoutControlFloat();
             if (MainAvailableMTIs[0] == SalesMTI) Sales_Load();
@@ -78,7 +84,7 @@ namespace Orion {
         }
 
         private void DefineUserRole() {
-            SalesMTI.Enabled = ReportMTI.Enabled = ProductsMTI.Enabled = EmployeesMTI.Enabled = ReportMTI.Enabled = false;
+            SalesMTI.Enabled = RestockMTI.Enabled = ReportMTI.Enabled = ProductsMTI.Enabled = EmployeesMTI.Enabled = ReportMTI.Enabled = false;
             if (Properties.Settings.Default.LoginRole == "SUPER") {
                 MainAvailableMTIs.Add(SalesMTI);
                 MainAvailableMTIs.Add(RestockMTI);
@@ -102,8 +108,7 @@ namespace Orion {
 
         public bool SalesLoaded = false;
         public static double SalesTotalPrice = 0;
-        DataTable SalesProductTable = new DataTable();
-        DataTable SalesProductTableResult = new DataTable();
+        DataTable SalesProductViewTableResult = new DataTable();
         DataTable SalesPendingTransaction = new DataTable();
 
         private void SalesMTI_Click(object sender, EventArgs e) {
@@ -123,14 +128,14 @@ namespace Orion {
 
         private void Sales_LoadOnce() {
             MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
-            SalesProductTable.Load(SalesProductReader);
-            SalesProductTable.PrimaryKey = new DataColumn[] { SalesProductTable.Columns["product_id"] };
-            SalesProductTableResult.Columns.Add("ID");
-            SalesProductTableResult.Columns.Add("Name");
-            SalesProductTableResult.Columns.Add("Price");
-            SalesProductTableResult.Columns.Add("Stock");
-            SalesProductTableResult.PrimaryKey = new DataColumn[] { SalesProductTableResult.Columns["ID"] };
-            SalesProductSeachResultDGV.DataSource = SalesProductTableResult;
+            ProductViewTable.Load(SalesProductReader);
+            ProductViewTable.PrimaryKey = new DataColumn[] { ProductViewTable.Columns["product_id"] };
+            SalesProductViewTableResult.Columns.Add("ID");
+            SalesProductViewTableResult.Columns.Add("Name");
+            SalesProductViewTableResult.Columns.Add("Price");
+            SalesProductViewTableResult.Columns.Add("Stock");
+            SalesProductViewTableResult.PrimaryKey = new DataColumn[] { SalesProductViewTableResult.Columns["ID"] };
+            SalesProductSeachResultDGV.DataSource = SalesProductViewTableResult;
             SalesProductSeachResultDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesProductSeachResultDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             SalesProductSeachResultDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -147,6 +152,10 @@ namespace Orion {
             SalesCartDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["Disc"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             SalesCartDGV.Columns["Qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            SalesCartDGV.Columns["ID"].ReadOnly = true;
+            SalesCartDGV.Columns["Name"].ReadOnly = true;
+            SalesCartDGV.Columns["Price"].ReadOnly = true;
+            SalesCartDGV.Columns["Disc"].ReadOnly = true;
             SalesLoaded = true;
         }
 
@@ -158,14 +167,14 @@ namespace Orion {
 
         private void SalesProductSearchTB_TextChanged(object sender, EventArgs e) {
             if (SalesProductSearchTB.Text == "") {
-                SalesProductTableResult.Clear();
+                SalesProductViewTableResult.Clear();
             } else {
                 string[] SalesSearchTerms = DbConnect.EscapeLikeValue(SalesProductSearchTB.Text).Split(' ');
                 for (int i = 0; i < SalesSearchTerms.Length; i++) SalesSearchTerms[i] = "(product_id + ' ' + product_name) LIKE '%" + SalesSearchTerms[i] + "%'";
                 string[] SalesProductSeachResultColumns = new string[] { "product_id", "product_name", "product_price", "product_stock" };
-                DataRow[] SalesProductSeachResultProductRows = new DataView(SalesProductTable).ToTable(false, SalesProductSeachResultColumns).Select(String.Join(" AND ", SalesSearchTerms));
-                SalesProductTableResult.Rows.Clear();
-                SalesProductSeachResultProductRows.CopyToDataTable(SalesProductTableResult, LoadOption.OverwriteChanges);
+                DataRow[] SalesProductSeachResultProductRows = new DataView(ProductViewTable).ToTable(false, SalesProductSeachResultColumns).Select(String.Join(" AND ", SalesSearchTerms));
+                SalesProductViewTableResult.Rows.Clear();
+                SalesProductSeachResultProductRows.CopyToDataTable(SalesProductViewTableResult, LoadOption.OverwriteChanges);
             }
         }
 
@@ -179,7 +188,7 @@ namespace Orion {
                 else {
                     if (SelectedProductRow == null) {
                         string[] ProductsColumn = new string[] { "product_id", "product_name", "product_price", "product_disc_pct" };
-                        DataRow NewPendingProductRow = new DataView(SalesProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
+                        DataRow NewPendingProductRow = new DataView(ProductViewTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
                         SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
                         SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
                         if(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Disc"].ToString()=="") SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Disc"] = 0;
@@ -196,7 +205,7 @@ namespace Orion {
         }
 
         private void SalesCartDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            int SelectedProductResultStock = int.Parse(SalesProductTable.Rows.Find(SalesCartDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString())["product_stock"].ToString());
+            int SelectedProductResultStock = int.Parse(ProductViewTable.Rows.Find(SalesCartDGV.Rows[e.RowIndex].Cells[0].FormattedValue.ToString())["product_stock"].ToString());
             int.TryParse(SalesPendingTransaction.Rows[e.RowIndex]["Qty"].ToString(), out int NewSelectedProductResultStock);
             SalesPendingTransaction.Rows[e.RowIndex]["Qty"] = Math.Max(Math.Min(NewSelectedProductResultStock, SelectedProductResultStock), 0).ToString();
             if (int.Parse(SalesPendingTransaction.Rows[e.RowIndex]["Qty"].ToString()) == 0) SalesPendingTransaction.Rows.RemoveAt(e.RowIndex);
@@ -206,10 +215,6 @@ namespace Orion {
 
         private void SalesCartDGV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
             SalesCheckoutB.Enabled = SalesPendingTransaction.Rows.Count > 0;
-        }
-
-        private void SalesCartDGV_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) {
-            SalesCartDGV_RowsAdded(sender, new DataGridViewRowsAddedEventArgs(0, 0));
         }
 
         private double SalesRefreshPrice() {
@@ -237,14 +242,17 @@ namespace Orion {
                 Opacity = .5;
                 if (Checkout.ShowDialog() == DialogResult.OK) {
                     string salesTransactionId = Checkout.transaction_id;
+                    String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                     foreach (DataRow dr in SalesPendingTransaction.Rows) {
-                        MySqlDataReader SalesTransactionDetailReader = new DbConnect().ExecQuery("INSERT transaction_detail (transaction_id, product_id, transaction_qty, transaction_discount) " +
-                    "VALUES ('" + salesTransactionId + "', '" + dr["ID"].ToString() + "', '" + dr["Qty"].ToString() + "', '" + dr["Disc"].ToString() + "');");
-                        MySqlDataReader ProductStockUpdateReader = new DbConnect().ExecQuery("UPDATE product SET product_stock = product_stock - " + dr["Qty"] + " WHERE product_id = '" + dr["ID"].ToString() + "'");
+                        new DbConnect().ExecNonQuery("INSERT transaction_detail (transaction_id, product_id, transaction_qty, transaction_discount) " +
+                            "VALUES ('" + salesTransactionId + "', '" + dr["ID"].ToString() + "', '" + dr["Qty"].ToString() + "', '" + dr["Disc"].ToString() + "');");
+                        new DbConnect().ExecNonQuery("UPDATE product SET product_stock = product_stock - " + dr["Qty"] + " WHERE product_id = '" + dr["ID"].ToString() + "';");
+                        new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
+                            "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '-" + dr["Qty"].ToString() + "');");
                     }
                     MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
-                    SalesProductTable.Load(SalesProductReader);
-                    SalesProductTableResult.Clear();
+                    ProductViewTable.Load(SalesProductReader);
+                    SalesProductViewTableResult.Clear();
                     SalesProductSearchTB.Clear();
                     SalesClearCartBI_Click(sender, e);
                 }
@@ -257,8 +265,7 @@ namespace Orion {
         #region Restock definition
 
         public bool RestockLoaded = false;
-        DataTable RestockProductTable = new DataTable();
-        DataTable RestockProductTableResult = new DataTable();
+        DataTable RestockProductViewTableResult = new DataTable();
         DataTable RestockPendingChanges = new DataTable();
 
         private void RestockMTI_Click(object sender, EventArgs e) {
@@ -272,16 +279,17 @@ namespace Orion {
             RestockProductSearchTB.Select();
             RestockProductSearchTB.Focus();
             if (!RestockLoaded) Restock_LoadOnce();
+            RestockPendingChangesDGV_RowsAdded(new object(), new DataGridViewRowsAddedEventArgs(0, 0));
         }
 
         private void Restock_LoadOnce() {
             MySqlDataReader RestockProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
-            RestockProductTable.Load(RestockProductReader);
-            RestockProductTableResult.Columns.Add("ID");
-            RestockProductTableResult.Columns.Add("Name");
-            RestockProductTableResult.Columns.Add("Stock");
-            RestockProductTableResult.PrimaryKey = new DataColumn[] { RestockProductTableResult.Columns["ID"] };
-            RestockProductSeachResultDGV.DataSource = RestockProductTableResult;
+            ProductViewTable.Load(RestockProductReader);
+            RestockProductViewTableResult.Columns.Add("ID");
+            RestockProductViewTableResult.Columns.Add("Name");
+            RestockProductViewTableResult.Columns.Add("Stock");
+            RestockProductViewTableResult.PrimaryKey = new DataColumn[] { RestockProductViewTableResult.Columns["ID"] };
+            RestockProductSeachResultDGV.DataSource = RestockProductViewTableResult;
             RestockProductSeachResultDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             RestockProductSeachResultDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             RestockProductSeachResultDGV.Columns["Stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -293,6 +301,8 @@ namespace Orion {
             RestockPendingChangesDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             RestockPendingChangesDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             RestockPendingChangesDGV.Columns["Qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            RestockPendingChangesDGV.Columns["ID"].ReadOnly = true;
+            RestockPendingChangesDGV.Columns["Name"].ReadOnly = true;
             RestockLoaded = true;
         }
 
@@ -303,12 +313,16 @@ namespace Orion {
         }
 
         private void RestockProductSearchTB_TextChanged(object sender, EventArgs e) {
-            string[] RestockSearchTerms = DbConnect.EscapeLikeValue(RestockProductSearchTB.Text).Split(' ');
-            for (int i = 0; i < RestockSearchTerms.Length; i++) RestockSearchTerms[i] = "(product_id + ' ' + product_name) LIKE '%" + RestockSearchTerms[i] + "%'";
-            string[] RestockProductSeachResultColumns = new string[] { "product_id", "product_name", "product_stock" };
-            DataRow[] RestockProductSeachResultProductRows = new DataView(RestockProductTable).ToTable(false, RestockProductSeachResultColumns).Select(String.Join(" AND ", RestockSearchTerms));
-            RestockProductTableResult.Rows.Clear();
-            RestockProductSeachResultProductRows.CopyToDataTable(RestockProductTableResult, LoadOption.OverwriteChanges);
+            if (RestockProductSearchTB.Text == "") {
+                RestockProductViewTableResult.Clear();
+            } else {
+                string[] RestockSearchTerms = DbConnect.EscapeLikeValue(RestockProductSearchTB.Text).Split(' ');
+                for (int i = 0; i < RestockSearchTerms.Length; i++) RestockSearchTerms[i] = "(product_id + ' ' + product_name) LIKE '%" + RestockSearchTerms[i] + "%'";
+                string[] RestockProductSeachResultColumns = new string[] { "product_id", "product_name", "product_stock" };
+                DataRow[] RestockProductSeachResultProductRows = new DataView(ProductViewTable).ToTable(false, RestockProductSeachResultColumns).Select(String.Join(" AND ", RestockSearchTerms));
+                RestockProductViewTableResult.Rows.Clear();
+                RestockProductSeachResultProductRows.CopyToDataTable(RestockProductViewTableResult, LoadOption.OverwriteChanges);
+            }
         }
 
         private void RestockProductSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
@@ -318,7 +332,7 @@ namespace Orion {
                 DataRow SelectedProductRow = RestockPendingChanges.Rows.Find(SelectedProductResultID);
                 if (SelectedProductRow == null) {
                     string[] ProductsColumn = new string[] { "product_id", "product_name", "product_disc_pct" };
-                    DataRow NewPendingProductRow = new DataView(RestockProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
+                    DataRow NewPendingProductRow = new DataView(ProductViewTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
                     RestockPendingChanges.Rows.Add(NewPendingProductRow.ItemArray);
                     SelectedProductRow = RestockPendingChanges.Rows.Find(SelectedProductResultID);
                     RestockPendingChanges.Rows[RestockPendingChanges.Rows.IndexOf(SelectedProductRow)]["Qty"] = 1;
@@ -332,6 +346,53 @@ namespace Orion {
             int.TryParse(RestockPendingChanges.Rows[e.RowIndex]["Qty"].ToString(), out int NewSelectedProductResultStock);
             RestockPendingChanges.Rows[e.RowIndex]["Qty"] = Math.Max(NewSelectedProductResultStock, 0).ToString();
             if (int.Parse(RestockPendingChanges.Rows[e.RowIndex]["Qty"].ToString()) == 0) RestockPendingChanges.Rows.RemoveAt(e.RowIndex);
+            RestockPendingChangesDGV_RowsAdded(sender, new DataGridViewRowsAddedEventArgs(0, 0));
+        }
+
+        private void RestockPendingChangesDGV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
+            RestockCommitB.Enabled = RestockPendingChanges.Rows.Count > 0;
+            RestockCancelB.Enabled = RestockPendingChanges.Rows.Count > 0;
+        }
+
+        private void RestockCancelB_Click(object sender, EventArgs e) {
+            if (RestockCancelB.Text == "Clear Changes") {
+                RestockPendingChanges.Clear();
+                RestockPendingChangesDGV_RowsAdded(sender, new DataGridViewRowsAddedEventArgs(0, 0));
+            } else {
+                RestockCommitB.Text = "OK";
+                RestockCancelB.Text = "Clear Changes";
+                RestockProductSeachResultDGV.Enabled = true;
+                RestockProductSearchTB.Enabled = true;
+            }
+        }
+
+        private void RestockCommitB_Click(object sender, EventArgs e) {
+            if (RestockCommitB.Text == "OK") {
+                RestockCommitB.Text = "Commit Changes";
+                RestockCancelB.Text = "Cancel";
+                LockRestock();
+            } else {
+                String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                foreach (DataRow dr in RestockPendingChanges.Rows) {
+                    new DbConnect().ExecNonQuery("UPDATE product SET product_stock = product_stock + " + dr["Qty"] + " WHERE product_id = '" + dr["ID"].ToString() + "';");
+                    new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
+                        "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + dr["Qty"].ToString() + "');");
+                }
+                RestockCancelB.Text = "Clear Changes";
+                RestockCommitB.Text = "OK";
+                RestockPendingChanges.Clear();
+                RestockProductSeachResultDGV.Enabled = true;
+                RestockProductSearchTB.Enabled = true;
+                RestockProductSearchTB.Clear();
+                MySqlDataReader RestockProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
+                ProductViewTable.Load(RestockProductReader);
+                RestockPendingChangesDGV_RowsAdded(sender, new DataGridViewRowsAddedEventArgs(0, 0));
+            }
+        }
+
+        private void LockRestock() {
+            RestockProductSeachResultDGV.Enabled = false;
+            RestockProductSearchTB.Enabled = false;
         }
 
         #endregion

@@ -117,7 +117,7 @@ namespace Orion {
                 LockPayment();
             } else {
                 String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
-                MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("INSERT transaction_header (transaction_id, transaction_timestamp, employee_id, transaction_method) " +
+                int SalesProductReader = new DbConnect().ExecNonQuery("INSERT transaction_header (transaction_id, transaction_timestamp, employee_id, transaction_method) " +
                     "VALUES ('" + CheckoutInvoiceNoL.Text.ToString() + "', '" + TimeStamp + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + CheckoutTransactionMethodCB.Text + "');");
                 transaction_id = CheckoutInvoiceNoL.Text.ToString();
                 DialogResult = DialogResult.OK;
@@ -127,7 +127,7 @@ namespace Orion {
 
         private void LockPayment() {
             CheckoutTransactionMethodCB.Enabled = CheckoutConfirmB.Text == "Confirm Checkout";
-            CheckoutPaymentTB.Enabled = CheckoutTransactionMethodCB.SelectedIndex == 0 && CheckoutConfirmB.Text == "Confirm Checkout";
+            CheckoutPaymentTB.Enabled = CheckoutTransactionMethodCB.SelectedIndex==0 && CheckoutConfirmB.Text == "Confirm Checkout";
         }
     }
 }
