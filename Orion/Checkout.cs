@@ -25,15 +25,15 @@ namespace Orion {
             String InvoiceNoBase36 = ConvertToBase(NextInvoiceNoBase10, 36).PadLeft(8, '0');
             CheckoutInvoiceNoL.Text = String.Format("O-INV-" + CheckoutDate + InvoiceNoBase36);
             CheckoutPriceL.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", Main.SalesTotalPrice);
+            CheckoutTransactionMethodCB.Items.Add("Cash");
+            CheckoutTransactionMethodCB.Items.Add("Debit");
+            CheckoutTransactionMethodCB.Items.Add("Credit");
+            CheckoutTransactionMethodCB.SelectedIndex = 0;
             RefreshPaymentAmount();
         }
 
         private void Checkout_FormClosed(object sender, FormClosedEventArgs e) {
 
-        }
-
-        private void CheckoutCancelB_Click(object sender, EventArgs e) {
-            this.Hide();
         }
 
         public String ConvertToBase(int num, int nbase) {
@@ -59,6 +59,17 @@ namespace Orion {
                 newNumber += chars.IndexOf(num[i]);
             }
             return newNumber;
+        }
+
+        private void CheckoutTransactionMethodCB_SelectedIndexChanged(object sender, EventArgs e) {
+            if (CheckoutTransactionMethodCB.SelectedIndex == 0) {
+                PaymentAmount = 0;
+                CheckoutPaymentTB.Enabled = true;
+            } else {
+                PaymentAmount = (decimal)Main.SalesTotalPrice;
+                CheckoutPaymentTB.Enabled = false;
+            }
+            RefreshPaymentAmount();
         }
 
         private decimal PaymentAmount = 0;
@@ -94,17 +105,29 @@ namespace Orion {
             }
         }
 
+        private void CheckoutCancelB_Click(object sender, EventArgs e) {
+            if (CheckoutConfirmB.Text == "Confirm Checkout") Close();
+            else CheckoutConfirmB.Text = "Confirm Checkout";
+            LockPayment();
+        }
+
         private void CheckoutConfirmB_Click(object sender, EventArgs e) {
-            if (CheckoutPriceL.Text == "Rp 0.00") {
-                ToastNotification.Show(this, "Please input item first");
+            if(CheckoutConfirmB.Text == "Confirm Checkout") {
+                CheckoutConfirmB.Text = "Confirm Payment";
+                LockPayment();
             } else {
                 String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                 MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("INSERT transaction_header (transaction_id, transaction_timestamp, employee_id, transaction_method) " +
-                    "VALUES ('" + CheckoutInvoiceNoL.Text.ToString() + "', '" + TimeStamp + "', '" + Properties.Settings.Default.LoginEmployeeID + "', 'Cash');");
-                this.transaction_id = CheckoutInvoiceNoL.Text.ToString();
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                    "VALUES ('" + CheckoutInvoiceNoL.Text.ToString() + "', '" + TimeStamp + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + CheckoutTransactionMethodCB.Text + "');");
+                transaction_id = CheckoutInvoiceNoL.Text.ToString();
+                DialogResult = DialogResult.OK;
+                Close();
             }
+        }
+
+        private void LockPayment() {
+            CheckoutTransactionMethodCB.Enabled = CheckoutConfirmB.Text == "Confirm Checkout";
+            CheckoutPaymentTB.Enabled = CheckoutTransactionMethodCB.SelectedIndex == 0 && CheckoutConfirmB.Text == "Confirm Checkout";
         }
     }
 }

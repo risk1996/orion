@@ -114,6 +114,7 @@ namespace Orion {
             LayoutControlHide();
             SalesLC.Visible = true;
             SalesLC_SizeChanged(new object(), new EventArgs());
+            SalesCartDGV_RowsAdded(new object(), new DataGridViewRowsAddedEventArgs(0, 0));
             SalesRefreshPrice();
             SalesProductSearchTB.Select();
             SalesProductSearchTB.Focus();
@@ -123,6 +124,7 @@ namespace Orion {
         private void Sales_LoadOnce() {
             MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
             SalesProductTable.Load(SalesProductReader);
+            SalesProductTable.PrimaryKey = new DataColumn[] { SalesProductTable.Columns["product_id"] };
             SalesProductTableResult.Columns.Add("ID");
             SalesProductTableResult.Columns.Add("Name");
             SalesProductTableResult.Columns.Add("Price");
@@ -155,12 +157,16 @@ namespace Orion {
         }
 
         private void SalesProductSearchTB_TextChanged(object sender, EventArgs e) {
-            string[] SalesSearchTerms = DbConnect.EscapeLikeValue(SalesProductSearchTB.Text).Split(' ');
-            for (int i = 0; i < SalesSearchTerms.Length; i++) SalesSearchTerms[i] = "(product_id + ' ' + product_name) LIKE '%" + SalesSearchTerms[i] + "%'";
-            string[] SalesProductSeachResultColumns = new string[] { "product_id", "product_name", "product_price", "product_stock" };
-            DataRow[] SalesProductSeachResultProductRows = new DataView(SalesProductTable).ToTable(false, SalesProductSeachResultColumns).Select(String.Join(" AND ", SalesSearchTerms));
-            SalesProductTableResult.Rows.Clear();
-            SalesProductSeachResultProductRows.CopyToDataTable(SalesProductTableResult, LoadOption.OverwriteChanges);
+            if (SalesProductSearchTB.Text == "") {
+                SalesProductTableResult.Clear();
+            } else {
+                string[] SalesSearchTerms = DbConnect.EscapeLikeValue(SalesProductSearchTB.Text).Split(' ');
+                for (int i = 0; i < SalesSearchTerms.Length; i++) SalesSearchTerms[i] = "(product_id + ' ' + product_name) LIKE '%" + SalesSearchTerms[i] + "%'";
+                string[] SalesProductSeachResultColumns = new string[] { "product_id", "product_name", "product_price", "product_stock" };
+                DataRow[] SalesProductSeachResultProductRows = new DataView(SalesProductTable).ToTable(false, SalesProductSeachResultColumns).Select(String.Join(" AND ", SalesSearchTerms));
+                SalesProductTableResult.Rows.Clear();
+                SalesProductSeachResultProductRows.CopyToDataTable(SalesProductTableResult, LoadOption.OverwriteChanges);
+            }
         }
 
         private void SalesProductSeachResultDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
@@ -176,6 +182,7 @@ namespace Orion {
                         DataRow NewPendingProductRow = new DataView(SalesProductTable).ToTable(false, ProductsColumn).Select("product_id = '" + SelectedProductResultID + "'")[0];
                         SalesPendingTransaction.Rows.Add(NewPendingProductRow.ItemArray);
                         SelectedProductRow = SalesPendingTransaction.Rows.Find(SelectedProductResultID);
+                        if(SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Disc"].ToString()=="") SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Disc"] = 0;
                         SalesPendingTransaction.Rows[SalesPendingTransaction.Rows.IndexOf(SelectedProductRow)]["Qty"] = 1;
                         SalesCartDGV.CurrentCell = SalesCartDGV.Rows[SalesCartDGV.Rows.Count - 1].Cells[4];
                         SalesCartDGV.BeginEdit(true);
@@ -193,19 +200,30 @@ namespace Orion {
             int.TryParse(SalesPendingTransaction.Rows[e.RowIndex]["Qty"].ToString(), out int NewSelectedProductResultStock);
             SalesPendingTransaction.Rows[e.RowIndex]["Qty"] = Math.Max(Math.Min(NewSelectedProductResultStock, SelectedProductResultStock), 0).ToString();
             if (int.Parse(SalesPendingTransaction.Rows[e.RowIndex]["Qty"].ToString()) == 0) SalesPendingTransaction.Rows.RemoveAt(e.RowIndex);
+            SalesCartDGV_RowsAdded(sender, new DataGridViewRowsAddedEventArgs(0, 0));
             SalesRefreshPrice();
         }
 
+        private void SalesCartDGV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
+            SalesCheckoutB.Enabled = SalesPendingTransaction.Rows.Count > 0;
+        }
+
+        private void SalesCartDGV_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) {
+            SalesCartDGV_RowsAdded(sender, new DataGridViewRowsAddedEventArgs(0, 0));
+        }
+
         private double SalesRefreshPrice() {
-            double subtotal = 0;
+            double subtotal = 0, vat, total;
             foreach(DataRow dr in SalesPendingTransaction.Rows) {
                 subtotal += double.Parse(dr["Price"].ToString()) * double.Parse(dr["Qty"].ToString())
                     * (String.IsNullOrEmpty(dr["Disc"].ToString())?1: ((100.0 - double.Parse(dr["Disc"].ToString())) / 100.0));
             }
             SalesSubtotalL.Text = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", subtotal);
-            SalesVATL.Text      = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", subtotal * 0.1);
-            SalesTotalL.Text    = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", subtotal * 1.1);
-            return subtotal * 1.1;
+            total = Math.Ceiling(subtotal * 1.1 / 500) * 500;
+            vat = total - subtotal;
+            SalesVATL.Text      = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", vat);
+            SalesTotalL.Text    = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", total);
+            return total;
         }
 
         private void SalesClearCartBI_Click(object sender, EventArgs e) {
@@ -217,8 +235,7 @@ namespace Orion {
             using (var Checkout = new Checkout()) {
                 SalesTotalPrice = SalesRefreshPrice();
                 Opacity = .5;
-                var result = Checkout.ShowDialog();
-                if (result == DialogResult.OK) {
+                if (Checkout.ShowDialog() == DialogResult.OK) {
                     string salesTransactionId = Checkout.transaction_id;
                     foreach (DataRow dr in SalesPendingTransaction.Rows) {
                         MySqlDataReader SalesTransactionDetailReader = new DbConnect().ExecQuery("INSERT transaction_detail (transaction_id, product_id, transaction_qty, transaction_discount) " +
@@ -227,12 +244,11 @@ namespace Orion {
                     }
                     MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
                     SalesProductTable.Load(SalesProductReader);
-                    SalesProductSeachResultDGV.DataSource = SalesProductTableResult;
                     SalesProductTableResult.Clear();
                     SalesProductSearchTB.Clear();
-                    Opacity = 1.0;
                     SalesClearCartBI_Click(sender, e);
                 }
+                Opacity = 1.0;
             }
         }
 

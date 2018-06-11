@@ -63,6 +63,8 @@
             this.RestockProductSearchTB = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.RestockProductSeachResultDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.RestockPendingChangesDGV = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.RestockCommitB = new DevComponents.DotNetBar.ButtonX();
+            this.RestockClearPendingChangesBI = new DevComponents.DotNetBar.ButtonItem();
             this.SalesLC = new DevComponents.DotNetBar.Layout.LayoutControl();
             this.SalesSubtotalL = new DevComponents.DotNetBar.LabelX();
             this.SalesTotalL = new DevComponents.DotNetBar.LabelX();
@@ -79,9 +81,7 @@
             this.RestockProductSearchLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.RestockProductSeachResultLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.RestockPendingChangesLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.RestockCommitB = new DevComponents.DotNetBar.ButtonX();
             this.RestockCommitLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
-            this.RestockClearPendingChangesBI = new DevComponents.DotNetBar.ButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).BeginInit();
@@ -353,6 +353,8 @@
             this.SalesCartDGV.Size = new System.Drawing.Size(491, 12);
             this.SalesCartDGV.TabIndex = 2;
             this.SalesCartDGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SalesCartDGV_CellEndEdit);
+            this.SalesCartDGV.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.SalesCartDGV_RowsAdded);
+            this.SalesCartDGV.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.SalesCartDGV_RowsRemoved);
             // 
             // SalesProductSeachResultDGV
             // 
@@ -553,6 +555,32 @@
             this.RestockPendingChangesDGV.Size = new System.Drawing.Size(481, 12);
             this.RestockPendingChangesDGV.TabIndex = 2;
             this.RestockPendingChangesDGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RestockPendingChangesDGV_CellEndEdit);
+            // 
+            // RestockCommitB
+            // 
+            this.RestockCommitB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.RestockCommitB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.RestockCommitB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.SelectedH.SetHighlightOnFocus(this.RestockCommitB, true);
+            this.RestockCommitB.Location = new System.Drawing.Point(4, 85);
+            this.RestockCommitB.Margin = new System.Windows.Forms.Padding(0);
+            this.RestockCommitB.Name = "RestockCommitB";
+            this.RestockCommitB.PopupSide = DevComponents.DotNetBar.ePopupSide.Bottom;
+            this.RestockCommitB.Size = new System.Drawing.Size(537, 42);
+            this.RestockCommitB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.RestockCommitB.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.RestockClearPendingChangesBI});
+            this.RestockCommitB.SubItemsExpandWidth = 50;
+            this.RestockCommitB.Symbol = "";
+            this.RestockCommitB.TabIndex = 3;
+            this.RestockCommitB.Text = "Commit Pending Changes";
+            // 
+            // RestockClearPendingChangesBI
+            // 
+            this.RestockClearPendingChangesBI.GlobalItem = false;
+            this.RestockClearPendingChangesBI.Name = "RestockClearPendingChangesBI";
+            this.RestockClearPendingChangesBI.Symbol = "";
+            this.RestockClearPendingChangesBI.Text = "Clear Pending Changes";
             // 
             // SalesLC
             // 
@@ -766,25 +794,6 @@
             this.RestockPendingChangesLCI.Width = 100;
             this.RestockPendingChangesLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // RestockCommitB
-            // 
-            this.RestockCommitB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.RestockCommitB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.RestockCommitB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
-            this.SelectedH.SetHighlightOnFocus(this.RestockCommitB, true);
-            this.RestockCommitB.Location = new System.Drawing.Point(4, 85);
-            this.RestockCommitB.Margin = new System.Windows.Forms.Padding(0);
-            this.RestockCommitB.Name = "RestockCommitB";
-            this.RestockCommitB.PopupSide = DevComponents.DotNetBar.ePopupSide.Bottom;
-            this.RestockCommitB.Size = new System.Drawing.Size(537, 42);
-            this.RestockCommitB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.RestockCommitB.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.RestockClearPendingChangesBI});
-            this.RestockCommitB.SubItemsExpandWidth = 50;
-            this.RestockCommitB.Symbol = "";
-            this.RestockCommitB.TabIndex = 4;
-            this.RestockCommitB.Text = "Commit Pending Changes";
-            // 
             // RestockCommitLCI
             // 
             this.RestockCommitLCI.Control = this.RestockCommitB;
@@ -793,13 +802,6 @@
             this.RestockCommitLCI.Name = "RestockCommitLCI";
             this.RestockCommitLCI.Width = 100;
             this.RestockCommitLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
-            // 
-            // RestockClearPendingChangesBI
-            // 
-            this.RestockClearPendingChangesBI.GlobalItem = false;
-            this.RestockClearPendingChangesBI.Name = "RestockClearPendingChangesBI";
-            this.RestockClearPendingChangesBI.Symbol = "";
-            this.RestockClearPendingChangesBI.Text = "Clear Pending Changes";
             // 
             // Main
             // 
