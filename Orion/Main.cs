@@ -68,19 +68,22 @@ namespace Orion {
             UserLI.Text = Properties.Settings.Default.LoginUsername;
             DefineUserRole();
             LayoutControlFloat();
+            LoadData();
             if (MainAvailableMTIs[0] == SalesMTI) Sales_Load();
             else if (MainAvailableMTIs[0] == RestockMTI) Restock_Load();
-            else if (MainAvailableMTIs[0] == ProductsMTI) ;
+            else if (MainAvailableMTIs[0] == ProductsMTI) Products_Load();
         }
 
         private void LayoutControlFloat() {
             SalesLC.Dock = DockStyle.Fill;
             RestockLC.Dock = DockStyle.Fill;
+            ProductsLC.Dock = DockStyle.Fill;
         }
 
         public void LayoutControlHide() {
             SalesLC.Visible = false;
             RestockLC.Visible = false;
+            ProductsLC.Visible = false;
         }
 
         private void DefineUserRole() {
@@ -102,6 +105,11 @@ namespace Orion {
                 MainAvailableMTIs.Add(ProductsMTI);
             }
             foreach(DevComponents.DotNetBar.Metro.MetroTileItem MTI in MainAvailableMTIs) MTI.Enabled = true;
+        }
+
+        private void LoadData() {
+            MySqlDataReader ProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
+            ProductViewTable.Load(ProductReader);
         }
 
         #region Sales definition
@@ -127,8 +135,6 @@ namespace Orion {
         }
 
         private void Sales_LoadOnce() {
-            MySqlDataReader SalesProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
-            ProductViewTable.Load(SalesProductReader);
             ProductViewTable.PrimaryKey = new DataColumn[] { ProductViewTable.Columns["product_id"] };
             SalesProductViewTableResult.Columns.Add("ID");
             SalesProductViewTableResult.Columns.Add("Name");
@@ -283,8 +289,6 @@ namespace Orion {
         }
 
         private void Restock_LoadOnce() {
-            MySqlDataReader RestockProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
-            ProductViewTable.Load(RestockProductReader);
             RestockProductViewTableResult.Columns.Add("ID");
             RestockProductViewTableResult.Columns.Add("Name");
             RestockProductViewTableResult.Columns.Add("Stock");
@@ -396,5 +400,93 @@ namespace Orion {
         }
 
         #endregion
+
+        #region Products definition
+
+        public bool ProductsLoaded = false;
+        DataTable ProductsProductView = new DataTable();
+
+        private void ProductsMTI_Click(object sender, EventArgs e) {
+            Products_Load();
+        }
+
+        private void Products_Load() {
+            LayoutControlHide();
+            ProductsLC.Visible = true;
+            ProductsLC_SizeChanged(new object(), new EventArgs());
+            ProductsProductSearchTB.Select();
+            ProductsProductSearchTB.Focus();
+            if (!ProductsLoaded) Products_LoadOnce();
+            ProductsProductSearchTB_TextChanged(new object(), new EventArgs());
+        }
+
+        private void Products_LoadOnce() {
+            ProductsProductView.Columns.Add("ID");
+            ProductsProductView.Columns.Add("Name");
+            ProductsProductView.Columns.Add("Package");
+            ProductsProductView.Columns.Add("Substance");
+            ProductsProductView.Columns.Add("Registrar");
+            ProductsProductView.Columns.Add("Distributor");
+            ProductsProductView.Columns.Add("Price");
+            ProductsProductView.Columns.Add("Stock");
+            ProductsProductView.Columns.Add("Disc");
+            ProductsProductView.RowChanged += new DataRowChangeEventHandler(ProductsProductView_RowChanged);
+            ProductsProductView.PrimaryKey = new DataColumn[] { ProductsProductView.Columns["ID"] };
+            ProductsListDGV.DataSource = ProductsProductView;
+            ProductsListDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Package"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Substance"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Registrar"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Distributor"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Disc"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsLoaded = true;
+        }
+
+        private void ProductsLC_SizeChanged(object sender, EventArgs e) {
+            int ProductsOtherComponentHeight = ProductsProductSearchLCI.Height;
+            ProductsListLCI.Height = ProductsLC.Height - ProductsOtherComponentHeight;
+        }
+
+        private void ProductsProductSearchTB_TextChanged(object sender, EventArgs e) {
+            string[] ProductsSearchTerms = DbConnect.EscapeLikeValue(ProductsProductSearchTB.Text).Split(' ');
+            for (int i = 0; i < ProductsSearchTerms.Length; i++) ProductsSearchTerms[i] = "(product_id + ' ' + product_name + ' ' + product_package + ' ' + product_substance + ' ' + product_registrar + ' ' + product_distributor) LIKE '%" + ProductsSearchTerms[i] + "%'";
+            string[] ProductsProductSeachResultColumns = new string[] { "product_id", "product_name", "product_package", "product_substance", "product_registrar", "product_distributor", "product_price", "product_stock", "product_disc_pct" };
+            DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductViewTable).ToTable(false, ProductsProductSeachResultColumns).Select(String.Join(" AND ", ProductsSearchTerms));
+            ProductsProductView.Rows.Clear();
+            ProductsProductSeachResultProductRows.CopyToDataTable(ProductsProductView, LoadOption.OverwriteChanges);
+        }
+
+        #endregion
+
+        private void ProductsListDGV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
+            //ToastNotification.Show(this, "Row Added");
+        }
+
+        private void ProductsListDGV_RowValidating(object sender, DataGridViewCellCancelEventArgs e) {
+            DataGridViewRow dr = ProductsListDGV.Rows[e.RowIndex];
+            if (dr.Cells[0].ToString() == "" || ProductsProductView.Rows.Find(dr.Cells[0].ToString()) != null) {
+                e.Cancel = true;
+            }
+        }
+
+        private void ProductsListDGV_RowValidated(object sender, DataGridViewCellEventArgs e) {
+            DataRowView d = (DataRowView)(ProductsListDGV.Rows[e.RowIndex].DataBoundItem);
+            if (d!=null && !d.IsEdit) {
+                d.Row.AcceptChanges();
+            }
+        }
+
+        private void ProductsListDGV_UserAddedRow(object sender, DataGridViewRowEventArgs e) {
+            //ToastNotification.Show(this, "User Added Row");
+        }
+
+        private void ProductsProductView_RowChanged(object sender, DataRowChangeEventArgs e) {
+            if (e.Action == DataRowAction.Commit) {
+                ToastNotification.Show(this, "Hore bisa");
+            }
+        }
     }
 }
