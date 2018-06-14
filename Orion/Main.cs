@@ -511,10 +511,13 @@ namespace Orion {
                 ProductsProductView = ProductViewTable.Copy();
                 ProductsProductView.Columns.Add("product_status");
                 ProductsProductSearchTB.Text = "";
+                ProductsProductSearchTB_TextChanged(sender, e);
+                ProductsPendingChanges.Clear();
             } else {
                 ProductsCommitB.Text = "OK";
                 ProductsCancelB.Text = "Clear Changes";
                 UnlockProducts();
+                ProductsCommitB.Enabled = true;
             }
         }
 
@@ -523,16 +526,26 @@ namespace Orion {
                 ProductsCommitB.Text = "Commit Changes";
                 ProductsCancelB.Text = "Cancel";
                 LockProducts();
+                ProductsCommitB.Enabled = ProductsPendingChanges.Rows.Count > 0;
             } else {
-                //String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
-                //foreach (DataRow dr in RestockPendingChanges.Rows) {
-                //    new DbConnect().ExecNonQuery("UPDATE product SET product_stock = product_stock + " + dr["Qty"] + " WHERE product_id = '" + dr["ID"].ToString() + "';");
-                //    new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
-                //        "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + dr["Qty"].ToString() + "');");
-                //}
-                //RestockCancelB.Text = "Clear Changes";
-                //RestockCommitB.Text = "OK";
-                //RestockPendingChanges.Clear();
+                String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                foreach (DataRow dr in ProductsPendingChanges.Rows) {
+                    if (dr["product_status"].ToString() == "UPDATE") {
+                        int ri = ProductsProductView.Rows.IndexOf(ProductsProductView.Rows.Find(dr["ID"]));
+                        string id = ProductViewTable.Rows[ri]["product_id"].ToString();
+                        new DbConnect().ExecNonQuery("UPDATE product SET product_id = '" + dr["ID"] + "', product_name = '" + dr["Name"] + "', product_package = '" + dr["Package"] + "', product_substance = '" + dr["Substance"] + "', product_registrar = '" + dr["Registrar"] + "', product_distributor = '" + dr["Distributor"] + "', product_price = '" + dr["Price"] + "', product_stock = '" + dr["Stock"] + "' " +
+                            "WHERE product_id = '" + id + "';");
+                    } else if (dr["product_status"].ToString() == "INSERT") {
+                        new DbConnect().ExecNonQuery("INSERT product(product_id, product_name, product_package, product_substance, product_registrar, product_distributor, product_price, product_stock)" +
+                            "VALUES ('" + dr["ID"] + "', '" + dr["Name"] + "', '" + dr["Package"] + "', '" + dr["Substance"] + "', '" + dr["Registrar"] + "', '" + dr["Distributor"] + "', " + dr["Price"] + ", " + dr["Stock"] + ");");
+                    } else if (dr["product_status"].ToString() == "DELETE") {
+                        new DbConnect().ExecNonQuery("DELETE FROM product WHERE product_id = '" + dr["ID"] + "';");
+                    }
+                }
+                ProductsCancelB.Text = "Clear Changes";
+                ProductsCommitB.Text = "OK";
+                ProductsPendingChanges.Clear();
+                UnlockProducts();
                 //RestockProductSeachResultDGV.Enabled = true;
                 //RestockProductSearchTB.Enabled = true;
                 //RestockProductSearchTB.Clear();
