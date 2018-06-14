@@ -54,5 +54,30 @@ namespace Orion {
             }
             return sb.ToString();
         }
+
+        static public String ConvertToBase(int num, int nbase) {
+            String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (nbase < 2 || nbase > chars.Length) return "";
+            int r;
+            String newNumber = "";
+            while (num >= nbase) {
+                r = num % nbase;
+                newNumber = chars[r] + newNumber;
+                num = num / nbase;
+            }
+            newNumber = chars[num] + newNumber;
+            return newNumber;
+        }
+
+        static public int ConvertFromBase(String num, int nbase) {
+            String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (nbase < 2 || nbase > chars.Length) return 0;
+            int newNumber = 0;
+            for (int i = 0; i < num.Length; i++) {
+                newNumber *= nbase;
+                newNumber += chars.IndexOf(num[i]);
+            }
+            return newNumber;
+        }
     }
 }

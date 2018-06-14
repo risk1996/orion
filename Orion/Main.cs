@@ -442,6 +442,7 @@ namespace Orion {
             ProductsListDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             ProductsListDGV.Columns["Stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             ProductsListDGV.Columns["Disc"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["ID"].ReadOnly = true;
             ProductsLoaded = true;
         }
 
@@ -457,6 +458,9 @@ namespace Orion {
             DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductsProductView).ToTable(false, ProductsProductSeachResultColumns).Select(String.Join(" AND ", ProductsSearchTerms));
             ProductsSearchResult.Rows.Clear();
             ProductsProductSeachResultProductRows.CopyToDataTable(ProductsSearchResult, LoadOption.OverwriteChanges);
+            foreach (DataGridViewRow dgvr in ProductsListDGV.Rows) {
+                dgvr.Cells[0].ReadOnly = true;
+            }
             DataRow[] ProductsProductChange = new DataView(ProductsProductView).ToTable(false, new string[] { "product_id", "product_status" }).Select("product_status IS NOT NULL");
             foreach (DataRow dr in ProductsProductChange) {
                 DataRow sr = ProductsSearchResult.Rows.Find(dr[0].ToString());
@@ -466,7 +470,10 @@ namespace Orion {
                     else if (dr[1].ToString() == "DELETE") {
                         ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
                         ProductsListDGV.Rows[isr].ReadOnly = true;
-                    } else if (dr[1].ToString() == "INSERT") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
+                    } else if (dr[1].ToString() == "INSERT") {
+                        ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
+                        ProductsListDGV.Rows[isr].ReadOnly = false;
+                    }
                 }
             }
         }
@@ -493,12 +500,20 @@ namespace Orion {
                     ProductsProductView.Rows.Remove(dr);
                     ProductsListDGV.Rows.RemoveAt(e.RowIndex);
                 } else if (dr == null) {
-                    object[] val = { "", "", "", "", "", "", 0, 0, 0 };
+                    string year = DateTime.Today.ToString("yy");
+                    DataRow[] drs = ProductsProductView.Select("product_id LIKE 'X" + year + "%'");
+                    int lastid = DbConnect.ConvertFromBase(drs[drs.Length - 1]["product_id"].ToString().Substring(3, 5), 36);
+                    int NextProductIDBase10 = lastid + 1;
+                    string NextProductIDBase36 = DbConnect.ConvertToBase(NextProductIDBase10, 36).PadLeft(5, '0');
+                    string pid = string.Format("X" + year + NextProductIDBase36);
+                    object[] val = { pid, "", "", "", "", "", 0, 0, 0 };
                     val[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    ProductsListDGV.Rows[e.RowIndex].Cells[0].Value = pid;
                     DataRow drnew = ProductsProductView.Rows.Add(val);
                     drnew["product_status"] = "INSERT";
                     dr = drnew;
                     ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
+                    ProductsListDGV.Rows[e.RowIndex].ReadOnly = false;
                 }
             }
         }
@@ -520,6 +535,7 @@ namespace Orion {
                         dr["product_status"] = null;
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                         ProductsListDGV.Rows[e.RowIndex].ReadOnly = false;
+                        ProductsListDGV.Rows[e.RowIndex].Cells[0].ReadOnly = true;
                     } else if(dr["product_status"].ToString() == "UPDATE") {
                         int index = ProductsProductView.Rows.IndexOf(dr);
                         for (int i = 0; i < ProductViewTable.Columns.Count; i++) {
@@ -528,6 +544,7 @@ namespace Orion {
                         dr["product_status"] = null;
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                         ProductsListDGV.Rows[e.RowIndex].ReadOnly = false;
+                        ProductsListDGV.Rows[e.RowIndex].Cells[0].ReadOnly = true;
                     }
                 }
             }
@@ -560,26 +577,33 @@ namespace Orion {
                     if (dr["product_status"].ToString() == "UPDATE") {
                         int ri = ProductsProductView.Rows.IndexOf(ProductsProductView.Rows.Find(dr["ID"]));
                         string id = ProductViewTable.Rows[ri]["product_id"].ToString();
+                        int newStock = int.Parse(ProductsProductView.Rows[ri]["Stock"].ToString());
+                        int oldStock = int.Parse(ProductsProductView.Rows[ri]["product_stock"].ToString());
                         new DbConnect().ExecNonQuery("UPDATE product SET product_id = '" + dr["ID"] + "', product_name = '" + dr["Name"] + "', product_package = '" + dr["Package"] + "', product_substance = '" + dr["Substance"] + "', product_registrar = '" + dr["Registrar"] + "', product_distributor = '" + dr["Distributor"] + "', product_price = '" + dr["Price"] + "', product_stock = '" + dr["Stock"] + "' " +
                             "WHERE product_id = '" + id + "';");
+                        if (newStock - oldStock != 0) {
+                            new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
+                        "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + (newStock - oldStock).ToString() + "');");
+                        }
                     } else if (dr["product_status"].ToString() == "INSERT") {
                         new DbConnect().ExecNonQuery("INSERT product(product_id, product_name, product_package, product_substance, product_registrar, product_distributor, product_price, product_stock)" +
                             "VALUES ('" + dr["ID"] + "', '" + dr["Name"] + "', '" + dr["Package"] + "', '" + dr["Substance"] + "', '" + dr["Registrar"] + "', '" + dr["Distributor"] + "', " + dr["Price"] + ", " + dr["Stock"] + ");");
+                        new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
+                        "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + dr["Stock"] + "');");
                     } else if (dr["product_status"].ToString() == "DELETE") {
                         new DbConnect().ExecNonQuery("DELETE FROM product WHERE product_id = '" + dr["ID"] + "';");
                     }
                 }
                 ProductsCancelB.Text = "Clear Changes";
                 ProductsCommitB.Text = "OK";
-                ProductsPendingChanges.Clear();
-                UnlockProducts();
-                //RestockProductSeachResultDGV.Enabled = true;
-                //RestockProductSearchTB.Enabled = true;
-                //RestockProductSearchTB.Clear();
-                //MySqlDataReader RestockProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
-                //ProductViewTable.Load(RestockProductReader);
-                //RestockPendingChangesDGV_RowsAdded(sender, new DataGridViewRowsAddedEventArgs(0, 0));
-            }
+                MySqlDataReader ProductsProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
+                ProductViewTable.Clear();
+                ProductViewTable.Load(ProductsProductReader);
+                ProductsProductView.Clear();
+                ProductsProductView = ProductViewTable.Copy();
+                ProductsProductView.Columns.Add("product_status");
+                ProductsProductSearchTB.Text = "";
+                UnlockProducts();            }
         }
 
         public void LockProducts() {
