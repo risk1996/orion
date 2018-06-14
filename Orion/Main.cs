@@ -472,36 +472,63 @@ namespace Orion {
         }
 
         private void ProductsListDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            if (e.RowIndex >= 0 && e.RowIndex < ProductsProductView.Rows.Count) {
-                DataRow dr = ProductsProductView.Rows.Find(ProductsSearchResult.Rows[e.RowIndex][0]);
-                if (dr != null && dr["product_status"].ToString() != "INSERT") {
-                    if (ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != ProductViewTable.Rows.Find(dr[0])[e.ColumnIndex].ToString()) {
-                        dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            if (e.RowIndex >= 0 && e.RowIndex < ProductsListDGV.Rows.Count) {
+                string id = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
+                DataRow dr = ProductsProductView.Rows.Find(id);
+                if (dr != null && (dr["product_status"].ToString() == "" || dr["product_status"].ToString() == "UPDATE")) {
+                    bool diff = false;
+                    int index = ProductsProductView.Rows.IndexOf(dr);
+                    dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    for (int i = 0; i < ProductViewTable.Columns.Count && !diff; i++) diff = dr[i].ToString() != ProductViewTable.Rows[index][i].ToString();
+                    if (diff) {
                         dr["product_status"] = "UPDATE";
-                        dr.AcceptChanges();
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
-                    } else if (dr["product_status"].ToString() == "UPDATE") {
-                        dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    } else {
+                        dr["product_status"] = null;
+                        ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                     }
                 } else if (dr != null && dr["product_status"].ToString() == "INSERT") {
                     dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                } else if (dr != null && dr["product_status"].ToString() == "TO BE DELETED") {
+                    ProductsProductView.Rows.Remove(dr);
+                    ProductsListDGV.Rows.RemoveAt(e.RowIndex);
+                } else if (dr == null) {
+                    object[] val = { "", "", "", "", "", "", 0, 0, 0 };
+                    val[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    DataRow drnew = ProductsProductView.Rows.Add(val);
+                    drnew["product_status"] = "INSERT";
+                    dr = drnew;
+                    ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
                 }
-            } else if (e.RowIndex >= 0) {
-                object[] val = { "", "", "", "", "", "", 0, 0, 0 };
-                val[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                DataRow dr = ProductsProductView.Rows.Add(val);
-                dr["product_status"] = "INSERT";
-                ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
             }
         }
 
         private void ProductsListDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex >= 0) {
-                DataRow dr = ProductsProductView.Rows.Find(ProductsSearchResult.Rows[e.RowIndex][0]);
+                string id = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
+                DataRow dr = ProductsProductView.Rows.Find(id);
                 if (dr != null) {
-                    dr["product_status"] = "DELETE";
-                    ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
-                    ProductsListDGV.Rows[e.RowIndex].ReadOnly = true;
+                    if (dr["product_status"].ToString() == "") {
+                        dr["product_status"] = "DELETE";
+                        ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                        ProductsListDGV.Rows[e.RowIndex].ReadOnly = true;
+                    } else if (dr["product_status"].ToString() == "INSERT") {
+                        dr["product_status"] = "TO BE DELETED";
+                        ProductsProductSearchTB.Select();
+                        ProductsProductSearchTB.Focus();
+                    } else if (dr["product_status"].ToString() == "DELETE") {
+                        dr["product_status"] = null;
+                        ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                        ProductsListDGV.Rows[e.RowIndex].ReadOnly = false;
+                    } else if(dr["product_status"].ToString() == "UPDATE") {
+                        int index = ProductsProductView.Rows.IndexOf(dr);
+                        for (int i = 0; i < ProductViewTable.Columns.Count; i++) {
+                            dr[i] = ProductsListDGV.Rows[e.RowIndex].Cells[i].Value = ProductViewTable.Rows[index][i];
+                        }
+                        dr["product_status"] = null;
+                        ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                        ProductsListDGV.Rows[e.RowIndex].ReadOnly = false;
+                    }
                 }
             }
         }
