@@ -403,6 +403,7 @@ namespace Orion {
         public bool ProductsLoaded = false;
         private DataTable ProductsProductView = new DataTable();
         private DataTable ProductsSearchResult = new DataTable();
+        private DataTable ProductsPendingChanges = new DataTable();
 
         private void ProductsMTI_Click(object sender, EventArgs e) {
             Products_Load();
@@ -445,7 +446,7 @@ namespace Orion {
         }
 
         private void ProductsLC_SizeChanged(object sender, EventArgs e) {
-            int ProductsOtherComponentHeight = ProductsProductSearchLCI.Height;
+            int ProductsOtherComponentHeight = ProductsProductSearchLCI.Height + ProductsCommitLCI.Height;
             ProductsListLCI.Height = ProductsLC.Height - ProductsOtherComponentHeight;
         }
 
@@ -455,59 +456,122 @@ namespace Orion {
             string[] ProductsProductSeachResultColumns = new string[] { "product_id", "product_name", "product_package", "product_substance", "product_registrar", "product_distributor", "product_price", "product_stock", "product_disc_pct" };
             DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductsProductView).ToTable(false, ProductsProductSeachResultColumns).Select(String.Join(" AND ", ProductsSearchTerms));
             ProductsSearchResult.Rows.Clear();
-            //ProductsProductSeachResultProductRows.CopyToDataTable(ProductsSearchResult, LoadOption.OverwriteChanges);
-            //DataRow[] ProductsProductChange = new DataView(ProductsProductView).ToTable(false, new string[] { "product_id", "product_status" }).Select("product_status IS NOT NULL");
-            //foreach (DataRow dr in ProductsProductChange) {
-            //    DataRow sr = ProductsSearchResult.Rows.Find(dr[0].ToString());
-            //    if (sr != null) {
-            //        int isr = ProductsSearchResult.Rows.IndexOf(sr);
-            //        if (dr[1].ToString() == "UPDATE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Yellow;
-            //        else if (dr[1].ToString() == "DELETE") {
-            //            ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
-            //            ProductsListDGV.Rows[isr].ReadOnly = true;
-            //        } else if (dr[1].ToString() == "INSERT") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
-            //    }
-            //}
+            ProductsProductSeachResultProductRows.CopyToDataTable(ProductsSearchResult, LoadOption.OverwriteChanges);
+            DataRow[] ProductsProductChange = new DataView(ProductsProductView).ToTable(false, new string[] { "product_id", "product_status" }).Select("product_status IS NOT NULL");
+            foreach (DataRow dr in ProductsProductChange) {
+                DataRow sr = ProductsSearchResult.Rows.Find(dr[0].ToString());
+                if (sr != null) {
+                    int isr = ProductsSearchResult.Rows.IndexOf(sr);
+                    if (dr[1].ToString() == "UPDATE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Yellow;
+                    else if (dr[1].ToString() == "DELETE") {
+                        ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
+                        ProductsListDGV.Rows[isr].ReadOnly = true;
+                    } else if (dr[1].ToString() == "INSERT") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
+                }
+            }
         }
 
-        #endregion Products definition
-
         private void ProductsListDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            //if (e.RowIndex > 0 && e.RowIndex < ProductsProductView.Rows.Count) {
-            //    DataRow dr = ProductsProductView.Rows.Find(ProductsSearchResult.Rows[e.RowIndex][0]);
-            //    if (dr != null && dr["product_status"].ToString() != "INSERT") {
-            //        ToastNotification.Show(this, dr[0].ToString() + dr.ItemArray.Length.ToString());
-            //        if (ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != ProductViewTable.Rows.Find(dr[0])[e.ColumnIndex].ToString()) {
-            //            dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            //            dr["product_status"] = "UDATE";
-            //            dr.AcceptChanges();
-            //            ToastNotification.Show(this, dr["product_status"].ToString());
-            //            ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
-            //        } else if(dr["product_status"].ToString() == "UPDATE") {
-            //            dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            //            ToastNotification.Show(this, "Hai");
-            //        }
-            //    } else if (dr != null && dr["product_status"].ToString() == "INSERT") {
-            //        dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            //    }
-            //} else if(e.RowIndex > 0) {
-            //    object[] val = { "", "", "", "", "", "", 0, 0, 0 };
-            //    val[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            //    DataRow dr = ProductsProductView.Rows.Add(val);
-            //    dr["product_status"] = "INSERT";
-            //    ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
-            //}
+            if (e.RowIndex >= 0 && e.RowIndex < ProductsProductView.Rows.Count) {
+                DataRow dr = ProductsProductView.Rows.Find(ProductsSearchResult.Rows[e.RowIndex][0]);
+                if (dr != null && dr["product_status"].ToString() != "INSERT") {
+                    if (ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != ProductViewTable.Rows.Find(dr[0])[e.ColumnIndex].ToString()) {
+                        dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                        dr["product_status"] = "UPDATE";
+                        dr.AcceptChanges();
+                        ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                    } else if (dr["product_status"].ToString() == "UPDATE") {
+                        dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    }
+                } else if (dr != null && dr["product_status"].ToString() == "INSERT") {
+                    dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                }
+            } else if (e.RowIndex >= 0) {
+                object[] val = { "", "", "", "", "", "", 0, 0, 0 };
+                val[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                DataRow dr = ProductsProductView.Rows.Add(val);
+                dr["product_status"] = "INSERT";
+                ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
+            }
         }
 
         private void ProductsListDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            //if (e.RowIndex > 0) {
-            //    DataRow dr = ProductsProductView.Rows.Find(ProductsSearchResult.Rows[e.RowIndex][0]);
-            //    if (dr != null) {
-            //        dr["product_status"] = "DELETE";
-            //        ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
-            //        ProductsListDGV.Rows[e.RowIndex].ReadOnly = true;
-            //    }
-            //}
+            if (e.RowIndex >= 0) {
+                DataRow dr = ProductsProductView.Rows.Find(ProductsSearchResult.Rows[e.RowIndex][0]);
+                if (dr != null) {
+                    dr["product_status"] = "DELETE";
+                    ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                    ProductsListDGV.Rows[e.RowIndex].ReadOnly = true;
+                }
+            }
         }
+
+        private void ProductsCancelB_Click(object sender, EventArgs e) {
+            if (ProductsCancelB.Text == "Clear Changes") {
+                ProductsProductView = ProductViewTable.Copy();
+                ProductsProductView.Columns.Add("product_status");
+                ProductsProductSearchTB.Text = "";
+            } else {
+                ProductsCommitB.Text = "OK";
+                ProductsCancelB.Text = "Clear Changes";
+                UnlockProducts();
+            }
+        }
+
+        private void ProductsCommitB_Click(object sender, EventArgs e) {
+            if (ProductsCommitB.Text == "OK") {
+                ProductsCommitB.Text = "Commit Changes";
+                ProductsCancelB.Text = "Cancel";
+                LockProducts();
+            } else {
+                //String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                //foreach (DataRow dr in RestockPendingChanges.Rows) {
+                //    new DbConnect().ExecNonQuery("UPDATE product SET product_stock = product_stock + " + dr["Qty"] + " WHERE product_id = '" + dr["ID"].ToString() + "';");
+                //    new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
+                //        "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + dr["Qty"].ToString() + "');");
+                //}
+                //RestockCancelB.Text = "Clear Changes";
+                //RestockCommitB.Text = "OK";
+                //RestockPendingChanges.Clear();
+                //RestockProductSeachResultDGV.Enabled = true;
+                //RestockProductSearchTB.Enabled = true;
+                //RestockProductSearchTB.Clear();
+                //MySqlDataReader RestockProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
+                //ProductViewTable.Load(RestockProductReader);
+                //RestockPendingChangesDGV_RowsAdded(sender, new DataGridViewRowsAddedEventArgs(0, 0));
+            }
+        }
+
+        public void LockProducts() {
+            ProductsProductSearchTB.Enabled = false;
+            string[] ProductsProductSeachResultColumns = new string[] { "product_id", "product_name", "product_package", "product_substance", "product_registrar", "product_distributor", "product_price", "product_stock", "product_disc_pct", "product_status" };
+            DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductsProductView).ToTable(false, ProductsProductSeachResultColumns).Select("product_status IS NOT NULL");
+            DataTable ProductsProductPendingTable = ProductsSearchResult.Clone();
+            ProductsProductPendingTable.Columns.Add("product_status");
+            ProductsProductSeachResultProductRows.CopyToDataTable(ProductsProductPendingTable, LoadOption.OverwriteChanges);
+            ProductsPendingChanges = ProductsProductPendingTable.Copy();
+            ProductsProductPendingTable.Columns.Remove("product_status");
+            ProductsListDGV.DataSource = ProductsProductPendingTable;
+            foreach (DataRow dr in ProductsProductSeachResultProductRows) {
+                int isr = ProductsProductPendingTable.Rows.IndexOf(ProductsProductPendingTable.Rows.Find(dr["product_id"]));
+                if (dr["product_status"].ToString() == "UPDATE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Yellow;
+                else if (dr["product_status"].ToString() == "DELETE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
+                else if (dr["product_status"].ToString() == "INSERT") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
+            }
+            ProductsListDGV.ReadOnly = true;
+            ProductsListDGV.AllowUserToAddRows = false;
+            ProductsListDGV.AllowUserToDeleteRows = false;
+        }
+
+        public void UnlockProducts() {
+            ProductsListDGV.DataSource = ProductsSearchResult;
+            ProductsProductSearchTB_TextChanged(new object(), new EventArgs());
+            ProductsProductSearchTB.Enabled = true;
+            ProductsListDGV.ReadOnly = false;
+            ProductsListDGV.AllowUserToAddRows = true;
+            ProductsListDGV.AllowUserToDeleteRows = true;
+        }
+
+        #endregion Products definition
     }
 }
