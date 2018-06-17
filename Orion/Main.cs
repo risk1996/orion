@@ -476,13 +476,6 @@ namespace Orion {
             }
         }
 
-        private void ProductsListDGV_RowValidating(object sender, DataGridViewCellCancelEventArgs e) {
-            if (ProductsListDGV[e.ColumnIndex, e.RowIndex].Value == null || string.IsNullOrEmpty(ProductsListDGV[e.ColumnIndex, e.RowIndex].Value.ToString())) {
-                e.Cancel = true;
-                return;
-            }
-        }
-
         private void ProductsListDGV_DataError(object sender, DataGridViewDataErrorEventArgs e) { }
 
         private void ProductsListDGV_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e) {
@@ -502,6 +495,18 @@ namespace Orion {
             if (e.RowIndex >= 0 && e.RowIndex < ProductsListDGV.Rows.Count) {
                 string id = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
                 DataRow dr = ProductsProductView.Rows.Find(id);
+                if (e.ColumnIndex >= 6) {
+                    decimal.TryParse(ProductsListDGV[e.ColumnIndex, e.RowIndex].Value.ToString(), out decimal dec);
+                    if (dec < 0) dec = 0;
+                    if (e.ColumnIndex == 6) {
+                        ProductsListDGV[e.ColumnIndex, e.RowIndex].Value = String.Format("{0:" + Properties.Settings.Default.CurrencyFormat + "}", dec);
+                    } else if (e.ColumnIndex == 7) {
+                        ProductsListDGV[e.ColumnIndex, e.RowIndex].Value = (int)dec;
+                    } else if (e.ColumnIndex == 8) {
+                        dec = Math.Min(100, dec);
+                        ProductsListDGV[e.ColumnIndex, e.RowIndex].Value = (dec == 0 ? null : dec.ToString());
+                    }
+                }
                 if (dr != null && (dr["product_status"].ToString() == "" || dr["product_status"].ToString() == "UPDATE")) {
                     bool diff = false;
                     int index = ProductsProductView.Rows.IndexOf(dr);
@@ -510,7 +515,7 @@ namespace Orion {
                         decimal.TryParse(ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out decimal dec);
                         dr[e.ColumnIndex] = dec;
                     }
-                    for (int i = 0; i < ProductViewTable.Columns.Count && !diff; i++) diff = dr[i].ToString() != ProductViewTable.Rows[index][i].ToString();
+                    for (int i = 0; i < ProductViewTable.Columns.Count && !diff; i++) diff = ProductsListDGV[i, e.RowIndex].Value.ToString() != ProductViewTable.Rows[index][i].ToString();
                     if (diff) {
                         dr["product_status"] = "UPDATE";
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
@@ -526,7 +531,7 @@ namespace Orion {
                     }
                 } else if (dr != null && dr["product_status"].ToString() == "TO BE DELETED") {
                     ProductsProductView.Rows.Remove(dr);
-                    ProductsListDGV.Rows.RemoveAt(e.RowIndex);
+                    try { ProductsListDGV.Rows.RemoveAt(e.RowIndex); } catch { }
                 } else if (dr == null && ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "") {
                     string pid = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
                     object[] val = { pid, "", "", "", "", "", 0, 0, 0 };
@@ -543,8 +548,7 @@ namespace Orion {
                     object[] val = { pid, "", "", "", "", "", 0, 0, 0 };
                     DataRow drnew = ProductsProductView.Rows.Add(val);
                     drnew["product_status"] = "TO BE DELETED";
-                    ProductsProductSearchTB.Select();
-                    ProductsProductSearchTB.Focus();
+                    ProductsListDGV_CellEndEdit(sender, e);
                 }
             }
         }

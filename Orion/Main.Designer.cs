@@ -682,7 +682,6 @@
             this.ProductsListDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductsListDGV_CellDoubleClick);
             this.ProductsListDGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductsListDGV_CellEndEdit);
             this.ProductsListDGV.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.ProductsListDGV_DataError);
-            this.ProductsListDGV.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.ProductsListDGV_RowValidating);
             // 
             // ProductsCancelB
             // 
