@@ -362,7 +362,7 @@
             dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.SalesCartDGV.DefaultCellStyle = dataGridViewCellStyle11;
             this.SalesCartDGV.EnableHeadersVisualStyles = false;
-            this.SalesCartDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.SalesCartDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.SelectedH.SetHighlightOnFocus(this.SalesCartDGV, true);
             this.SalesCartDGV.Location = new System.Drawing.Point(50, 64);
             this.SalesCartDGV.Margin = new System.Windows.Forms.Padding(0);
@@ -406,7 +406,7 @@
             this.SalesProductSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle14;
             this.SalesProductSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.SalesProductSeachResultDGV.EnableHeadersVisualStyles = false;
-            this.SalesProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.SalesProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.SelectedH.SetHighlightOnFocus(this.SalesProductSeachResultDGV, true);
             this.SalesProductSeachResultDGV.Location = new System.Drawing.Point(50, 44);
             this.SalesProductSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
@@ -521,7 +521,7 @@
             this.RestockProductSeachResultDGV.DefaultCellStyle = dataGridViewCellStyle5;
             this.RestockProductSeachResultDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.RestockProductSeachResultDGV.EnableHeadersVisualStyles = false;
-            this.RestockProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.RestockProductSeachResultDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.SelectedH.SetHighlightOnFocus(this.RestockProductSeachResultDGV, true);
             this.RestockProductSeachResultDGV.Location = new System.Drawing.Point(60, 45);
             this.RestockProductSeachResultDGV.Margin = new System.Windows.Forms.Padding(0);
@@ -563,7 +563,7 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.RestockPendingChangesDGV.DefaultCellStyle = dataGridViewCellStyle8;
             this.RestockPendingChangesDGV.EnableHeadersVisualStyles = false;
-            this.RestockPendingChangesDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.RestockPendingChangesDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.SelectedH.SetHighlightOnFocus(this.RestockPendingChangesDGV, true);
             this.RestockPendingChangesDGV.Location = new System.Drawing.Point(60, 65);
             this.RestockPendingChangesDGV.Margin = new System.Windows.Forms.Padding(0);
@@ -663,7 +663,7 @@
             this.ProductsListDGV.DefaultCellStyle = dataGridViewCellStyle2;
             this.ProductsListDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.ProductsListDGV.EnableHeadersVisualStyles = false;
-            this.ProductsListDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.ProductsListDGV.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.SelectedH.SetHighlightOnFocus(this.ProductsListDGV, true);
             this.ProductsListDGV.Location = new System.Drawing.Point(59, 45);
             this.ProductsListDGV.Margin = new System.Windows.Forms.Padding(0);
@@ -678,8 +678,11 @@
             this.ProductsListDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.ProductsListDGV.Size = new System.Drawing.Size(482, 12);
             this.ProductsListDGV.TabIndex = 1;
+            this.ProductsListDGV.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.ProductsListDGV_CellBeginEdit);
             this.ProductsListDGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductsListDGV_CellDoubleClick);
             this.ProductsListDGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductsListDGV_CellEndEdit);
+            this.ProductsListDGV.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.ProductsListDGV_DataError);
+            this.ProductsListDGV.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.ProductsListDGV_RowValidating);
             // 
             // ProductsCancelB
             // 

@@ -458,9 +458,7 @@ namespace Orion {
             DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductsProductView).ToTable(false, ProductsProductSeachResultColumns).Select(String.Join(" AND ", ProductsSearchTerms));
             ProductsSearchResult.Rows.Clear();
             ProductsProductSeachResultProductRows.CopyToDataTable(ProductsSearchResult, LoadOption.OverwriteChanges);
-            foreach (DataGridViewRow dgvr in ProductsListDGV.Rows) {
-                dgvr.Cells[0].ReadOnly = true;
-            }
+            ProductsListDGV.Columns[0].ReadOnly = true;
             DataRow[] ProductsProductChange = new DataView(ProductsProductView).ToTable(false, new string[] { "product_id", "product_status" }).Select("product_status IS NOT NULL");
             foreach (DataRow dr in ProductsProductChange) {
                 DataRow sr = ProductsSearchResult.Rows.Find(dr[0].ToString());
@@ -478,6 +476,28 @@ namespace Orion {
             }
         }
 
+        private void ProductsListDGV_RowValidating(object sender, DataGridViewCellCancelEventArgs e) {
+            if (ProductsListDGV[e.ColumnIndex, e.RowIndex].Value == null || string.IsNullOrEmpty(ProductsListDGV[e.ColumnIndex, e.RowIndex].Value.ToString())) {
+                e.Cancel = true;
+                return;
+            }
+        }
+
+        private void ProductsListDGV_DataError(object sender, DataGridViewDataErrorEventArgs e) { }
+
+        private void ProductsListDGV_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e) {
+            if (e.RowIndex == ProductsListDGV.RowCount - 1) {
+                string year = DateTime.Today.ToString("yy");
+                DataRow[] drs = ProductsProductView.Select("product_id LIKE 'X" + year + "%'");
+                int lastid = drs.Length > 0 ? DbConnect.ConvertFromBase(drs[drs.Length - 1]["product_id"].ToString().Substring(3, 5), 36) : 0;
+                int NextProductIDBase10 = lastid + 1;
+                string NextProductIDBase36 = DbConnect.ConvertToBase(NextProductIDBase10, 36).PadLeft(5, '0');
+                string pid = string.Format("X" + year + NextProductIDBase36);
+                ProductsListDGV.Rows[e.RowIndex].Cells[0].Value = pid;
+                ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
+            }
+        }
+
         private void ProductsListDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex >= 0 && e.RowIndex < ProductsListDGV.Rows.Count) {
                 string id = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
@@ -485,7 +505,11 @@ namespace Orion {
                 if (dr != null && (dr["product_status"].ToString() == "" || dr["product_status"].ToString() == "UPDATE")) {
                     bool diff = false;
                     int index = ProductsProductView.Rows.IndexOf(dr);
-                    dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (e.ColumnIndex < 6) dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    else {
+                        decimal.TryParse(ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out decimal dec);
+                        dr[e.ColumnIndex] = dec;
+                    }
                     for (int i = 0; i < ProductViewTable.Columns.Count && !diff; i++) diff = dr[i].ToString() != ProductViewTable.Rows[index][i].ToString();
                     if (diff) {
                         dr["product_status"] = "UPDATE";
@@ -495,25 +519,32 @@ namespace Orion {
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                     }
                 } else if (dr != null && dr["product_status"].ToString() == "INSERT") {
-                    dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (e.ColumnIndex < 6) dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    else {
+                        decimal.TryParse(ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out decimal dec);
+                        dr[e.ColumnIndex] = dec;
+                    }
                 } else if (dr != null && dr["product_status"].ToString() == "TO BE DELETED") {
                     ProductsProductView.Rows.Remove(dr);
                     ProductsListDGV.Rows.RemoveAt(e.RowIndex);
-                } else if (dr == null) {
-                    string year = DateTime.Today.ToString("yy");
-                    DataRow[] drs = ProductsProductView.Select("product_id LIKE 'X" + year + "%'");
-                    int lastid = DbConnect.ConvertFromBase(drs[drs.Length - 1]["product_id"].ToString().Substring(3, 5), 36);
-                    int NextProductIDBase10 = lastid + 1;
-                    string NextProductIDBase36 = DbConnect.ConvertToBase(NextProductIDBase10, 36).PadLeft(5, '0');
-                    string pid = string.Format("X" + year + NextProductIDBase36);
+                } else if (dr == null && ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "") {
+                    string pid = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
                     object[] val = { pid, "", "", "", "", "", 0, 0, 0 };
-                    val[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    ProductsListDGV.Rows[e.RowIndex].Cells[0].Value = pid;
+                    if (e.ColumnIndex < 6) val[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    else {
+                        decimal.TryParse(ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out decimal dec);
+                        val[e.ColumnIndex] = dec;
+                    }
                     DataRow drnew = ProductsProductView.Rows.Add(val);
                     drnew["product_status"] = "INSERT";
-                    dr = drnew;
-                    ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
-                    ProductsListDGV.Rows[e.RowIndex].ReadOnly = false;
+                } else if (dr == null && ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "") {
+                    ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    string pid = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    object[] val = { pid, "", "", "", "", "", 0, 0, 0 };
+                    DataRow drnew = ProductsProductView.Rows.Add(val);
+                    drnew["product_status"] = "TO BE DELETED";
+                    ProductsProductSearchTB.Select();
+                    ProductsProductSearchTB.Focus();
                 }
             }
         }
@@ -577,20 +608,43 @@ namespace Orion {
                     if (dr["product_status"].ToString() == "UPDATE") {
                         int ri = ProductsProductView.Rows.IndexOf(ProductsProductView.Rows.Find(dr["ID"]));
                         string id = ProductViewTable.Rows[ri]["product_id"].ToString();
-                        int newStock = int.Parse(ProductsProductView.Rows[ri]["Stock"].ToString());
-                        int oldStock = int.Parse(ProductsProductView.Rows[ri]["product_stock"].ToString());
+                        int.TryParse(ProductsProductView.Rows[ri]["product_stock"].ToString(), out int newStock);
+                        int.TryParse(ProductViewTable.Rows[ri]["product_stock"].ToString(), out int oldStock);
+                        float.TryParse(ProductsProductView.Rows[ri]["product_disc_pct"].ToString(), out float newDisc);
+                        float.TryParse(ProductViewTable.Rows[ri]["product_disc_pct"].ToString(), out float oldDisc);
                         new DbConnect().ExecNonQuery("UPDATE product SET product_id = '" + dr["ID"] + "', product_name = '" + dr["Name"] + "', product_package = '" + dr["Package"] + "', product_substance = '" + dr["Substance"] + "', product_registrar = '" + dr["Registrar"] + "', product_distributor = '" + dr["Distributor"] + "', product_price = '" + dr["Price"] + "', product_stock = '" + dr["Stock"] + "' " +
                             "WHERE product_id = '" + id + "';");
                         if (newStock - oldStock != 0) {
                             new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
-                        "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + (newStock - oldStock).ToString() + "');");
+                                "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + (newStock - oldStock).ToString() + "');");
+                        }
+                        if (oldDisc == 0 && newDisc != 0) {
+                            new DbConnect().ExecNonQuery("INSERT product_discount " +
+                                "VALUES ('" + dr["ID"].ToString() + "', '" + newDisc.ToString() + "');");
+                        } else if (oldDisc != 0 && newDisc == 0) {
+                            new DbConnect().ExecNonQuery("DELETE FROM product_discount " +
+                                "WHERE product_id = '" + dr["ID"].ToString() + "';");
+                        } else if (oldDisc != 0 && newDisc != 0) {
+                            new DbConnect().ExecNonQuery("UPDATE product_discount SET product_disc_pct = '" + newDisc.ToString() + "'" +
+                                "WHERE product_id = '" + dr["ID"].ToString() + "';");
                         }
                     } else if (dr["product_status"].ToString() == "INSERT") {
+                        int ri = ProductsProductView.Rows.IndexOf(ProductsProductView.Rows.Find(dr["ID"]));
+                        int newStock = int.Parse(ProductsProductView.Rows[ri]["product_stock"].ToString());
+                        float newDisc = float.Parse(ProductsProductView.Rows[ri]["product_disc_pct"].ToString());
                         new DbConnect().ExecNonQuery("INSERT product(product_id, product_name, product_package, product_substance, product_registrar, product_distributor, product_price, product_stock)" +
                             "VALUES ('" + dr["ID"] + "', '" + dr["Name"] + "', '" + dr["Package"] + "', '" + dr["Substance"] + "', '" + dr["Registrar"] + "', '" + dr["Distributor"] + "', " + dr["Price"] + ", " + dr["Stock"] + ");");
-                        new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
-                        "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + dr["Stock"] + "');");
+                        if (newStock != 0) {
+                            new DbConnect().ExecNonQuery("INSERT product_stock_history(product_id, employee_id, product_stock_history_timestamp, product_stock_history_qty) " +
+                                "VALUES ('" + dr["ID"].ToString() + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + TimeStamp + "', '" + dr["Stock"] + "');");
+                        }
+                        if (newDisc != 0) {
+                            new DbConnect().ExecNonQuery("INSERT product_discount " +
+                                "VALUES ('" + dr["ID"].ToString() + "', '" + newDisc.ToString() + "');");
+                        }
                     } else if (dr["product_status"].ToString() == "DELETE") {
+                        new DbConnect().ExecNonQuery("DELETE FROM product_stock_history WHERE product_id = '" + dr["ID"] + "';");
+                        new DbConnect().ExecNonQuery("DELETE FROM product_discount WHERE product_id = '" + dr["ID"] + "';");
                         new DbConnect().ExecNonQuery("DELETE FROM product WHERE product_id = '" + dr["ID"] + "';");
                     }
                 }
