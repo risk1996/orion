@@ -10,6 +10,7 @@ namespace Orion {
     public partial class Main : RibbonForm {
         private List<DevComponents.DotNetBar.Metro.MetroTileItem> MainAvailableMTIs = new List<DevComponents.DotNetBar.Metro.MetroTileItem>();
         private DataTable ProductViewTable = new DataTable();
+        private DataTable EmployeesViewTable = new DataTable();
 
         public Main() {
             InitializeComponent();
@@ -75,12 +76,14 @@ namespace Orion {
             SalesLC.Dock = DockStyle.Fill;
             RestockLC.Dock = DockStyle.Fill;
             ProductsLC.Dock = DockStyle.Fill;
+            EmployeesLC.Dock = DockStyle.Fill;
         }
 
         public void LayoutControlHide() {
             SalesLC.Visible = false;
             RestockLC.Visible = false;
             ProductsLC.Visible = false;
+            EmployeesLC.Visible = false;
         }
 
         private void DefineUserRole() {
@@ -107,9 +110,11 @@ namespace Orion {
         private void LoadData() {
             MySqlDataReader ProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
             ProductViewTable.Load(ProductReader);
+            MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT * FROM employee;");
+            EmployeesViewTable.Load(EmployeeReader);
         }
 
-        #region Sales definition
+        #region Sales
 
         public bool SalesLoaded = false;
         public static double SalesTotalPrice = 0;
@@ -265,7 +270,7 @@ namespace Orion {
 
         #endregion Sales definition
 
-        #region Restock definition
+        #region Restock
 
         public bool RestockLoaded = false;
         private DataTable RestockProductViewTableResult = new DataTable();
@@ -398,7 +403,7 @@ namespace Orion {
 
         #endregion Restock definition
 
-        #region Products definition
+        #region Products
 
         public bool ProductsLoaded = false;
         private DataTable ProductsProductView = new DataTable();
@@ -421,7 +426,7 @@ namespace Orion {
 
         private void Products_LoadOnce() {
             ProductsProductView = ProductViewTable.Copy();
-            ProductsProductView.Columns.Add("product_status");
+            ProductsProductView.Columns.Add("product_update");
             ProductsSearchResult.Columns.Add("ID");
             ProductsSearchResult.Columns.Add("Name");
             ProductsSearchResult.Columns.Add("Package");
@@ -433,15 +438,15 @@ namespace Orion {
             ProductsSearchResult.Columns.Add("Disc");
             ProductsSearchResult.PrimaryKey = new DataColumn[] { ProductsSearchResult.Columns["ID"] };
             ProductsListDGV.DataSource = ProductsSearchResult;
-            ProductsListDGV.Columns["ID"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ProductsListDGV.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ProductsListDGV.Columns["Package"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ProductsListDGV.Columns["Substance"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ProductsListDGV.Columns["Registrar"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["ID"].AutoSizeMode          = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Name"].AutoSizeMode        = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Package"].AutoSizeMode     = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Substance"].AutoSizeMode   = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Registrar"].AutoSizeMode   = DataGridViewAutoSizeColumnMode.DisplayedCells;
             ProductsListDGV.Columns["Distributor"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ProductsListDGV.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ProductsListDGV.Columns["Stock"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            ProductsListDGV.Columns["Disc"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Price"].AutoSizeMode       = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Stock"].AutoSizeMode       = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            ProductsListDGV.Columns["Disc"].AutoSizeMode        = DataGridViewAutoSizeColumnMode.DisplayedCells;
             ProductsListDGV.Columns["ID"].ReadOnly = true;
             ProductsLoaded = true;
         }
@@ -459,7 +464,7 @@ namespace Orion {
             ProductsSearchResult.Rows.Clear();
             ProductsProductSeachResultProductRows.CopyToDataTable(ProductsSearchResult, LoadOption.OverwriteChanges);
             ProductsListDGV.Columns[0].ReadOnly = true;
-            DataRow[] ProductsProductChange = new DataView(ProductsProductView).ToTable(false, new string[] { "product_id", "product_status" }).Select("product_status IS NOT NULL");
+            DataRow[] ProductsProductChange = new DataView(ProductsProductView).ToTable(false, new string[] { "product_id", "product_update" }).Select("product_update IS NOT NULL");
             foreach (DataRow dr in ProductsProductChange) {
                 DataRow sr = ProductsSearchResult.Rows.Find(dr[0].ToString());
                 if (sr != null) {
@@ -507,7 +512,7 @@ namespace Orion {
                         ProductsListDGV[e.ColumnIndex, e.RowIndex].Value = (dec == 0 ? null : dec.ToString());
                     }
                 }
-                if (dr != null && (dr["product_status"].ToString() == "" || dr["product_status"].ToString() == "UPDATE")) {
+                if (dr != null && (dr["product_update"].ToString() == "" || dr["product_update"].ToString() == "UPDATE")) {
                     bool diff = false;
                     int index = ProductsProductView.Rows.IndexOf(dr);
                     if (e.ColumnIndex < 6) dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
@@ -517,19 +522,19 @@ namespace Orion {
                     }
                     for (int i = 0; i < ProductViewTable.Columns.Count && !diff; i++) diff = ProductsListDGV[i, e.RowIndex].Value.ToString() != ProductViewTable.Rows[index][i].ToString();
                     if (diff) {
-                        dr["product_status"] = "UPDATE";
+                        dr["product_update"] = "UPDATE";
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
                     } else {
-                        dr["product_status"] = null;
+                        dr["product_update"] = null;
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                     }
-                } else if (dr != null && dr["product_status"].ToString() == "INSERT") {
+                } else if (dr != null && dr["product_update"].ToString() == "INSERT") {
                     if (e.ColumnIndex < 6) dr[e.ColumnIndex] = ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                     else {
                         decimal.TryParse(ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out decimal dec);
                         dr[e.ColumnIndex] = dec;
                     }
-                } else if (dr != null && dr["product_status"].ToString() == "TO BE DELETED") {
+                } else if (dr != null && dr["product_update"].ToString() == "TO BE DELETED") {
                     ProductsProductView.Rows.Remove(dr);
                     try { ProductsListDGV.Rows.RemoveAt(e.RowIndex); } catch { }
                 } else if (dr == null && ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "") {
@@ -541,13 +546,13 @@ namespace Orion {
                         val[e.ColumnIndex] = dec;
                     }
                     DataRow drnew = ProductsProductView.Rows.Add(val);
-                    drnew["product_status"] = "INSERT";
+                    drnew["product_update"] = "INSERT";
                 } else if (dr == null && ProductsListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "") {
                     ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                     string pid = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
                     object[] val = { pid, "", "", "", "", "", 0, 0, 0 };
                     DataRow drnew = ProductsProductView.Rows.Add(val);
-                    drnew["product_status"] = "TO BE DELETED";
+                    drnew["product_update"] = "TO BE DELETED";
                     ProductsListDGV_CellEndEdit(sender, e);
                 }
             }
@@ -558,25 +563,25 @@ namespace Orion {
                 string id = ProductsListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
                 DataRow dr = ProductsProductView.Rows.Find(id);
                 if (dr != null) {
-                    if (dr["product_status"].ToString() == "") {
-                        dr["product_status"] = "DELETE";
+                    if (dr["product_update"].ToString() == "") {
+                        dr["product_update"] = "DELETE";
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
                         ProductsListDGV.Rows[e.RowIndex].ReadOnly = true;
-                    } else if (dr["product_status"].ToString() == "INSERT") {
-                        dr["product_status"] = "TO BE DELETED";
+                    } else if (dr["product_update"].ToString() == "INSERT") {
+                        dr["product_update"] = "TO BE DELETED";
                         ProductsProductSearchTB.Select();
                         ProductsProductSearchTB.Focus();
-                    } else if (dr["product_status"].ToString() == "DELETE") {
-                        dr["product_status"] = null;
+                    } else if (dr["product_update"].ToString() == "DELETE") {
+                        dr["product_update"] = null;
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                         ProductsListDGV.Rows[e.RowIndex].ReadOnly = false;
                         ProductsListDGV.Rows[e.RowIndex].Cells[0].ReadOnly = true;
-                    } else if(dr["product_status"].ToString() == "UPDATE") {
+                    } else if(dr["product_update"].ToString() == "UPDATE") {
                         int index = ProductsProductView.Rows.IndexOf(dr);
                         for (int i = 0; i < ProductViewTable.Columns.Count; i++) {
                             dr[i] = ProductsListDGV.Rows[e.RowIndex].Cells[i].Value = ProductViewTable.Rows[index][i];
                         }
-                        dr["product_status"] = null;
+                        dr["product_update"] = null;
                         ProductsListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                         ProductsListDGV.Rows[e.RowIndex].ReadOnly = false;
                         ProductsListDGV.Rows[e.RowIndex].Cells[0].ReadOnly = true;
@@ -588,7 +593,7 @@ namespace Orion {
         private void ProductsCancelB_Click(object sender, EventArgs e) {
             if (ProductsCancelB.Text == "Clear Changes") {
                 ProductsProductView = ProductViewTable.Copy();
-                ProductsProductView.Columns.Add("product_status");
+                ProductsProductView.Columns.Add("product_update");
                 ProductsProductSearchTB.Text = "";
                 ProductsProductSearchTB_TextChanged(sender, e);
                 ProductsPendingChanges.Clear();
@@ -609,7 +614,7 @@ namespace Orion {
             } else {
                 String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                 foreach (DataRow dr in ProductsPendingChanges.Rows) {
-                    if (dr["product_status"].ToString() == "UPDATE") {
+                    if (dr["product_update"].ToString() == "UPDATE") {
                         int ri = ProductsProductView.Rows.IndexOf(ProductsProductView.Rows.Find(dr["ID"]));
                         string id = ProductViewTable.Rows[ri]["product_id"].ToString();
                         int.TryParse(ProductsProductView.Rows[ri]["product_stock"].ToString(), out int newStock);
@@ -632,7 +637,7 @@ namespace Orion {
                             new DbConnect().ExecNonQuery("UPDATE product_discount SET product_disc_pct = '" + newDisc.ToString() + "'" +
                                 "WHERE product_id = '" + dr["ID"].ToString() + "';");
                         }
-                    } else if (dr["product_status"].ToString() == "INSERT") {
+                    } else if (dr["product_update"].ToString() == "INSERT") {
                         int ri = ProductsProductView.Rows.IndexOf(ProductsProductView.Rows.Find(dr["ID"]));
                         int newStock = int.Parse(ProductsProductView.Rows[ri]["product_stock"].ToString());
                         float newDisc = float.Parse(ProductsProductView.Rows[ri]["product_disc_pct"].ToString());
@@ -646,7 +651,7 @@ namespace Orion {
                             new DbConnect().ExecNonQuery("INSERT product_discount " +
                                 "VALUES ('" + dr["ID"].ToString() + "', '" + newDisc.ToString() + "');");
                         }
-                    } else if (dr["product_status"].ToString() == "DELETE") {
+                    } else if (dr["product_update"].ToString() == "DELETE") {
                         new DbConnect().ExecNonQuery("DELETE FROM product_stock_history WHERE product_id = '" + dr["ID"] + "';");
                         new DbConnect().ExecNonQuery("DELETE FROM product_discount WHERE product_id = '" + dr["ID"] + "';");
                         new DbConnect().ExecNonQuery("DELETE FROM product WHERE product_id = '" + dr["ID"] + "';");
@@ -659,26 +664,26 @@ namespace Orion {
                 ProductViewTable.Load(ProductsProductReader);
                 ProductsProductView.Clear();
                 ProductsProductView = ProductViewTable.Copy();
-                ProductsProductView.Columns.Add("product_status");
+                ProductsProductView.Columns.Add("product_update");
                 ProductsProductSearchTB.Text = "";
                 UnlockProducts();            }
         }
 
         public void LockProducts() {
             ProductsProductSearchTB.Enabled = false;
-            string[] ProductsProductSeachResultColumns = new string[] { "product_id", "product_name", "product_package", "product_substance", "product_registrar", "product_distributor", "product_price", "product_stock", "product_disc_pct", "product_status" };
-            DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductsProductView).ToTable(false, ProductsProductSeachResultColumns).Select("product_status IS NOT NULL");
+            string[] ProductsProductSeachResultColumns = new string[] { "product_id", "product_name", "product_package", "product_substance", "product_registrar", "product_distributor", "product_price", "product_stock", "product_disc_pct", "product_update" };
+            DataRow[] ProductsProductSeachResultProductRows = new DataView(ProductsProductView).ToTable(false, ProductsProductSeachResultColumns).Select("product_update IS NOT NULL");
             DataTable ProductsProductPendingTable = ProductsSearchResult.Clone();
-            ProductsProductPendingTable.Columns.Add("product_status");
+            ProductsProductPendingTable.Columns.Add("product_update");
             ProductsProductSeachResultProductRows.CopyToDataTable(ProductsProductPendingTable, LoadOption.OverwriteChanges);
             ProductsPendingChanges = ProductsProductPendingTable.Copy();
-            ProductsProductPendingTable.Columns.Remove("product_status");
+            ProductsProductPendingTable.Columns.Remove("product_update");
             ProductsListDGV.DataSource = ProductsProductPendingTable;
             foreach (DataRow dr in ProductsProductSeachResultProductRows) {
                 int isr = ProductsProductPendingTable.Rows.IndexOf(ProductsProductPendingTable.Rows.Find(dr["product_id"]));
-                if (dr["product_status"].ToString() == "UPDATE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Yellow;
-                else if (dr["product_status"].ToString() == "DELETE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
-                else if (dr["product_status"].ToString() == "INSERT") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
+                if (dr["product_update"].ToString() == "UPDATE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Yellow;
+                else if (dr["product_update"].ToString() == "DELETE") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
+                else if (dr["product_update"].ToString() == "INSERT") ProductsListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
             }
             ProductsListDGV.ReadOnly = true;
             ProductsListDGV.AllowUserToAddRows = false;
@@ -695,5 +700,100 @@ namespace Orion {
         }
 
         #endregion Products definition
+
+        #region Employees
+
+        public bool EmployeesLoaded = false;
+        private DataTable EmployeesEmployeeView = new DataTable();
+        private DataTable EmployeesSearchResult = new DataTable();
+        private DataTable EmployeesPendingChanges = new DataTable();
+
+        private void EmployeesMTI_Click(object sender, EventArgs e) {
+            Employees_Load();
+        }
+
+        private void Employees_Load() {
+            LayoutControlHide();
+            EmployeesLC.Visible = true;
+            EmployeesLC_SizeChanged(new object(), new EventArgs());
+            EmployeesEmployeeSearchTB.Select();
+            EmployeesEmployeeSearchTB.Focus();
+            if (!EmployeesLoaded) Employees_LoadOnce();
+            EmployeesEmployeeSearchTB_TextChanged(new object(), new EventArgs());
+        }
+
+        private void Employees_LoadOnce() {
+            EmployeesEmployeeView = EmployeesViewTable.Copy();
+            EmployeesEmployeeView.Columns.Add("employee_update");
+            EmployeesSearchResult.Columns.Add("ID");
+            EmployeesSearchResult.Columns.Add("Username");
+            EmployeesSearchResult.Columns.Add("First Name");
+            EmployeesSearchResult.Columns.Add("Last Name");
+            EmployeesSearchResult.Columns.Add("Role");
+            EmployeesSearchResult.Columns.Add("Gender");
+            EmployeesSearchResult.Columns.Add("DOB");
+            EmployeesSearchResult.Columns.Add("Phone");
+            EmployeesSearchResult.Columns.Add("E-mail");
+            EmployeesSearchResult.Columns.Add("Address");
+            EmployeesSearchResult.Columns.Add("Hire Date");
+            EmployeesSearchResult.Columns.Add("Status");
+            EmployeesSearchResult.Columns.Add("Last Login");
+            EmployeesSearchResult.PrimaryKey = new DataColumn[] { EmployeesSearchResult.Columns["ID"] };
+            EmployeesListDGV.DataSource = EmployeesSearchResult;
+            EmployeesListDGV.Columns["ID"].AutoSizeMode         = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Username"].AutoSizeMode   = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["First Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Last Name"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Role"].AutoSizeMode       = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Gender"].AutoSizeMode     = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["DOB"].AutoSizeMode        = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Phone"].AutoSizeMode      = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["E-mail"].AutoSizeMode     = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Address"].AutoSizeMode    = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Hire Date"].AutoSizeMode  = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Status"].AutoSizeMode     = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["Last Login"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EmployeesListDGV.Columns["ID"].ReadOnly = true;
+            EmployeesLoaded = true;
+        }
+
+        private void EmployeesLC_SizeChanged(object sender, EventArgs e) {
+            int EmployeesOtherComponentHeight = EmployeesEmployeeSearchLCI.Height + EmployeesCommitLCI.Height;
+            EmployeesListLCI.Height = EmployeesLC.Height - EmployeesOtherComponentHeight;
+        }
+
+        private void EmployeesEmployeeSearchTB_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void EmployeesListDGV_DataError(object sender, DataGridViewDataErrorEventArgs e) { }
+
+        private void EmployeesListDGV_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e) {
+
+        }
+
+        private void EmployeesListDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+
+        }
+
+        private void EmployeesListDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+
+        }
+
+        private void EmployeesCancelB_Click(object sender, EventArgs e) {
+
+        }
+
+        private void EmployeesCommitB_Click(object sender, EventArgs e) {
+
+        }
+
+        #endregion
+
+        #region Report
+
+
+
+        #endregion
     }
 }

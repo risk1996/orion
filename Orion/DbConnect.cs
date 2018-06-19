@@ -20,7 +20,7 @@ namespace Orion {
         public string MySQLConnectionString;
         MySqlConnection Conn;
         public DbConnect() {
-            MySQLConnectionString = String.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};CharSet=utf8;SslMode=none;", Hostname, Port, DBName, Username, Password);
+            MySQLConnectionString = String.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};CharSet=utf8;SslMode=none;convert zero datetime=True", Hostname, Port, DBName, Username, Password);
             Conn = new MySqlConnection(MySQLConnectionString);
             Conn.Open();
         }
