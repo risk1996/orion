@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Orion {
@@ -114,7 +116,7 @@ namespace Orion {
         private void LoadData() {
             MySqlDataReader ProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
             ProductViewTable.Load(ProductReader);
-            MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT * FROM employee;");
+            MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_hire_date, employee_status, employee_last_login FROM employee;");
             EmployeesViewTable.Load(EmployeeReader);
         }
 
@@ -767,29 +769,204 @@ namespace Orion {
         }
 
         private void EmployeesEmployeeSearchTB_TextChanged(object sender, EventArgs e) {
-
+            string[] EmployeesSearchTerms = DbConnect.EscapeLikeValue(EmployeesEmployeeSearchTB.Text).Split(' ');
+            for (int i = 0; i < EmployeesSearchTerms.Length; i++) EmployeesSearchTerms[i] = "(employee_id + ' ' + employee_uname + ' ' + employee_fname + ' ' + employee_lname + ' ' + employee_role + ' ' + employee_gender + ' ' + employee_phone + ' ' + employee_email + ' ' + employee_address + ' ' + employee_status) LIKE '%" + EmployeesSearchTerms[i] + "%'";
+            string[] EmployeesEmployeeSeachResultColumns = new string[] { "employee_id", "employee_uname", "employee_fname", "employee_lname", "employee_role", "employee_gender", "employee_dob", "employee_phone", "employee_email", "employee_address", "employee_hire_date", "employee_status", "employee_last_login" };
+            DataRow[] EmployeesEmployeeSearchResultEmployeeRows = new DataView(EmployeesEmployeeView).ToTable(false, EmployeesEmployeeSeachResultColumns).Select(String.Join(" AND ", EmployeesSearchTerms));
+            EmployeesSearchResult.Rows.Clear();
+            EmployeesEmployeeSearchResultEmployeeRows.CopyToDataTable(EmployeesSearchResult, LoadOption.OverwriteChanges);
+            EmployeesListDGV.Columns[0].ReadOnly = true;
+            DataRow[] EmployeesEmployeeChange = new DataView(EmployeesEmployeeView).ToTable(false, new string[] { "employee_id", "employee_update" }).Select("employee_update IS NOT NULL");
+            foreach (DataRow dr in EmployeesEmployeeChange) {
+                DataRow sr = EmployeesSearchResult.Rows.Find(dr[0].ToString());
+                if (sr != null) {
+                    int isr = EmployeesSearchResult.Rows.IndexOf(sr);
+                    if (dr[1].ToString() == "UPDATE") EmployeesListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Yellow;
+                    else if (dr[1].ToString() == "DELETE") {
+                        EmployeesListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
+                        EmployeesListDGV.Rows[isr].ReadOnly = true;
+                    } else if (dr[1].ToString() == "INSERT") {
+                        EmployeesListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
+                        EmployeesListDGV.Rows[isr].ReadOnly = false;
+                    }
+                }
+            }
         }
 
         private void EmployeesListDGV_DataError(object sender, DataGridViewDataErrorEventArgs e) { }
 
         private void EmployeesListDGV_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e) {
-
+            if (e.RowIndex == EmployeesListDGV.RowCount - 1) {
+                int lastId = int.MinValue;
+                foreach (DataRow dr in EmployeesEmployeeView.Rows) {
+                    int maxvalue = dr.Field<int>("employee_id");
+                    lastId = Math.Max(lastId, maxvalue);
+                }
+                int NextEmployeeID = lastId + 1;
+                EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value = NextEmployeeID;
+                EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
+            }
         }
 
         private void EmployeesListDGV_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-
+            if (e.RowIndex >= 0 && e.RowIndex < EmployeesListDGV.Rows.Count) {
+                string id = EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
+                DataRow dr = EmployeesEmployeeView.Rows.Find(id);
+                if (dr != null && (dr["employee_update"].ToString() == "" || dr["employee_update"].ToString() == "UPDATE")) {
+                    bool diff = false;
+                    int index = EmployeesEmployeeView.Rows.IndexOf(dr);
+                    dr[e.ColumnIndex] = EmployeesListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    for (int i = 0; i < EmployeesViewTable.Columns.Count && !diff; i++) diff = EmployeesListDGV[i, e.RowIndex].Value.ToString() != EmployeesViewTable.Rows[index][i].ToString();
+                    if (diff) {
+                        dr["employee_update"] = "UPDATE";
+                        EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                    } else {
+                        dr["employee_update"] = null;
+                        EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    }
+                } else if (dr != null && dr["employee_update"].ToString() == "INSERT") {
+                    dr[e.ColumnIndex] = EmployeesListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                } else if (dr != null && dr["employee_update"].ToString() == "TO BE DELETED") {
+                    EmployeesEmployeeView.Rows.Remove(dr);
+                    try { EmployeesListDGV.Rows.RemoveAt(e.RowIndex); } catch { }
+                } else if (dr == null && EmployeesListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "") {
+                    string pid = EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    object[] val = { pid, "", "", "", "", "", "1970-01-01", "", "", "", "1970-01-01", "", "1970-01-01 19:19:19" };
+                    val[e.ColumnIndex] = EmployeesListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    DataRow drnew = EmployeesEmployeeView.Rows.Add(val);
+                    drnew["employee_update"] = "INSERT";
+                } else if (dr == null && EmployeesListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "") {
+                    EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    string pid = EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    object[] val = { pid, "", "", "", "", "", "1970-01-01", "", "", "", "1970-01-01", "", "1970-01-01 19:19:19" };
+                    DataRow drnew = EmployeesEmployeeView.Rows.Add(val);
+                    drnew["employee_update"] = "TO BE DELETED";
+                    EmployeesListDGV_CellEndEdit(sender, e);
+                }
+            }
         }
 
         private void EmployeesListDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
-
+            if (e.RowIndex >= 0) {
+                string id = EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
+                DataRow dr = EmployeesEmployeeView.Rows.Find(id);
+                if (dr != null) {
+                    if (dr["employee_update"].ToString() == "") {
+                        dr["employee_update"] = "DELETE";
+                        EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                        EmployeesListDGV.Rows[e.RowIndex].ReadOnly = true;
+                    } else if (dr["employee_update"].ToString() == "INSERT") {
+                        dr["employee_update"] = "TO BE DELETED";
+                        EmployeesEmployeeSearchTB.Select();
+                        EmployeesEmployeeSearchTB.Focus();
+                    } else if (dr["employee_update"].ToString() == "DELETE") {
+                        dr["employee_update"] = null;
+                        EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                        EmployeesListDGV.Rows[e.RowIndex].ReadOnly = false;
+                        EmployeesListDGV.Rows[e.RowIndex].Cells[0].ReadOnly = true;
+                    } else if (dr["employee_update"].ToString() == "UPDATE") {
+                        int index = EmployeesEmployeeView.Rows.IndexOf(dr);
+                        for (int i = 0; i < EmployeesViewTable.Columns.Count; i++) {
+                            dr[i] = EmployeesListDGV.Rows[e.RowIndex].Cells[i].Value = EmployeesViewTable.Rows[index][i];
+                        }
+                        dr["employee_update"] = null;
+                        EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                        EmployeesListDGV.Rows[e.RowIndex].ReadOnly = false;
+                        EmployeesListDGV.Rows[e.RowIndex].Cells[0].ReadOnly = true;
+                    }
+                }
+            }
         }
 
         private void EmployeesCancelB_Click(object sender, EventArgs e) {
-
+            if (EmployeesCancelB.Text == "Clear Changes") {
+                EmployeesEmployeeView = EmployeesViewTable.Copy();
+                EmployeesEmployeeView.Columns.Add("employee_update");
+                EmployeesEmployeeSearchTB.Text = "";
+                EmployeesEmployeeSearchTB_TextChanged(sender, e);
+                EmployeesPendingChanges.Clear();
+            } else {
+                EmployeesCommitB.Text = "OK";
+                EmployeesCancelB.Text = "Clear Changes";
+                //UnlockProducts();
+                EmployeesCommitB.Enabled = true;
+            }
         }
 
         private void EmployeesCommitB_Click(object sender, EventArgs e) {
+            if (EmployeesCommitB.Text == "OK") {
+                EmployeesCommitB.Text = "Commit Changes";
+                EmployeesCancelB.Text = "Cancel";
+                LockEmployees();
+                EmployeesCommitB.Enabled = EmployeesPendingChanges.Rows.Count > 0;
+            } else {
+                String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                foreach (DataRow dr in EmployeesPendingChanges.Rows) {
+                    if (dr["employee_update"].ToString() == "UPDATE") {
+                        int ri = EmployeesEmployeeView.Rows.IndexOf(EmployeesEmployeeView.Rows.Find(dr["ID"]));
+                        string id = EmployeesViewTable.Rows[ri]["employee_id"].ToString();
+                        new DbConnect().ExecNonQuery("UPDATE employee SET employee_id = " + dr["ID"] + ", employee_uname = '" + dr["Username"] + "', employee_fname = '" + dr["First Name"] + "', employee_lname = '" + dr["Last Name"] + "', employee_role = '" + dr["Role"] + "', employee_gender = '" + dr["Gender"] + "', employee_dob = '" + dr["DOB"] + "', employee_phone = '" + dr["Phone"] + "', employee_email = '" + dr["E-mail"] + "', employee_address = '" + dr["Address"] + "', employee_hire_date = '" + dr["Hire Date"] + "', employee_status = '" + dr["Status"] + "', employee_last_login = '" + dr["Last Login"] +  
+                            "' WHERE employee_id = " + id + ";");
+                    } else if (dr["employee_update"].ToString() == "INSERT") {
+                        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                        var stringChars = new char[6];
+                        var random = new Random();
+                        for (int i = 0; i < stringChars.Length; i++) {
+                            stringChars[i] = chars[random.Next(chars.Length)];
+                        }
+                        var defaultSalt = new String(stringChars);
+                        SHA512 sha512 = new SHA512Managed();
+                        string password = DateTime.Today.ToString("ddMMyyyy") + defaultSalt;
+                        ToastNotification.Show(this, password);
+                        string defaultPass = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(password))).Replace("-", "").ToLower();
+                        int ri = EmployeesEmployeeView.Rows.IndexOf(EmployeesEmployeeView.Rows.Find(dr["ID"]));
+                        new DbConnect().ExecNonQuery("INSERT employee(employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_password, employee_salt, employee_hire_date, employee_status, employee_last_login)" +
+                            "VALUES (" + dr["ID"] + ", '" + dr["Username"] + "', '" + dr["First Name"] + "', '" + dr["Last Name"] + "', '" + dr["Role"] + "', '" + dr["Gender"] + "', '" + dr["DOB"] + "', '" + dr["Phone"] + "', '" + dr["E-mail"] + "', '" + dr["Address"] + "', '" + defaultPass + "', '" + defaultSalt + "', '" + dr["Hire Date"] + "', '" + dr["Status"] + "', '" + dr["Last Login"] + "');");
+                    } else if (dr["employee_update"].ToString() == "DELETE") {
+                        new DbConnect().ExecNonQuery("DELETE FROM employee WHERE employee_id = " + dr["ID"] + ";");
+                    }
+                }
+                EmployeesCancelB.Text = "Clear Changes";
+                EmployeesCommitB.Text = "OK";
+                MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_hire_date, employee_status, employee_last_login FROM employee;");
+                EmployeesViewTable.Clear();
+                EmployeesViewTable.Load(EmployeeReader);
+                EmployeesEmployeeView.Clear();
+                EmployeesEmployeeView = EmployeesViewTable.Copy();
+                EmployeesEmployeeView.Columns.Add("employee_update");
+                EmployeesEmployeeSearchTB.Text = "";
+                UnlockEmployees();
+            }
+        }
 
+        public void LockEmployees() {
+            EmployeesEmployeeSearchTB.Enabled = false;
+            string[] EmployeesEmployeeSeachResultColumns = new string[] { "employee_id", "employee_uname", "employee_fname", "employee_lname", "employee_role", "employee_gender", "employee_dob", "employee_phone", "employee_email", "employee_address", "employee_hire_date", "employee_status", "employee_last_login", "employee_update" };
+            DataRow[] EmployeesEmployeeSeachResultEmployeeRows = new DataView(EmployeesEmployeeView).ToTable(false, EmployeesEmployeeSeachResultColumns).Select("employee_update IS NOT NULL");
+            DataTable EmployeesEmployeePendingTable = EmployeesSearchResult.Clone();
+            EmployeesEmployeePendingTable.Columns.Add("employee_update");
+            EmployeesEmployeeSeachResultEmployeeRows.CopyToDataTable(EmployeesEmployeePendingTable, LoadOption.OverwriteChanges);
+            EmployeesPendingChanges = EmployeesEmployeePendingTable.Copy();
+            EmployeesEmployeePendingTable.Columns.Remove("employee_update");
+            EmployeesListDGV.DataSource = EmployeesEmployeePendingTable;
+            foreach (DataRow dr in EmployeesEmployeeSeachResultEmployeeRows) {
+                int isr = EmployeesEmployeePendingTable.Rows.IndexOf(EmployeesEmployeePendingTable.Rows.Find(dr["employee_id"]));
+                if (dr["employee_update"].ToString() == "UPDATE") EmployeesListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Yellow;
+                else if (dr["employee_update"].ToString() == "DELETE") EmployeesListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Red;
+                else if (dr["employee_update"].ToString() == "INSERT") EmployeesListDGV.Rows[isr].DefaultCellStyle.BackColor = Color.Green;
+            }
+            EmployeesListDGV.ReadOnly = true;
+            EmployeesListDGV.AllowUserToAddRows = false;
+            EmployeesListDGV.AllowUserToDeleteRows = false;
+        }
+
+        public void UnlockEmployees() {
+            EmployeesListDGV.DataSource = EmployeesSearchResult;
+            EmployeesEmployeeSearchTB_TextChanged(new object(), new EventArgs());
+            EmployeesEmployeeSearchTB.Enabled = true;
+            EmployeesListDGV.ReadOnly = false;
+            EmployeesListDGV.AllowUserToAddRows = true;
+            EmployeesListDGV.AllowUserToDeleteRows = true;
         }
 
         #endregion
