@@ -38,6 +38,12 @@ namespace Orion {
         }
 
         private void SettingsBI_Click(object sender, EventArgs e) {
+            Opacity = 0.5;
+            Settings settings = new Settings();
+            settings.ShowDialog();
+            SelectedH.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Custom;
+            SelectedH.CustomHighlightColors = new Color[] { Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme };
+            Opacity = 1.0;
         }
 
         private void AboutBI_Click(object sender, EventArgs e) {
@@ -76,6 +82,9 @@ namespace Orion {
         }
 
         private void Main_Load(object sender, EventArgs e) {
+            StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(Color.White, Properties.Settings.Default.ColorScheme);
+            SelectedH.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Custom;
+            SelectedH.CustomHighlightColors = new Color[] { Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme };
             UserLI.Text = Properties.Settings.Default.LoginUsername;
             DefineUserRole();
             LayoutControlFloat();
@@ -259,7 +268,7 @@ namespace Orion {
                 SalesTotalPrice = SalesRefreshPrice();
                 Opacity = .5;
                 if (Checkout.ShowDialog() == DialogResult.OK) {
-                    string salesTransactionId = Checkout.transaction_id;
+                    string salesTransactionId = Checkout.Transaction_id;
                     String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                     foreach (DataRow dr in SalesPendingTransaction.Rows) {
                         new DbConnect().ExecNonQuery("INSERT transaction_detail (transaction_id, product_id, transaction_qty, transaction_discount) " +

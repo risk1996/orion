@@ -12,5 +12,9 @@ namespace Orion {
         public About() {
             InitializeComponent();
         }
+
+        private void About_Load(object sender, EventArgs e) {
+            StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(Color.White, Properties.Settings.Default.ColorScheme);
+        }
     }
 }

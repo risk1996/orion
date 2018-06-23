@@ -15,9 +15,12 @@ namespace Orion {
         }
 
         DataTable CheckoutTransactionTable = new DataTable();
-        public string transaction_id { get; set; }
+        public string Transaction_id { get; set; }
 
         private void Checkout_Load(object sender, EventArgs e) {
+            StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(Color.White, Properties.Settings.Default.ColorScheme);
+            SelectedH.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Custom;
+            SelectedH.CustomHighlightColors = new Color[] { Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme };
             String CheckoutDate = DateTime.Today.ToString("yyMMdd");
             MySqlDataReader CheckoutTransactionReader = new DbConnect().ExecQuery("SELECT * FROM transaction_header WHERE transaction_id LIKE 'O-INV-" + CheckoutDate + "%';");
             CheckoutTransactionTable.Load(CheckoutTransactionReader);
@@ -95,7 +98,7 @@ namespace Orion {
                 int SalesProductReader = new DbConnect().ExecNonQuery("INSERT transaction_header (transaction_id, transaction_timestamp, employee_id, transaction_method) " +
                     "VALUES ('" + CheckoutInvoiceNoL.Text.ToString() + "', '" + TimeStamp + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" 
                     + CheckoutTransactionMethodCB.Text + "');");
-                transaction_id = CheckoutInvoiceNoL.Text.ToString();
+                Transaction_id = CheckoutInvoiceNoL.Text.ToString();
                 DialogResult = DialogResult.OK;
                 Close();
             }

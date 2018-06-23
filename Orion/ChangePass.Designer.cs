@@ -23,6 +23,7 @@ namespace Orion {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangePass));
             this.IconSB = new DevComponents.DotNetBar.Controls.SymbolBox();
             this.UsernameL = new DevComponents.DotNetBar.LabelX();
@@ -33,6 +34,7 @@ namespace Orion {
             this.CancelB = new DevComponents.DotNetBar.ButtonX();
             this.InfoL = new DevComponents.DotNetBar.LabelX();
             this.SelectedH = new DevComponents.DotNetBar.Validator.Highlighter();
+            this.StyleSM = new DevComponents.DotNetBar.StyleManager(this.components);
             this.SuspendLayout();
             // 
             // IconSB
@@ -160,6 +162,11 @@ namespace Orion {
             // 
             this.SelectedH.ContainerControl = this;
             // 
+            // StyleSM
+            // 
+            this.StyleSM.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro;
+            this.StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(87)))), ((int)(((byte)(154))))));
+            // 
             // ChangePass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,7 +188,7 @@ namespace Orion {
             this.MinimizeBox = false;
             this.Name = "ChangePass";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Orion | Change Password";
+            this.Text = "Change Password | Orion";
             this.Load += new System.EventHandler(this.ChangePass_Load);
             this.ResumeLayout(false);
 
@@ -198,5 +205,6 @@ namespace Orion {
         private DevComponents.DotNetBar.ButtonX CancelB;
         private DevComponents.DotNetBar.LabelX InfoL;
         private DevComponents.DotNetBar.Validator.Highlighter SelectedH;
+        private DevComponents.DotNetBar.StyleManager StyleSM;
     }
 }

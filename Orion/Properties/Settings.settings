@@ -25,5 +25,8 @@
     <Setting Name="LoginRole" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ColorScheme" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">43, 87, 154</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

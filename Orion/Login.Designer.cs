@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.LoginB = new DevComponents.DotNetBar.ButtonX();
             this.UsernameTB = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -31,6 +32,7 @@
             this.RememberCB = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.ProgressCP = new DevComponents.DotNetBar.Controls.CircularProgress();
             this.LogoRI = new DevComponents.DotNetBar.Controls.ReflectionImage();
+            this.StyleSM = new DevComponents.DotNetBar.StyleManager(this.components);
             this.SuspendLayout();
             // 
             // LoginB
@@ -140,6 +142,11 @@
             this.LogoRI.Size = new System.Drawing.Size(58, 108);
             this.LogoRI.TabIndex = 5;
             // 
+            // StyleSM
+            // 
+            this.StyleSM.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro;
+            this.StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(87)))), ((int)(((byte)(154))))));
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,5 +181,6 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX RememberCB;
         private DevComponents.DotNetBar.Controls.ReflectionImage LogoRI;
         private DevComponents.DotNetBar.Controls.CircularProgress ProgressCP;
+        private DevComponents.DotNetBar.StyleManager StyleSM;
     }
 }

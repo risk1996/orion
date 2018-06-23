@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -108,6 +109,7 @@
             this.EmployeesListLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.EmployeesCancelLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.EmployeesCommitLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.StyleSM = new DevComponents.DotNetBar.StyleManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.TopBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesCartDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalesProductSeachResultDGV)).BeginInit();
@@ -328,16 +330,16 @@
             // 
             // ChangePasswordBI
             // 
+            this.ChangePasswordBI.ColorTable = DevComponents.DotNetBar.eButtonColor.BlueWithBackground;
             this.ChangePasswordBI.Name = "ChangePasswordBI";
             this.ChangePasswordBI.Symbol = "";
-            this.ChangePasswordBI.SymbolColor = System.Drawing.Color.White;
             this.ChangePasswordBI.Click += new System.EventHandler(this.ChangePasswordBI_Click);
             // 
             // LogoutBI
             // 
+            this.LogoutBI.ColorTable = DevComponents.DotNetBar.eButtonColor.BlueWithBackground;
             this.LogoutBI.Name = "LogoutBI";
             this.LogoutBI.Symbol = "";
-            this.LogoutBI.SymbolColor = System.Drawing.Color.White;
             this.LogoutBI.Click += new System.EventHandler(this.LogoutBI_Click);
             // 
             // SelectedH
@@ -1182,6 +1184,11 @@
             this.EmployeesCommitLCI.Width = 50;
             this.EmployeesCommitLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
+            // StyleSM
+            // 
+            this.StyleSM.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro;
+            this.StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(87)))), ((int)(((byte)(154))))));
+            // 
             // Main
             // 
             this.ClientSize = new System.Drawing.Size(784, 561);
@@ -1281,5 +1288,6 @@
         private DevComponents.DotNetBar.Layout.LayoutControlItem EmployeesCancelLCI;
         private DevComponents.DotNetBar.Layout.LayoutControlItem EmployeesCommitLCI;
         private DevComponents.DotNetBar.ButtonItem ChangePasswordBI;
+        private DevComponents.DotNetBar.StyleManager StyleSM;
     }
 }

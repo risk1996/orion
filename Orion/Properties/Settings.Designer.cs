@@ -93,5 +93,17 @@ namespace Orion.Properties {
                 this["LoginRole"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("43, 87, 154")]
+        public global::System.Drawing.Color ColorScheme {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorScheme"]));
+            }
+            set {
+                this["ColorScheme"] = value;
+            }
+        }
     }
 }

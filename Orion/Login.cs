@@ -17,6 +17,10 @@ namespace Orion {
         }
 
         private void Login_Load(object sender, EventArgs e) {
+            StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(Color.White, Properties.Settings.Default.ColorScheme);
+            SelectedH.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Custom;
+            SelectedH.CustomHighlightColors = new Color[] { Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme };
+            ProgressCP.ProgressColor = Properties.Settings.Default.ColorScheme;
             ProgressCP.IsRunning = true;
             if (Properties.Settings.Default.LoginRemember) {
                 UsernameTB.Text    = Properties.Settings.Default.LoginUsername;

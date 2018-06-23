@@ -14,6 +14,7 @@ namespace Orion {
         }
 
         private void Calc_Load(object sender, EventArgs e) {
+            StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(Color.White, Properties.Settings.Default.ColorScheme);
             Calculator.Focus();
         }
     }

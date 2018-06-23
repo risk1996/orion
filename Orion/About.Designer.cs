@@ -23,12 +23,14 @@ namespace Orion {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
             this.LogoRI = new DevComponents.DotNetBar.Controls.ReflectionImage();
             this.TitleL = new DevComponents.DotNetBar.LabelX();
             this.DevelopersL = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.CloseB = new DevComponents.DotNetBar.ButtonX();
+            this.StyleSM = new DevComponents.DotNetBar.StyleManager(this.components);
             this.SuspendLayout();
             // 
             // LogoRI
@@ -51,7 +53,7 @@ namespace Orion {
             // 
             // 
             // 
-            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TitleL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.TitleL.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TitleL.Location = new System.Drawing.Point(76, 12);
             this.TitleL.Name = "TitleL";
@@ -64,7 +66,7 @@ namespace Orion {
             // 
             // 
             // 
-            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.DevelopersL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.DevelopersL.Location = new System.Drawing.Point(76, 41);
             this.DevelopersL.Name = "DevelopersL";
             this.DevelopersL.Size = new System.Drawing.Size(196, 79);
@@ -97,6 +99,11 @@ namespace Orion {
             this.CloseB.TabIndex = 10;
             this.CloseB.Text = "Close";
             // 
+            // StyleSM
+            // 
+            this.StyleSM.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro;
+            this.StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(87)))), ((int)(((byte)(154))))));
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -115,7 +122,8 @@ namespace Orion {
             this.MinimizeBox = false;
             this.Name = "About";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Orion | About";
+            this.Text = "About | Orion";
+            this.Load += new System.EventHandler(this.About_Load);
             this.ResumeLayout(false);
 
         }
@@ -127,5 +135,6 @@ namespace Orion {
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.LabelX DevelopersL;
         private DevComponents.DotNetBar.ButtonX CloseB;
+        private DevComponents.DotNetBar.StyleManager StyleSM;
     }
 }

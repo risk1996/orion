@@ -19,6 +19,9 @@ namespace Orion {
         }
 
         private void ChangePass_Load(object sender, EventArgs e) {
+            StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(Color.White, Properties.Settings.Default.ColorScheme);
+            SelectedH.FocusHighlightColor = DevComponents.DotNetBar.Validator.eHighlightColor.Custom;
+            SelectedH.CustomHighlightColors = new Color[] { Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme, Properties.Settings.Default.ColorScheme };
             MySqlDataReader reader = new DbConnect().ExecQuery("SELECT * FROM employee WHERE employee_id = " + Properties.Settings.Default.LoginEmployeeID.ToString() + ";");
             reader.Read();
             UsernameL.Text = reader["employee_uname"].ToString();

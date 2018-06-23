@@ -23,8 +23,10 @@ namespace Orion {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Checkout));
             this.CheckoutLC = new DevComponents.DotNetBar.Layout.LayoutControl();
+            this.CheckoutTransactionMethodCB = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.CheckoutPaymentCurrencySB = new DevComponents.DotNetBar.Controls.SymbolBox();
             this.CheckoutPaymentTB = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.CheckoutCancelB = new DevComponents.DotNetBar.ButtonX();
@@ -34,6 +36,7 @@ namespace Orion {
             this.CheckoutPriceL = new DevComponents.DotNetBar.LabelX();
             this.CheckoutInvoiceNoLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.layoutGroup1 = new DevComponents.DotNetBar.Layout.LayoutGroup();
+            this.CheckoutTransactionMethodLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutPaymentCurrencyLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutPaymentLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutPriceLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
@@ -41,8 +44,7 @@ namespace Orion {
             this.CheckoutCancelLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.CheckoutConfirmLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
             this.SelectedH = new DevComponents.DotNetBar.Validator.Highlighter();
-            this.CheckoutTransactionMethodCB = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.CheckoutTransactionMethodLCI = new DevComponents.DotNetBar.Layout.LayoutControlItem();
+            this.StyleSM = new DevComponents.DotNetBar.StyleManager(this.components);
             this.CheckoutLC.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,6 +72,23 @@ namespace Orion {
             this.CheckoutLC.Size = new System.Drawing.Size(384, 286);
             this.CheckoutLC.TabIndex = 0;
             // 
+            // CheckoutTransactionMethodCB
+            // 
+            this.CheckoutTransactionMethodCB.DisplayMember = "Text";
+            this.CheckoutTransactionMethodCB.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.CheckoutTransactionMethodCB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CheckoutTransactionMethodCB.ForeColor = System.Drawing.Color.Black;
+            this.CheckoutTransactionMethodCB.FormattingEnabled = true;
+            this.SelectedH.SetHighlightOnFocus(this.CheckoutTransactionMethodCB, true);
+            this.CheckoutTransactionMethodCB.ItemHeight = 30;
+            this.CheckoutTransactionMethodCB.Location = new System.Drawing.Point(61, 53);
+            this.CheckoutTransactionMethodCB.Margin = new System.Windows.Forms.Padding(0);
+            this.CheckoutTransactionMethodCB.Name = "CheckoutTransactionMethodCB";
+            this.CheckoutTransactionMethodCB.Size = new System.Drawing.Size(315, 36);
+            this.CheckoutTransactionMethodCB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CheckoutTransactionMethodCB.TabIndex = 1;
+            this.CheckoutTransactionMethodCB.SelectedIndexChanged += new System.EventHandler(this.CheckoutTransactionMethodCB_SelectedIndexChanged);
+            // 
             // CheckoutPaymentCurrencySB
             // 
             this.CheckoutPaymentCurrencySB.BackColor = System.Drawing.Color.White;
@@ -84,7 +103,7 @@ namespace Orion {
             this.CheckoutPaymentCurrencySB.Size = new System.Drawing.Size(39, 44);
             this.CheckoutPaymentCurrencySB.Symbol = "Rp";
             this.CheckoutPaymentCurrencySB.SymbolSize = 18F;
-            this.CheckoutPaymentCurrencySB.TabIndex = 999;
+            this.CheckoutPaymentCurrencySB.TabIndex = 2;
             this.CheckoutPaymentCurrencySB.TabStop = false;
             // 
             // CheckoutPaymentTB
@@ -104,7 +123,7 @@ namespace Orion {
             this.CheckoutPaymentTB.Name = "CheckoutPaymentTB";
             this.CheckoutPaymentTB.PreventEnterBeep = true;
             this.CheckoutPaymentTB.Size = new System.Drawing.Size(268, 43);
-            this.CheckoutPaymentTB.TabIndex = 2;
+            this.CheckoutPaymentTB.TabIndex = 3;
             this.CheckoutPaymentTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.CheckoutPaymentTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckoutPaymentTB_KeyDown);
             // 
@@ -113,13 +132,14 @@ namespace Orion {
             this.CheckoutCancelB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CheckoutCancelB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.CheckoutCancelB.Font = new System.Drawing.Font("Segoe UI", 15.75F);
+            this.SelectedH.SetHighlightOnFocus(this.CheckoutCancelB, true);
             this.CheckoutCancelB.Location = new System.Drawing.Point(8, 240);
             this.CheckoutCancelB.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutCancelB.Name = "CheckoutCancelB";
             this.CheckoutCancelB.Size = new System.Drawing.Size(104, 42);
             this.CheckoutCancelB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CheckoutCancelB.Symbol = "";
-            this.CheckoutCancelB.TabIndex = 3;
+            this.CheckoutCancelB.TabIndex = 6;
             this.CheckoutCancelB.Text = "Cancel";
             this.CheckoutCancelB.Click += new System.EventHandler(this.CheckoutCancelB_Click);
             // 
@@ -128,13 +148,14 @@ namespace Orion {
             this.CheckoutConfirmB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CheckoutConfirmB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.CheckoutConfirmB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.SelectedH.SetHighlightOnFocus(this.CheckoutConfirmB, true);
             this.CheckoutConfirmB.Location = new System.Drawing.Point(120, 240);
             this.CheckoutConfirmB.Margin = new System.Windows.Forms.Padding(0);
             this.CheckoutConfirmB.Name = "CheckoutConfirmB";
             this.CheckoutConfirmB.Size = new System.Drawing.Size(256, 42);
             this.CheckoutConfirmB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CheckoutConfirmB.Symbol = "";
-            this.CheckoutConfirmB.TabIndex = 4;
+            this.CheckoutConfirmB.TabIndex = 7;
             this.CheckoutConfirmB.Text = "Confirm Checkout";
             this.CheckoutConfirmB.Click += new System.EventHandler(this.CheckoutConfirmB_Click);
             // 
@@ -168,7 +189,7 @@ namespace Orion {
             this.CheckoutChangeL.Name = "CheckoutChangeL";
             this.CheckoutChangeL.Size = new System.Drawing.Size(315, 37);
             this.CheckoutChangeL.Symbol = "Rp";
-            this.CheckoutChangeL.TabIndex = 999;
+            this.CheckoutChangeL.TabIndex = 5;
             this.CheckoutChangeL.Text = "<CHANGE>";
             this.CheckoutChangeL.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
@@ -186,7 +207,7 @@ namespace Orion {
             this.CheckoutPriceL.Name = "CheckoutPriceL";
             this.CheckoutPriceL.Size = new System.Drawing.Size(315, 37);
             this.CheckoutPriceL.Symbol = "Rp";
-            this.CheckoutPriceL.TabIndex = 999;
+            this.CheckoutPriceL.TabIndex = 4;
             this.CheckoutPriceL.Text = "<PRICE>";
             this.CheckoutPriceL.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
@@ -216,6 +237,16 @@ namespace Orion {
             this.layoutGroup1.TextPosition = DevComponents.DotNetBar.Layout.eLayoutPosition.Top;
             this.layoutGroup1.Width = 100;
             this.layoutGroup1.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            // 
+            // CheckoutTransactionMethodLCI
+            // 
+            this.CheckoutTransactionMethodLCI.Control = this.CheckoutTransactionMethodCB;
+            this.CheckoutTransactionMethodLCI.Height = 45;
+            this.CheckoutTransactionMethodLCI.MinSize = new System.Drawing.Size(64, 18);
+            this.CheckoutTransactionMethodLCI.Name = "CheckoutTransactionMethodLCI";
+            this.CheckoutTransactionMethodLCI.Text = "Method:";
+            this.CheckoutTransactionMethodLCI.Width = 100;
+            this.CheckoutTransactionMethodLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
             // CheckoutPaymentCurrencyLCI
             // 
@@ -273,31 +304,14 @@ namespace Orion {
             this.CheckoutConfirmLCI.Width = 70;
             this.CheckoutConfirmLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
             // 
-            // CheckoutTransactionMethodCB
+            // SelectedH
             // 
-            this.CheckoutTransactionMethodCB.DisplayMember = "Text";
-            this.CheckoutTransactionMethodCB.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.CheckoutTransactionMethodCB.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CheckoutTransactionMethodCB.ForeColor = System.Drawing.Color.Black;
-            this.CheckoutTransactionMethodCB.FormattingEnabled = true;
-            this.CheckoutTransactionMethodCB.ItemHeight = 30;
-            this.CheckoutTransactionMethodCB.Location = new System.Drawing.Point(61, 53);
-            this.CheckoutTransactionMethodCB.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
-            this.CheckoutTransactionMethodCB.Name = "CheckoutTransactionMethodCB";
-            this.CheckoutTransactionMethodCB.Size = new System.Drawing.Size(315, 36);
-            this.CheckoutTransactionMethodCB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.CheckoutTransactionMethodCB.TabIndex = 1;
-            this.CheckoutTransactionMethodCB.SelectedIndexChanged += new System.EventHandler(this.CheckoutTransactionMethodCB_SelectedIndexChanged);
+            this.SelectedH.ContainerControl = this;
             // 
-            // CheckoutTransactionMethodLCI
+            // StyleSM
             // 
-            this.CheckoutTransactionMethodLCI.Control = this.CheckoutTransactionMethodCB;
-            this.CheckoutTransactionMethodLCI.Height = 45;
-            this.CheckoutTransactionMethodLCI.MinSize = new System.Drawing.Size(64, 18);
-            this.CheckoutTransactionMethodLCI.Name = "CheckoutTransactionMethodLCI";
-            this.CheckoutTransactionMethodLCI.Text = "Method:";
-            this.CheckoutTransactionMethodLCI.Width = 100;
-            this.CheckoutTransactionMethodLCI.WidthType = DevComponents.DotNetBar.Layout.eLayoutSizeType.Percent;
+            this.StyleSM.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro;
+            this.StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(87)))), ((int)(((byte)(154))))));
             // 
             // Checkout
             // 
@@ -307,7 +321,6 @@ namespace Orion {
             this.Controls.Add(this.CheckoutLC);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -344,5 +357,6 @@ namespace Orion {
         private DevComponents.DotNetBar.Layout.LayoutControlItem CheckoutPaymentCurrencyLCI;
         private DevComponents.DotNetBar.Controls.ComboBoxEx CheckoutTransactionMethodCB;
         private DevComponents.DotNetBar.Layout.LayoutControlItem CheckoutTransactionMethodLCI;
+        private DevComponents.DotNetBar.StyleManager StyleSM;
     }
 }

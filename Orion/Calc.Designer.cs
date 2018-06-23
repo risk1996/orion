@@ -23,8 +23,10 @@ namespace Orion {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Calc));
             this.Calculator = new DevComponents.Editors.Calculator();
+            this.StyleSM = new DevComponents.DotNetBar.StyleManager(this.components);
             this.SuspendLayout();
             // 
             // Calculator
@@ -34,6 +36,11 @@ namespace Orion {
             this.Calculator.Location = new System.Drawing.Point(0, 0);
             this.Calculator.Name = "Calculator";
             this.Calculator.Size = new System.Drawing.Size(190, 211);
+            // 
+            // StyleSM
+            // 
+            this.StyleSM.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro;
+            this.StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(87)))), ((int)(((byte)(154))))));
             // 
             // Calc
             // 
@@ -49,7 +56,7 @@ namespace Orion {
             this.MinimizeBox = false;
             this.Name = "Calc";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Calculator";
+            this.Text = "Calculator | Orion";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Calc_Load);
             this.ResumeLayout(false);
@@ -60,5 +67,6 @@ namespace Orion {
         #endregion
 
         private DevComponents.Editors.Calculator Calculator;
+        private DevComponents.DotNetBar.StyleManager StyleSM;
     }
 }
