@@ -128,8 +128,9 @@ namespace Orion {
             MySqlDataReader ProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
             ProductViewTable.Load(ProductReader);
             MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, " +
-                "employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_hire_date, " +
-                "employee_status, employee_last_login FROM employee WHERE employee_status = 'T';");
+                "employee_role, employee_gender, DATE_FORMAT(employee_dob, '%Y-%m-%d') employee_dob, employee_phone, employee_email, employee_address, " +
+                "DATE_FORMAT(employee_hire_date, '%Y-%m-%d') employee_hire_date, employee_status, DATE_FORMAT(employee_last_login, '%Y-%m-%d %H:%i:%s') employee_last_login" +
+                " FROM employee WHERE employee_status = 'T';");
             EmployeesViewTable.Load(EmployeeReader);
         }
 
@@ -843,14 +844,14 @@ namespace Orion {
                     try { EmployeesListDGV.Rows.RemoveAt(e.RowIndex); } catch { }
                 } else if (dr == null && EmployeesListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "") {
                     string pid = EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
-                    object[] val = { pid, "", "", "", "", "", "1970-01-01", "", "", "", "1970-01-01", "", "1970-01-01 19:19:19" };
+                    object[] val = { pid, "", "", "", "", "", "1970-01-01", "", "", "", "1970-01-01", "", "1970-01-01 00:00:01" };
                     val[e.ColumnIndex] = EmployeesListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                     DataRow drnew = EmployeesEmployeeView.Rows.Add(val);
                     drnew["employee_update"] = "INSERT";
                 } else if (dr == null && EmployeesListDGV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "") {
                     EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                     string pid = EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value.ToString();
-                    object[] val = { pid, "", "", "", "", "", "1970-01-01", "", "", "", "1970-01-01", "", "1970-01-01 19:19:19" };
+                    object[] val = { pid, "", "", "", "", "", "1970-01-01", "", "", "", "1970-01-01", "", "1970-01-01 00:00:01" };
                     DataRow drnew = EmployeesEmployeeView.Rows.Add(val);
                     drnew["employee_update"] = "TO BE DELETED";
                     EmployeesListDGV_CellEndEdit(sender, e);
@@ -921,10 +922,8 @@ namespace Orion {
                             "' WHERE employee_id = " + id + ";");
                     } else if (dr["employee_update"].ToString() == "INSERT") {
                         var defaultSalt = DbConnect.SaltGenerator();
-                        
                         SHA512 sha512 = new SHA512Managed();
                         string password = DateTime.Today.ToString("ddMMyyyy") + defaultSalt;
-                        ToastNotification.Show(this, password);
                         string defaultPass = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(password))).Replace("-", "").ToLower();
                         int ri = EmployeesEmployeeView.Rows.IndexOf(EmployeesEmployeeView.Rows.Find(dr["ID"]));
                         new DbConnect().ExecNonQuery("INSERT employee(employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_password, employee_salt, employee_hire_date, employee_status, employee_last_login)" +
@@ -935,7 +934,10 @@ namespace Orion {
                 }
                 EmployeesCancelB.Text = "Clear Changes";
                 EmployeesCommitB.Text = "OK";
-                MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_hire_date, employee_status, employee_last_login FROM employee WHERE employee_status = 'T';");
+                MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, " +
+                "employee_role, employee_gender, DATE_FORMAT(employee_dob, '%Y-%m-%d') employee_dob, employee_phone, employee_email, employee_address, " +
+                "DATE_FORMAT(employee_hire_date, '%Y-%m-%d') employee_hire_date, employee_status, DATE_FORMAT(employee_last_login, '%Y-%m-%d %H:%i:%s') employee_last_login" +
+                " FROM employee WHERE employee_status = 'T';");
                 EmployeesViewTable.Clear();
                 EmployeesViewTable.Load(EmployeeReader);
                 EmployeesEmployeeView.Clear();

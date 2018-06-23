@@ -35,10 +35,6 @@ namespace Orion {
             RefreshPaymentAmount();
         }
 
-        private void Checkout_FormClosed(object sender, FormClosedEventArgs e) {
-
-        }
-
         private void CheckoutTransactionMethodCB_SelectedIndexChanged(object sender, EventArgs e) {
             if (CheckoutTransactionMethodCB.SelectedIndex == 0) {
                 PaymentAmount = 0;
