@@ -96,17 +96,12 @@ namespace Orion {
         }
 
         private void DefineUserRole() {
-            SalesMTI.Enabled = RestockMTI.Enabled = ReportMTI.Enabled = ProductsMTI.Enabled = EmployeesMTI.Enabled = ReportMTI.Enabled = false;
+            SalesMTI.Enabled = RestockMTI.Enabled = ProductsMTI.Enabled = EmployeesMTI.Enabled = false;
             if (Properties.Settings.Default.LoginRole == "SUPER") {
                 MainAvailableMTIs.Add(SalesMTI);
                 MainAvailableMTIs.Add(RestockMTI);
                 MainAvailableMTIs.Add(ProductsMTI);
                 MainAvailableMTIs.Add(EmployeesMTI);
-                MainAvailableMTIs.Add(ReportMTI);
-            } else if (Properties.Settings.Default.LoginRole == "MANAGER") {
-                MainAvailableMTIs.Add(ProductsMTI);
-                MainAvailableMTIs.Add(EmployeesMTI);
-                MainAvailableMTIs.Add(ReportMTI);
             } else if (Properties.Settings.Default.LoginRole == "CLERK") {
                 MainAvailableMTIs.Add(SalesMTI);
             } else if (Properties.Settings.Default.LoginRole == "WAREHOUSE") {
@@ -805,7 +800,7 @@ namespace Orion {
                 MySqlDataReader r = new DbConnect().ExecQuery("SELECT COUNT(*) AS CNT FROM employee;");
                 r.Read();
                 int lastId = int.Parse(r["CNT"].ToString());
-                int NextEmployeeID = lastId + 1;
+                int NextEmployeeID = lastId;
                 EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value = NextEmployeeID;
                 EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
             }
