@@ -41,6 +41,10 @@ namespace Orion {
         }
 
         private void AboutBI_Click(object sender, EventArgs e) {
+            Opacity = 0.5;
+            About about = new About();
+            about.ShowDialog();
+            Opacity = 1.0;
         }
 
         private void MinimizeBI_Click(object sender, EventArgs e) {
