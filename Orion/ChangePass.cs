@@ -23,7 +23,7 @@ namespace Orion {
             reader.Read();
             UsernameL.Text = reader["employee_uname"].ToString();
             InfoL.Text = reader["employee_fname"].ToString() + " " + reader["employee_lname"].ToString() + "\n" + reader["employee_email"].ToString() + "\n(Since: " + reader["employee_hire_date"].ToString() + ")";
-            HashedPass = reader["employee_pass"].ToString();
+            HashedPass = reader["employee_password"].ToString();
             Salt = reader["employee_salt"].ToString();
         }
 

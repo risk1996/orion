@@ -32,6 +32,7 @@ namespace Orion {
             this.OKB = new DevComponents.DotNetBar.ButtonX();
             this.CancelB = new DevComponents.DotNetBar.ButtonX();
             this.InfoL = new DevComponents.DotNetBar.LabelX();
+            this.SelectedH = new DevComponents.DotNetBar.Validator.Highlighter();
             this.SuspendLayout();
             // 
             // IconSB
@@ -70,6 +71,7 @@ namespace Orion {
             this.OldPasswordTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.OldPasswordTB.DisabledBackColor = System.Drawing.Color.White;
             this.OldPasswordTB.ForeColor = System.Drawing.Color.Black;
+            this.SelectedH.SetHighlightOnFocus(this.OldPasswordTB, true);
             this.OldPasswordTB.Location = new System.Drawing.Point(12, 92);
             this.OldPasswordTB.Name = "OldPasswordTB";
             this.OldPasswordTB.PasswordChar = '●';
@@ -88,6 +90,7 @@ namespace Orion {
             this.NewPasswordTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.NewPasswordTB.DisabledBackColor = System.Drawing.Color.White;
             this.NewPasswordTB.ForeColor = System.Drawing.Color.Black;
+            this.SelectedH.SetHighlightOnFocus(this.NewPasswordTB, true);
             this.NewPasswordTB.Location = new System.Drawing.Point(12, 120);
             this.NewPasswordTB.Name = "NewPasswordTB";
             this.NewPasswordTB.PasswordChar = '●';
@@ -106,6 +109,7 @@ namespace Orion {
             this.ConfirmPasswordTB.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.ConfirmPasswordTB.DisabledBackColor = System.Drawing.Color.White;
             this.ConfirmPasswordTB.ForeColor = System.Drawing.Color.Black;
+            this.SelectedH.SetHighlightOnFocus(this.ConfirmPasswordTB, true);
             this.ConfirmPasswordTB.Location = new System.Drawing.Point(12, 148);
             this.ConfirmPasswordTB.Name = "ConfirmPasswordTB";
             this.ConfirmPasswordTB.PasswordChar = '●';
@@ -152,6 +156,10 @@ namespace Orion {
             this.InfoL.TabIndex = 7;
             this.InfoL.Text = "<INFORMATION>";
             // 
+            // SelectedH
+            // 
+            this.SelectedH.ContainerControl = this;
+            // 
             // ChangePass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -189,5 +197,6 @@ namespace Orion {
         private DevComponents.DotNetBar.ButtonX OKB;
         private DevComponents.DotNetBar.ButtonX CancelB;
         private DevComponents.DotNetBar.LabelX InfoL;
+        private DevComponents.DotNetBar.Validator.Highlighter SelectedH;
     }
 }
