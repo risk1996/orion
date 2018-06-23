@@ -28,7 +28,7 @@ namespace Orion {
 
         private void LoginB_Click(object sender, EventArgs e) {
             ProgressCP.Visible = true;
-            MySqlDataReader emp = new DbConnect().ExecQuery("SELECT * FROM employee WHERE employee_uname = '" + UsernameTB.Text + "';");
+            MySqlDataReader emp = new DbConnect().ExecQuery("SELECT * FROM employee WHERE employee_uname = '" + UsernameTB.Text + "' AND employee_status = 'T';");
             if (emp.HasRows) {
                 SHA512 sha512 = new SHA512Managed();
                 emp.Read();
