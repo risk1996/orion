@@ -55,6 +55,10 @@ namespace Orion {
             Close();
         }
 
+        private void ChangePasswordBI_Click(object sender, EventArgs e) {
+
+        }
+
         private void LogoutBI_Click(object sender, EventArgs e) {
             new Login().Show();
             Close();

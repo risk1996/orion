@@ -38,7 +38,7 @@
             this.LoginB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.LoginB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.SelectedH.SetHighlightOnFocus(this.LoginB, true);
-            this.LoginB.Location = new System.Drawing.Point(204, 97);
+            this.LoginB.Location = new System.Drawing.Point(197, 97);
             this.LoginB.Name = "LoginB";
             this.LoginB.Size = new System.Drawing.Size(75, 23);
             this.LoginB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -62,7 +62,7 @@
             this.UsernameTB.Location = new System.Drawing.Point(76, 12);
             this.UsernameTB.Name = "UsernameTB";
             this.UsernameTB.PreventEnterBeep = true;
-            this.UsernameTB.Size = new System.Drawing.Size(203, 22);
+            this.UsernameTB.Size = new System.Drawing.Size(196, 22);
             this.UsernameTB.TabIndex = 0;
             this.UsernameTB.WatermarkText = "Username";
             this.UsernameTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UsernameTB_KeyDown);
@@ -82,7 +82,7 @@
             this.PasswordTB.Name = "PasswordTB";
             this.PasswordTB.PasswordChar = '●';
             this.PasswordTB.PreventEnterBeep = true;
-            this.PasswordTB.Size = new System.Drawing.Size(203, 22);
+            this.PasswordTB.Size = new System.Drawing.Size(196, 22);
             this.PasswordTB.TabIndex = 1;
             this.PasswordTB.WatermarkText = "Password";
             this.PasswordTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PasswordTB_KeyDown);
@@ -115,7 +115,7 @@
             // 
             // 
             this.ProgressCP.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ProgressCP.Location = new System.Drawing.Point(175, 97);
+            this.ProgressCP.Location = new System.Drawing.Point(168, 97);
             this.ProgressCP.Name = "ProgressCP";
             this.ProgressCP.ProgressBarType = DevComponents.DotNetBar.eCircularProgressType.Donut;
             this.ProgressCP.ProgressColor = System.Drawing.Color.DodgerBlue;
@@ -144,7 +144,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(291, 132);
+            this.ClientSize = new System.Drawing.Size(284, 132);
             this.Controls.Add(this.ProgressCP);
             this.Controls.Add(this.LogoRI);
             this.Controls.Add(this.RememberCB);
