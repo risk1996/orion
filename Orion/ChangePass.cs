@@ -36,7 +36,7 @@ namespace Orion {
             string oldPassword = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(OldPasswordTB.Text + Salt))).Replace("-", "").ToLower();
             if (oldPassword == HashedPass) {
                 if (NewPasswordTB.Text == ConfirmPasswordTB.Text) {
-                    string newSalt = "";
+                    string newSalt = DbConnect.SaltGenerator();
                     string newPassword = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(NewPasswordTB.Text + newSalt))).Replace("-", "").ToLower();
                     new DbConnect().ExecNonQuery("UPDATE employee SET employee_password = '" + newPassword + "', employee_salt = '" + newSalt + "' WHERE employee_id = " + Properties.Settings.Default.LoginEmployeeID.ToString() + ";");
                 } else ToastNotification.Show(this, "New password does not match");
