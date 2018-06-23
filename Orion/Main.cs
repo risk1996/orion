@@ -260,6 +260,7 @@ namespace Orion {
 
         private void SalesClearCartBI_Click(object sender, EventArgs e) {
             SalesPendingTransaction.Clear();
+            SalesCheckoutB.Enabled = false;
             SalesRefreshPrice();
         }
 
@@ -974,12 +975,6 @@ namespace Orion {
             EmployeesListDGV.AllowUserToAddRows = true;
             EmployeesListDGV.AllowUserToDeleteRows = true;
         }
-
-        #endregion
-
-        #region Report
-
-
 
         #endregion
     }

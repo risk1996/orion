@@ -30,10 +30,6 @@ namespace Orion {
             Salt = reader["employee_salt"].ToString();
         }
 
-        private void CancelB_Click(object sender, EventArgs e) {
-            Close();
-        }
-
         private void OKB_Click(object sender, EventArgs e) {
             SHA512 sha512 = new SHA512Managed();
             string oldPassword = BitConverter.ToString(sha512.ComputeHash(Encoding.ASCII.GetBytes(OldPasswordTB.Text + Salt))).Replace("-", "").ToLower();

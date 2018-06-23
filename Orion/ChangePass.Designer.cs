@@ -124,7 +124,6 @@ namespace Orion {
             // 
             this.OKB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.OKB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.OKB.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.OKB.Location = new System.Drawing.Point(197, 176);
             this.OKB.Name = "OKB";
             this.OKB.Size = new System.Drawing.Size(75, 23);
@@ -144,7 +143,6 @@ namespace Orion {
             this.CancelB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CancelB.TabIndex = 6;
             this.CancelB.Text = "Cancel";
-            this.CancelB.Click += new System.EventHandler(this.CancelB_Click);
             // 
             // InfoL
             // 
