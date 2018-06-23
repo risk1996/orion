@@ -56,7 +56,7 @@ namespace Orion {
             this.UsernameL.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UsernameL.Location = new System.Drawing.Point(93, 12);
             this.UsernameL.Name = "UsernameL";
-            this.UsernameL.Size = new System.Drawing.Size(179, 33);
+            this.UsernameL.Size = new System.Drawing.Size(179, 32);
             this.UsernameL.TabIndex = 1;
             this.UsernameL.Text = "<USERNAME>";
             // 
@@ -118,23 +118,27 @@ namespace Orion {
             // 
             this.OKB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.OKB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.OKB.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.OKB.Location = new System.Drawing.Point(197, 176);
             this.OKB.Name = "OKB";
             this.OKB.Size = new System.Drawing.Size(75, 23);
             this.OKB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.OKB.TabIndex = 5;
             this.OKB.Text = "OK";
+            this.OKB.Click += new System.EventHandler(this.OKB_Click);
             // 
             // CancelB
             // 
             this.CancelB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CancelB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.CancelB.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelB.Location = new System.Drawing.Point(12, 176);
             this.CancelB.Name = "CancelB";
             this.CancelB.Size = new System.Drawing.Size(75, 23);
             this.CancelB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CancelB.TabIndex = 6;
             this.CancelB.Text = "Cancel";
+            this.CancelB.Click += new System.EventHandler(this.CancelB_Click);
             // 
             // InfoL
             // 
@@ -142,9 +146,9 @@ namespace Orion {
             // 
             // 
             this.InfoL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.InfoL.Location = new System.Drawing.Point(93, 51);
+            this.InfoL.Location = new System.Drawing.Point(93, 43);
             this.InfoL.Name = "InfoL";
-            this.InfoL.Size = new System.Drawing.Size(179, 35);
+            this.InfoL.Size = new System.Drawing.Size(179, 43);
             this.InfoL.TabIndex = 7;
             this.InfoL.Text = "<INFORMATION>";
             // 
@@ -163,9 +167,14 @@ namespace Orion {
             this.Controls.Add(this.IconSB);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ChangePass";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Orion | Change Password";
+            this.Load += new System.EventHandler(this.ChangePass_Load);
             this.ResumeLayout(false);
 
         }

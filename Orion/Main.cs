@@ -56,7 +56,10 @@ namespace Orion {
         }
 
         private void ChangePasswordBI_Click(object sender, EventArgs e) {
-
+            Opacity = 0.5;
+            ChangePass cp = new ChangePass();
+            cp.ShowDialog();
+            Opacity = 1.0;
         }
 
         private void LogoutBI_Click(object sender, EventArgs e) {
