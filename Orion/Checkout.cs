@@ -93,7 +93,8 @@ namespace Orion {
             } else {
                 String TimeStamp = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                 int SalesProductReader = new DbConnect().ExecNonQuery("INSERT transaction_header (transaction_id, transaction_timestamp, employee_id, transaction_method) " +
-                    "VALUES ('" + CheckoutInvoiceNoL.Text.ToString() + "', '" + TimeStamp + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" + CheckoutTransactionMethodCB.Text + "');");
+                    "VALUES ('" + CheckoutInvoiceNoL.Text.ToString() + "', '" + TimeStamp + "', '" + Properties.Settings.Default.LoginEmployeeID + "', '" 
+                    + CheckoutTransactionMethodCB.Text + "');");
                 transaction_id = CheckoutInvoiceNoL.Text.ToString();
                 DialogResult = DialogResult.OK;
                 Close();

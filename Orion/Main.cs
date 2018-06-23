@@ -112,7 +112,9 @@ namespace Orion {
         private void LoadData() {
             MySqlDataReader ProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
             ProductViewTable.Load(ProductReader);
-            MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_hire_date, employee_status, employee_last_login FROM employee;");
+            MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, " +
+                "employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_hire_date, " +
+                "employee_status, employee_last_login FROM employee WHERE employee_status = 'T';");
             EmployeesViewTable.Load(EmployeeReader);
         }
 
@@ -793,11 +795,9 @@ namespace Orion {
 
         private void EmployeesListDGV_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e) {
             if (e.RowIndex == EmployeesListDGV.RowCount - 1) {
-                int lastId = int.MinValue;
-                foreach (DataRow dr in EmployeesEmployeeView.Rows) {
-                    int maxvalue = dr.Field<int>("employee_id");
-                    lastId = Math.Max(lastId, maxvalue);
-                }
+                MySqlDataReader r = new DbConnect().ExecQuery("SELECT COUNT(*) AS CNT FROM employee;");
+                r.Read();
+                int lastId = int.Parse(r["CNT"].ToString());
                 int NextEmployeeID = lastId + 1;
                 EmployeesListDGV.Rows[e.RowIndex].Cells[0].Value = NextEmployeeID;
                 EmployeesListDGV.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
@@ -904,13 +904,8 @@ namespace Orion {
                         new DbConnect().ExecNonQuery("UPDATE employee SET employee_id = " + dr["ID"] + ", employee_uname = '" + dr["Username"] + "', employee_fname = '" + dr["First Name"] + "', employee_lname = '" + dr["Last Name"] + "', employee_role = '" + dr["Role"] + "', employee_gender = '" + dr["Gender"] + "', employee_dob = '" + dr["DOB"] + "', employee_phone = '" + dr["Phone"] + "', employee_email = '" + dr["E-mail"] + "', employee_address = '" + dr["Address"] + "', employee_hire_date = '" + dr["Hire Date"] + "', employee_status = '" + dr["Status"] + "', employee_last_login = '" + dr["Last Login"] +  
                             "' WHERE employee_id = " + id + ";");
                     } else if (dr["employee_update"].ToString() == "INSERT") {
-                        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                        var stringChars = new char[6];
-                        var random = new Random();
-                        for (int i = 0; i < stringChars.Length; i++) {
-                            stringChars[i] = chars[random.Next(chars.Length)];
-                        }
-                        var defaultSalt = new String(stringChars);
+                        var defaultSalt = DbConnect.SaltGenerator();
+                        
                         SHA512 sha512 = new SHA512Managed();
                         string password = DateTime.Today.ToString("ddMMyyyy") + defaultSalt;
                         ToastNotification.Show(this, password);
@@ -919,12 +914,12 @@ namespace Orion {
                         new DbConnect().ExecNonQuery("INSERT employee(employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_password, employee_salt, employee_hire_date, employee_status, employee_last_login)" +
                             "VALUES (" + dr["ID"] + ", '" + dr["Username"] + "', '" + dr["First Name"] + "', '" + dr["Last Name"] + "', '" + dr["Role"] + "', '" + dr["Gender"] + "', '" + dr["DOB"] + "', '" + dr["Phone"] + "', '" + dr["E-mail"] + "', '" + dr["Address"] + "', '" + defaultPass + "', '" + defaultSalt + "', '" + dr["Hire Date"] + "', '" + dr["Status"] + "', '" + dr["Last Login"] + "');");
                     } else if (dr["employee_update"].ToString() == "DELETE") {
-                        new DbConnect().ExecNonQuery("DELETE FROM employee WHERE employee_id = " + dr["ID"] + ";");
+                        new DbConnect().ExecNonQuery("UPDATE employee SET employee_status = 'F' WHERE employee_id = " + dr["ID"] + ";");
                     }
                 }
                 EmployeesCancelB.Text = "Clear Changes";
                 EmployeesCommitB.Text = "OK";
-                MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_hire_date, employee_status, employee_last_login FROM employee;");
+                MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, employee_role, employee_gender, employee_dob, employee_phone, employee_email, employee_address, employee_hire_date, employee_status, employee_last_login FROM employee WHERE employee_status = 'T';");
                 EmployeesViewTable.Clear();
                 EmployeesViewTable.Load(EmployeeReader);
                 EmployeesEmployeeView.Clear();
