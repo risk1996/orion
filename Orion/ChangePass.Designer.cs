@@ -35,6 +35,8 @@ namespace Orion {
             this.InfoL = new DevComponents.DotNetBar.LabelX();
             this.SelectedH = new DevComponents.DotNetBar.Validator.Highlighter();
             this.StyleSM = new DevComponents.DotNetBar.StyleManager(this.components);
+            this.PasswordComplexityPB = new DevComponents.DotNetBar.Controls.ProgressBarX();
+            this.PasswordComplexityL = new DevComponents.DotNetBar.LabelX();
             this.SuspendLayout();
             // 
             // IconSB
@@ -100,6 +102,7 @@ namespace Orion {
             this.NewPasswordTB.Size = new System.Drawing.Size(260, 22);
             this.NewPasswordTB.TabIndex = 3;
             this.NewPasswordTB.WatermarkText = "New Password";
+            this.NewPasswordTB.TextChanged += new System.EventHandler(this.NewPasswordTB_TextChanged);
             // 
             // ConfirmPasswordTB
             // 
@@ -124,7 +127,7 @@ namespace Orion {
             // 
             this.OKB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.OKB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.OKB.Location = new System.Drawing.Point(197, 176);
+            this.OKB.Location = new System.Drawing.Point(197, 226);
             this.OKB.Name = "OKB";
             this.OKB.Size = new System.Drawing.Size(75, 23);
             this.OKB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -137,7 +140,7 @@ namespace Orion {
             this.CancelB.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.CancelB.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.CancelB.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelB.Location = new System.Drawing.Point(12, 176);
+            this.CancelB.Location = new System.Drawing.Point(12, 226);
             this.CancelB.Name = "CancelB";
             this.CancelB.Size = new System.Drawing.Size(75, 23);
             this.CancelB.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -165,11 +168,40 @@ namespace Orion {
             this.StyleSM.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro;
             this.StyleSM.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(87)))), ((int)(((byte)(154))))));
             // 
+            // PasswordComplexityPB
+            // 
+            // 
+            // 
+            // 
+            this.PasswordComplexityPB.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.PasswordComplexityPB.ChunkColor = System.Drawing.Color.Red;
+            this.PasswordComplexityPB.ChunkColor2 = System.Drawing.Color.Lime;
+            this.PasswordComplexityPB.Location = new System.Drawing.Point(12, 176);
+            this.PasswordComplexityPB.Name = "PasswordComplexityPB";
+            this.PasswordComplexityPB.Size = new System.Drawing.Size(260, 15);
+            this.PasswordComplexityPB.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2000;
+            this.PasswordComplexityPB.TabIndex = 8;
+            this.PasswordComplexityPB.Text = "progressBarX1";
+            // 
+            // PasswordComplexityL
+            // 
+            // 
+            // 
+            // 
+            this.PasswordComplexityL.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.PasswordComplexityL.Location = new System.Drawing.Point(12, 197);
+            this.PasswordComplexityL.Name = "PasswordComplexityL";
+            this.PasswordComplexityL.Size = new System.Drawing.Size(260, 23);
+            this.PasswordComplexityL.TabIndex = 9;
+            this.PasswordComplexityL.Text = "<PASSWORD COMPLEXITY>";
+            // 
             // ChangePass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 211);
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.PasswordComplexityL);
+            this.Controls.Add(this.PasswordComplexityPB);
             this.Controls.Add(this.InfoL);
             this.Controls.Add(this.CancelB);
             this.Controls.Add(this.OKB);
@@ -180,6 +212,7 @@ namespace Orion {
             this.Controls.Add(this.IconSB);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -204,5 +237,7 @@ namespace Orion {
         private DevComponents.DotNetBar.LabelX InfoL;
         private DevComponents.DotNetBar.Validator.Highlighter SelectedH;
         private DevComponents.DotNetBar.StyleManager StyleSM;
+        private DevComponents.DotNetBar.LabelX PasswordComplexityL;
+        private DevComponents.DotNetBar.Controls.ProgressBarX PasswordComplexityPB;
     }
 }
