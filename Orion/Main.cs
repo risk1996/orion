@@ -125,7 +125,9 @@ namespace Orion {
         }
 
         private void LoadData() {
-            MySqlDataReader ProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
+            MySqlDataReader ProductReader = new DbConnect().ExecQuery("SELECT product_id, product_name, product_package, " +
+                "product_substance, product_registrar, product_distributor, product_price, product_stock, " +
+                " product_disc_pct FROM product_view WHERE product_status = 'T';");
             ProductViewTable.Load(ProductReader);
             MySqlDataReader EmployeeReader = new DbConnect().ExecQuery("SELECT employee_id, employee_uname, employee_fname, employee_lname, " +
                 "employee_role, employee_gender, DATE_FORMAT(employee_dob, '%Y-%m-%d') employee_dob, employee_phone, employee_email, employee_address, " +
@@ -652,7 +654,7 @@ namespace Orion {
                             new DbConnect().ExecNonQuery("INSERT product_discount " +
                                 "VALUES ('" + dr["ID"].ToString() + "', '" + newDisc.ToString() + "');");
                         } else if (oldDisc != 0 && newDisc == 0) {
-                            new DbConnect().ExecNonQuery("DELETE FROM product_discount " +
+                            new DbConnect().ExecNonQuery("UPDATE FROM product_discount " +
                                 "WHERE product_id = '" + dr["ID"].ToString() + "';");
                         } else if (oldDisc != 0 && newDisc != 0) {
                             new DbConnect().ExecNonQuery("UPDATE product_discount SET product_disc_pct = '" + newDisc.ToString() + "'" +
@@ -673,14 +675,14 @@ namespace Orion {
                                 "VALUES ('" + dr["ID"].ToString() + "', '" + newDisc.ToString() + "');");
                         }
                     } else if (dr["product_update"].ToString() == "DELETE") {
-                        new DbConnect().ExecNonQuery("DELETE FROM product_stock_history WHERE product_id = '" + dr["ID"] + "';");
-                        new DbConnect().ExecNonQuery("DELETE FROM product_discount WHERE product_id = '" + dr["ID"] + "';");
-                        new DbConnect().ExecNonQuery("DELETE FROM product WHERE product_id = '" + dr["ID"] + "';");
+                        new DbConnect().ExecNonQuery("UPDATE product SET product_status = 'F' WHERE product_id = '" + dr["ID"] + "';");
                     }
                 }
                 ProductsCancelB.Text = "Clear Changes";
                 ProductsCommitB.Text = "OK";
-                MySqlDataReader ProductsProductReader = new DbConnect().ExecQuery("SELECT * FROM product_view;");
+                MySqlDataReader ProductsProductReader = new DbConnect().ExecQuery("SELECT product_id, product_name, product_package, " +
+                "product_substance, product_registrar, product_distributor, product_price, product_stock, " +
+                " product_disc_pct FROM product_view WHERE product_status = 'T';;");
                 ProductViewTable.Clear();
                 ProductViewTable.Load(ProductsProductReader);
                 ProductsProductView.Clear();
